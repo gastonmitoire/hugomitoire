@@ -1,3 +1,9 @@
+import { Button } from "@nextui-org/button";
+
 export default function AdminPage() {
-  return <h1>Admin Page</h1>;
+  return (
+    <div>
+      <Button color="primary">Button</Button>
+    </div>
+  );
 }
