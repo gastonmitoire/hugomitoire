@@ -17,7 +17,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
 
   if (!mounted) return null;
   return (
-    <div>
+    <div className="dark text-foreground bg-background h-screen">
       <TopbarAdmin />
 
       {mounted && children}
