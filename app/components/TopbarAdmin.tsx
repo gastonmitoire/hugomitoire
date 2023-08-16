@@ -14,29 +14,42 @@ import {
 } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
 
-export const TopbarAdmin: React.FC = () => {
+interface AdminTopbarProps {
+  pathname: string | null;
+}
+
+const adminRoutes = [
+  {
+    name: "Libros",
+    href: "/admin/books",
+  },
+  {
+    name: "Usuarios",
+    href: "/admin/users",
+  },
+];
+
+export const TopbarAdmin: React.FC<AdminTopbarProps> = ({ pathname }) => {
   return (
     <Navbar>
       <NavbarBrand>
-        <p className="font-bold text-inherit">ADMIN</p>
+        <Link href="/admin" color="foreground">
+          <p className="font-bold text-inherit">ADMIN</p>
+        </Link>
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page" color="secondary">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
+        {adminRoutes.map((route) => (
+          <NavbarItem key={route.name} isActive={pathname === route.href}>
+            <Link
+              href={route.href}
+              color={pathname === route.href ? "secondary" : "foreground"}
+              aria-current={pathname === route.href ? "page" : undefined}
+            >
+              {route.name}
+            </Link>
+          </NavbarItem>
+        ))}
       </NavbarContent>
 
       <NavbarContent as="div" justify="end">

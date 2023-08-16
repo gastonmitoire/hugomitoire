@@ -2,9 +2,9 @@ import { Button } from "@nextui-org/button";
 
 export default function AdminPage() {
   return (
-    <div>
+    <main className="container mx-auto">
       oliwis alowa
       <Button color="primary">Button</Button>
-    </div>
+    </main>
   );
 }

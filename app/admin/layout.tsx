@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
-import { AdminLayout } from "../features/admin/AdminLayout";
+import { headers } from "next/headers";
+
+import { TopbarAdmin } from "@/app/components/TopbarAdmin";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,5 +14,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <AdminLayout>{children}</AdminLayout>;
+  const headersList = headers();
+  const activePath = headersList.get("x-invoke-path");
+
+  return (
+    <>
+      <TopbarAdmin pathname={activePath} />
+      {children}
+    </>
+  );
 }
