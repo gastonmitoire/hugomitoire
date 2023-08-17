@@ -50,46 +50,51 @@ export default function AdminBooksNewPage() {
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold">Crear libro</h2>
       <Spacer y={5} />
-      <form onSubmit={validateForm} className="flex flex-col gap-3">
-        <div>aca la portada o algo asi</div>
-        <div>
-          <Input
-            size="lg"
-            name="title"
-            label="Título"
-            placeholder="Título"
-            required
-            validationState={error.title ? "invalid" : "valid"}
-            errorMessage={error.title}
-          />
-          <Spacer y={3} />
-          <Textarea
-            size="lg"
-            name="description"
-            label="Descripción"
-            placeholder="Descripción"
-            required
-            validationState={error.description ? "invalid" : "valid"}
-            errorMessage={error.description}
-          />
-          <Spacer y={3} />
-          <Input
-            size="lg"
-            name="type"
-            label="Tipo"
-            placeholder="Tipo"
-            required
-            validationState={error.type ? "invalid" : "valid"}
-            errorMessage={error.type}
-          />
-        </div>
-        <Spacer y={5} />
-        <div className="flex justify-end">
-          <Button type="submit" color="secondary">
-            Crear
-          </Button>
-        </div>
-      </form>
+      <div className="grid grid-cols-5">
+        <form
+          onSubmit={validateForm}
+          className="col-start-2 col-end-5 flex flex-col gap-3"
+        >
+          <div>aca la portada o algo asi</div>
+          <div>
+            <Input
+              size="lg"
+              name="title"
+              label="Título"
+              placeholder="Título"
+              required
+              validationState={error.title ? "invalid" : "valid"}
+              errorMessage={error.title}
+            />
+            <Spacer y={3} />
+            <Textarea
+              size="lg"
+              name="description"
+              label="Descripción"
+              placeholder="Descripción"
+              required
+              validationState={error.description ? "invalid" : "valid"}
+              errorMessage={error.description}
+            />
+            <Spacer y={3} />
+            <Input
+              size="lg"
+              name="type"
+              label="Tipo"
+              placeholder="Tipo"
+              required
+              validationState={error.type ? "invalid" : "valid"}
+              errorMessage={error.type}
+            />
+          </div>
+          <Spacer y={5} />
+          <div className="flex justify-end">
+            <Button type="submit" color="secondary">
+              Crear
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
