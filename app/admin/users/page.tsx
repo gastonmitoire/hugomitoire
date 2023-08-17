@@ -5,7 +5,7 @@ export default async function AdminPage() {
   return (
     <main className="container mx-auto">
       USERS
-      <UsersTable users={users} />{" "}
+      {/* <UsersTable users={users} />{" "} */}
     </main>
   );
 }
