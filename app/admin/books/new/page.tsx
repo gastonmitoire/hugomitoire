@@ -1,7 +1,9 @@
 // new-book page
 "use client";
 
+import { Button } from "@nextui-org/button";
 import { Input, Textarea } from "@nextui-org/input";
+import { Modal } from "@nextui-org/modal";
 import { Spacer } from "@nextui-org/spacer";
 
 import { Book } from "@prisma/client";
@@ -15,13 +17,13 @@ export default function AdminBooksNewPage() {
       return;
     }
 
-    const book: Book = {
-      title: data.get("title") as string,
-      description: data.get("description") as string,
-      type: data.get("type") as string,
-    };
+    // const book: Book = {
+    //   title: data.get("title") as string,
+    //   description: data.get("description") as string,
+    //   type: data.get("type") as string,
+    // };
 
-    console.log(book);
+    // console.log(book);
   };
 
   return (
@@ -54,11 +56,12 @@ export default function AdminBooksNewPage() {
             required
           />
         </div>
-
-        <div className="flex justify-end">
-          <button type="submit" className="btn btn-primary">
-            Crear libro
-          </button>
+        <div>olapue</div>
+        <Spacer y={5} />
+        <div className="col-span-2 flex justify-end">
+          <Button type="submit" color="secondary">
+            Crear
+          </Button>
         </div>
       </form>
     </div>
