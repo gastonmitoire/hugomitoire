@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import prisma from "@/app/_lib/prisma";
 
 export async function POST(request: Request) {
   const { url, filename, encoding, mimetype } = await request.json();

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { headers } from "next/headers";
 
-import { TopbarAdmin } from "@/app/components/TopbarAdmin";
+import { TopbarAdmin } from "@/app/_components/TopbarAdmin";
 
 export const metadata: Metadata = {
   title: "Create Next App",
