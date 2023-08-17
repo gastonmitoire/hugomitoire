@@ -3,7 +3,6 @@
 
 import { Button } from "@nextui-org/button";
 import { Input, Textarea } from "@nextui-org/input";
-import { Modal } from "@nextui-org/modal";
 import { Spacer } from "@nextui-org/spacer";
 
 import { Book } from "@prisma/client";
@@ -30,7 +29,8 @@ export default function AdminBooksNewPage() {
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold">Crear libro</h2>
       <Spacer y={5} />
-      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-3">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div>aca la portada o algo asi</div>
         <div>
           <Input
             size="lg"
@@ -56,9 +56,8 @@ export default function AdminBooksNewPage() {
             required
           />
         </div>
-        <div>olapue</div>
         <Spacer y={5} />
-        <div className="col-span-2 flex justify-end">
+        <div className="flex justify-end">
           <Button type="submit" color="secondary">
             Crear
           </Button>
