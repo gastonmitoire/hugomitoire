@@ -1,13 +1,6 @@
-import { UsersTable } from "@/app/features/admin/UsersTable";
-
 export default async function AdminPage() {
   const users = await getData();
-  return (
-    <main className="container mx-auto">
-      USERS
-      {/* <UsersTable users={users} />{" "} */}
-    </main>
-  );
+  return <main className="container mx-auto">USERS</main>;
 }
 
 async function getData() {
