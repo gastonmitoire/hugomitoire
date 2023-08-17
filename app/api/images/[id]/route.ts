@@ -6,19 +6,12 @@ import path from "path";
 import prisma from "@/app/_lib/prisma";
 const imagePath = path.join(process.cwd(), "public", "images");
 
-// Función de utilidad para leer el cuerpo de la solicitud como JSON
-async function readRequestBodyAsJson(request: Request): Promise<any> {
-  const bodyText = await request.text();
-  return JSON.parse(bodyText);
-}
-
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Response> {
   const clientURL = new URL(request.nextUrl.toString());
 
-  console.log("Client URL:", clientURL);
   try {
     const { id } = params;
 
@@ -39,8 +32,6 @@ export async function DELETE(
     // Delete the image file from the public/images folder
     const imageFilePath = path.join(imagePath, image.filename);
     await fsPromises.unlink(imageFilePath);
-
-    console.log("Image deleted:", image);
 
     return NextResponse.redirect(clientURL.origin + "/admin/images");
   } catch (error) {
