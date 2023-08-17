@@ -7,6 +7,7 @@ import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import { Spacer } from "@nextui-org/spacer";
+import { Spinner } from "@nextui-org/spinner";
 
 export default function AdminImagesPage() {
   const [images, setImages] = useState<ImageModel[]>([]);
@@ -55,18 +56,27 @@ export default function AdminImagesPage() {
       </form>
       <Spacer y={5} />
       <div className="grid grid-cols-3 gap-5">
-        {images.map((image) => (
-          <div key={image.id} className="flex flex-col gap-3">
-            <div className="flex justify-center">
-              <Image src={image.url} alt={image.filename} className="w-64" />
+        {images.length > 0 ? (
+          images.map((image) => (
+            <div key={image.id} className="flex flex-col gap-3">
+              <div className="flex justify-center">
+                <Image src={image.url} alt={image.filename} className="w-64" />
+              </div>
+              <div className="flex justify-center">
+                <Button
+                  color="secondary"
+                  onClick={() => handleDelete(image.id)}
+                >
+                  Eliminar
+                </Button>
+              </div>
             </div>
-            <div className="flex justify-center">
-              <Button color="secondary" onClick={() => handleDelete(image.id)}>
-                Eliminar
-              </Button>
-            </div>
+          ))
+        ) : (
+          <div className="col-span-3 grid place-items-center">
+            <Spinner color="secondary" size="lg" label="Cargando imágenes..." />
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
