@@ -1,14 +1,15 @@
 "use client";
 
+import { Image as ImageModel } from "@prisma/client";
+
 import { useEffect, useState } from "react";
 import { Button } from "@nextui-org/button";
+import { Image } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import { Spacer } from "@nextui-org/spacer";
 
-import { Image } from "@prisma/client";
-
 export default function AdminImagesPage() {
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<ImageModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -31,10 +32,6 @@ export default function AdminImagesPage() {
       setImages((prev) => prev.filter((image) => image.id !== id));
     }
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="container mx-auto">
@@ -61,7 +58,7 @@ export default function AdminImagesPage() {
         {images.map((image) => (
           <div key={image.id} className="flex flex-col gap-3">
             <div className="flex justify-center">
-              <img src={image.url} alt={image.filename} className="w-64" />
+              <Image src={image.url} alt={image.filename} className="w-64" />
             </div>
             <div className="flex justify-center">
               <Button color="secondary" onClick={() => handleDelete(image.id)}>

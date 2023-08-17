@@ -13,6 +13,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest): Promise<Response> {
+  const clientURL = new URL(request.nextUrl.toString());
   try {
     const form = await request.formData();
 
@@ -51,7 +52,12 @@ export async function POST(request: NextRequest): Promise<Response> {
 
     console.log("Image created:", createdImage);
 
-    return NextResponse.json(createdImage);
+    return new Response(null, {
+      status: 303, // See Other
+      headers: {
+        Location: clientURL.origin + "/admin/images",
+      },
+    });
   } catch (error) {
     console.error("Error:", error);
 

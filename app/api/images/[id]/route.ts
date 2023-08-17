@@ -17,6 +17,8 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ): Promise<Response> {
   const clientURL = new URL(request.nextUrl.toString());
+
+  console.log("Client URL:", clientURL);
   try {
     const { id } = params;
 
@@ -40,7 +42,7 @@ export async function DELETE(
 
     console.log("Image deleted:", image);
 
-    return NextResponse.redirect("http://localhost:3000/admin/images");
+    return NextResponse.redirect(clientURL.origin + "/admin/images");
   } catch (error) {
     console.error("Error:", error);
 
