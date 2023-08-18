@@ -4,17 +4,19 @@
 import { useState } from "react";
 
 import { Image as ImageModel } from "@prisma/client";
+import { Genre as GenreModel } from "@prisma/client";
 
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import { Input, Textarea } from "@nextui-org/input";
-import { RadioGroup } from "@nextui-org/radio";
+import { RadioGroup, Radio } from "@nextui-org/radio";
 import { Spacer } from "@nextui-org/spacer";
 
 import { ImageCustomRadio } from "@/app/_components/ImageCustomRadio";
 
 interface BookFormProps {
   images: ImageModel[];
+  genres: GenreModel[];
 }
 
 interface BookModel {
@@ -29,7 +31,7 @@ interface BookModel {
   publicationDate: Date;
 }
 
-export const BookForm: React.FC<BookFormProps> = ({ images }) => {
+export const BookForm: React.FC<BookFormProps> = ({ images, genres }) => {
   const [error, setError] = useState<Record<string, string>>({});
 
   console.log(error);
@@ -164,8 +166,18 @@ export const BookForm: React.FC<BookFormProps> = ({ images }) => {
               onChange={handleOnValueChange}
             />
             <Spacer y={3} />
+
+            <RadioGroup label="Género" name="genreId" orientation="horizontal">
+              {genres.map((genre) => (
+                <Radio key={genre.id} value={genre.id}>
+                  {genre.name}
+                </Radio>
+              ))}
+            </RadioGroup>
+            <Spacer y={3} />
           </div>
           <Spacer y={5} />
+
           <div className="flex justify-end">
             <Button type="submit" color="secondary">
               Crear
