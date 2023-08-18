@@ -11,6 +11,8 @@ import { Input } from "@nextui-org/input";
 import { Progress } from "@nextui-org/progress";
 import { Spacer } from "@nextui-org/spacer";
 
+import { imagesService } from "./_service/images.service";
+
 export default function AdminImagesPage() {
   const [images, setImages] = useState<ImageModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -19,14 +21,10 @@ export default function AdminImagesPage() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchImages = async () => {
-      const response = await fetch("/api/images");
-      const data = await response.json();
-      setImages(data);
+    imagesService.getAll().then((images) => {
+      setImages(images);
       setLoading(false);
-    };
-
-    fetchImages();
+    });
   }, []);
 
   const handleDelete = async (id: string) => {

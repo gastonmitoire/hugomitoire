@@ -4,15 +4,10 @@ import { Divider } from "@nextui-org/divider";
 
 import { BookForm } from "@/app/_components/forms/BookForm";
 
-const fetchImages = async () => {
-  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/images");
-  const data = await response.json();
-
-  return data;
-};
+import { imagesService } from "../../images/_service/images.service";
 
 export default async function AdminBooksNewPage() {
-  const images = await fetchImages();
+  const images = await imagesService.getAll();
 
   console.log(images);
 
