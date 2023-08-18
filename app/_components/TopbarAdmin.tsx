@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Navbar,
@@ -22,6 +24,10 @@ const adminRoutes = [
   {
     name: "Libros",
     href: "/admin/books",
+  },
+  {
+    name: "Imágenes",
+    href: "/admin/images",
   },
   {
     name: "Usuarios",

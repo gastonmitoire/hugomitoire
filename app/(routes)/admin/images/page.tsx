@@ -90,7 +90,7 @@ export default function AdminImagesPage() {
 
       <Divider className="my-5" />
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-flow-col auto-cols-auto gap-5">
         {loading && (
           <div className="col-span-3">
             <Progress

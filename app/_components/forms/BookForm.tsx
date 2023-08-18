@@ -3,7 +3,6 @@
 
 import { useState } from "react";
 
-import { Book as BookModel } from "@prisma/client";
 import { Image as ImageModel } from "@prisma/client";
 
 import { Button } from "@nextui-org/button";
@@ -16,6 +15,18 @@ import { ImageCustomRadio } from "@/app/_components/ImageCustomRadio";
 
 interface BookFormProps {
   images: ImageModel[];
+}
+
+interface BookModel {
+  title: string;
+  description: string;
+  type: string;
+  cover: string;
+  secondaryImage: string;
+  genreId: string;
+  illustratorId: string;
+  publisherId: string;
+  publicationDate: Date;
 }
 
 export const BookForm: React.FC<BookFormProps> = ({ images }) => {
@@ -41,17 +52,28 @@ export const BookForm: React.FC<BookFormProps> = ({ images }) => {
     };
 
     const fieldErrors: Record<string, string> = {};
+    console.log(book);
 
-    Object.keys(book).forEach((key) => {
-      if (!book[key as keyof typeof book]) {
-        fieldErrors[key] = "Este campo es obligatorio";
-      }
-    });
+    // Object.keys(book).forEach((key) => {
+    //   if (!book[key as keyof typeof book]) {
+    //     fieldErrors[key] = "Este campo es obligatorio";
+    //   }
+    // });
 
-    setError(fieldErrors);
+    // setError(fieldErrors);
 
     if (Object.keys(fieldErrors).length === 0) {
       // Realizar la acción deseada si el formulario es válido
+    }
+  }
+
+  function handleOnValueChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+
+    setError((prev) => ({ ...prev, [name]: "" }));
+
+    if (!value) {
+      setError((prev) => ({ ...prev, [name]: "Este campo es obligatorio" }));
     }
   }
 
@@ -62,20 +84,52 @@ export const BookForm: React.FC<BookFormProps> = ({ images }) => {
           onSubmit={validateForm}
           className="col-start-2 col-end-5 flex flex-col gap-3"
         >
-          <div>
-            <RadioGroup>
-              {images.map((image) => (
-                <ImageCustomRadio value={image.id}>
-                  <Image
-                    src={image.url}
-                    width={300}
-                    height={400}
-                    alt={image.filename}
-                  />
-                </ImageCustomRadio>
-              ))}
-            </RadioGroup>
-          </div>
+          <RadioGroup
+            name="cover"
+            orientation="horizontal"
+            classNames={{
+              base: "flex flex-nowrap overflow-x-auto",
+              wrapper: "flex flex-nowrap overflow-x-auto",
+            }}
+          >
+            {images.map((image) => (
+              <ImageCustomRadio
+                key={image.id}
+                value={process.env.NEXT_PUBLIC_API_URL + image.url}
+              >
+                <Image
+                  src={image.url}
+                  width={300}
+                  height={400}
+                  alt={image.filename}
+                  radius="none"
+                />
+              </ImageCustomRadio>
+            ))}
+          </RadioGroup>
+          <RadioGroup
+            name="secondaryImage"
+            orientation="horizontal"
+            classNames={{
+              base: "flex flex-nowrap overflow-x-auto",
+              wrapper: "flex flex-nowrap overflow-x-auto",
+            }}
+          >
+            {images.map((image) => (
+              <ImageCustomRadio
+                key={image.id}
+                value={process.env.NEXT_PUBLIC_API_URL + image.url}
+              >
+                <Image
+                  src={image.url}
+                  width={300}
+                  height={400}
+                  alt={image.filename}
+                  radius="none"
+                />
+              </ImageCustomRadio>
+            ))}
+          </RadioGroup>
           <div>
             <Input
               size="lg"
@@ -85,6 +139,7 @@ export const BookForm: React.FC<BookFormProps> = ({ images }) => {
               required
               validationState={error.title ? "invalid" : "valid"}
               errorMessage={error.title}
+              onChange={handleOnValueChange}
             />
             <Spacer y={3} />
             <Textarea
@@ -95,6 +150,7 @@ export const BookForm: React.FC<BookFormProps> = ({ images }) => {
               required
               validationState={error.description ? "invalid" : "valid"}
               errorMessage={error.description}
+              onChange={handleOnValueChange}
             />
             <Spacer y={3} />
             <Input
@@ -105,7 +161,9 @@ export const BookForm: React.FC<BookFormProps> = ({ images }) => {
               required
               validationState={error.type ? "invalid" : "valid"}
               errorMessage={error.type}
+              onChange={handleOnValueChange}
             />
+            <Spacer y={3} />
           </div>
           <Spacer y={5} />
           <div className="flex justify-end">
