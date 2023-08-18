@@ -1,3 +1,4 @@
+import { fetchClient } from "./fetchClient";
 import { capitalize } from "./utils";
 
-export { capitalize };
+export { fetchClient, capitalize };
