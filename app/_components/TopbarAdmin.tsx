@@ -26,6 +26,10 @@ const adminRoutes = [
     href: "/admin/books",
   },
   {
+    name: "Géneros",
+    href: "/admin/genres",
+  },
+  {
     name: "Imágenes",
     href: "/admin/images",
   },
