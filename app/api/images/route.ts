@@ -7,9 +7,20 @@ import prisma from "@/app/_lib/prisma";
 const imagePath = path.join(process.cwd(), "public", "images");
 
 export async function GET() {
-  const images = await prisma.image.findMany();
+  try {
+    // Find all images in the database
+    const images = await prisma.image.findMany();
 
-  return NextResponse.json(images);
+    if (!images) {
+      throw new Error("Images not found");
+    }
+
+    return NextResponse.json(images);
+  } catch (error) {
+    console.error("Error:", error);
+
+    return new Response("Error getting the images", { status: 500 });
+  }
 }
 
 export async function POST(request: NextRequest): Promise<Response> {
@@ -49,8 +60,6 @@ export async function POST(request: NextRequest): Promise<Response> {
     // Write the image file to the public/images folder
     const imageFilePath = path.join(imagePath, imageName);
     await fsPromises.writeFile(imageFilePath, imageBuffer);
-
-    console.log("Image created:", createdImage);
 
     return new Response(null, {
       status: 303, // See Other

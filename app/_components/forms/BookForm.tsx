@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Image as ImageModel } from "@prisma/client";
 import { Genre as GenreModel } from "@prisma/client";
+import { User as UserModel } from "@prisma/client";
 
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
@@ -17,6 +18,8 @@ import { ImageCustomRadio } from "@/app/_components/ImageCustomRadio";
 interface BookFormProps {
   images: ImageModel[];
   genres: GenreModel[];
+  illustrators: UserModel[];
+  publishers: UserModel[];
 }
 
 interface BookModel {
@@ -31,10 +34,13 @@ interface BookModel {
   publicationDate: Date;
 }
 
-export const BookForm: React.FC<BookFormProps> = ({ images, genres }) => {
+export const BookForm: React.FC<BookFormProps> = ({
+  images,
+  genres,
+  illustrators,
+  publishers,
+}) => {
   const [error, setError] = useState<Record<string, string>>({});
-
-  console.log(error);
 
   function validateForm(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -53,8 +59,9 @@ export const BookForm: React.FC<BookFormProps> = ({ images, genres }) => {
       publicationDate: new Date(formData.get("publicationDate") as string),
     };
 
+    console.log("book", book);
+
     const fieldErrors: Record<string, string> = {};
-    console.log(book);
 
     // Object.keys(book).forEach((key) => {
     //   if (!book[key as keyof typeof book]) {
@@ -83,10 +90,12 @@ export const BookForm: React.FC<BookFormProps> = ({ images, genres }) => {
     <>
       <div className="grid grid-cols-5">
         <form
-          onSubmit={validateForm}
+          action="/api/books"
+          method="POST"
           className="col-start-2 col-end-5 flex flex-col gap-3"
         >
           <RadioGroup
+            label="Portada"
             name="cover"
             orientation="horizontal"
             classNames={{
@@ -110,6 +119,7 @@ export const BookForm: React.FC<BookFormProps> = ({ images, genres }) => {
             ))}
           </RadioGroup>
           <RadioGroup
+            label="Imagen secundaria"
             name="secondaryImage"
             orientation="horizontal"
             classNames={{
@@ -174,6 +184,44 @@ export const BookForm: React.FC<BookFormProps> = ({ images, genres }) => {
                 </Radio>
               ))}
             </RadioGroup>
+            <Spacer y={3} />
+
+            <RadioGroup
+              label="Ilustrador"
+              name="illustratorId"
+              orientation="horizontal"
+            >
+              {illustrators.map((illustrator) => (
+                <Radio key={illustrator.id} value={illustrator.id}>
+                  {illustrator.username}
+                </Radio>
+              ))}
+            </RadioGroup>
+            <Spacer y={3} />
+
+            <RadioGroup
+              label="Editorial"
+              name="publisherId"
+              orientation="horizontal"
+            >
+              {publishers.map((publisher) => (
+                <Radio key={publisher.id} value={publisher.id}>
+                  {publisher.username}
+                </Radio>
+              ))}
+            </RadioGroup>
+            <Spacer y={3} />
+
+            <Input
+              size="lg"
+              name="publicationDate"
+              label="Fecha de publicación"
+              placeholder="Fecha de publicación"
+              required
+              validationState={error.publicationDate ? "invalid" : "valid"}
+              errorMessage={error.publicationDate}
+              onChange={handleOnValueChange}
+            />
             <Spacer y={3} />
           </div>
           <Spacer y={5} />

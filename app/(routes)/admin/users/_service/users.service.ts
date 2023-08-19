@@ -4,10 +4,20 @@ import { User as UserModel } from "@prisma/client";
 export const usersService = {
   getAll,
   getById,
+  getByRole,
 };
 
 async function getAll() {
   const users = await fetchClient("/users", { method: "GET", headers: {} });
+
+  return users as UserModel[];
+}
+
+async function getByRole(role: string) {
+  const users = await fetchClient(`/users/${role}`, {
+    method: "GET",
+    headers: {},
+  });
 
   return users as UserModel[];
 }
