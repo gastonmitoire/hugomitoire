@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin-ext"] });
 
 import { Providers } from "./providers";
 
@@ -26,7 +26,7 @@ export default function RootLayout(props: RootLayoutProps) {
   return (
     <html lang="en">
       <body
-        className={`dark text-foreground bg-background min-h-screen ${inter.className}`}
+        className={`dark text-foreground bg-background min-h-screen ${montserrat.className}`}
       >
         <Providers>
           <Topbar pathname={activePath} />

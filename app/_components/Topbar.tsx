@@ -1,6 +1,10 @@
 "use client";
 
 import React from "react";
+import { Cinzel } from "next/font/google";
+
+const cinzel = Cinzel({ subsets: ["latin-ext"] });
+
 import {
   Navbar,
   NavbarBrand,
@@ -50,7 +54,9 @@ export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
 
       <NavbarBrand className="justify-center">
         <Link href="/admin" color="foreground">
-          <p className="font-bold text-inherit">Hugo Mitoire</p>
+          <p className={`font-bold text-inherit text-3xl ${cinzel.className}`}>
+            Hugo Mitoire
+          </p>
         </Link>
       </NavbarBrand>
 
