@@ -7,6 +7,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 import { Providers } from "./providers";
 
+import { Topbar } from "./_components/Topbar";
+
 interface RootLayoutProps {
   children: React.ReactNode;
   landing: React.ReactNode;
@@ -27,6 +29,7 @@ export default function RootLayout(props: RootLayoutProps) {
         className={`dark text-foreground bg-background min-h-screen ${inter.className}`}
       >
         <Providers>
+          <Topbar pathname={activePath} />
           {activePath === "/" ? props.landing : props.children}
         </Providers>
       </body>
