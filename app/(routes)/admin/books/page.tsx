@@ -5,6 +5,8 @@ import { booksService } from "./_service/books.service";
 export default async function AdminBooksPage() {
   const books = await booksService.getAll();
 
+  console.log(books);
+
   return (
     <main className="container mx-auto">
       <h1 className="text-3xl font-bold">Books</h1>

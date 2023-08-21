@@ -48,7 +48,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     const createdImage = await prisma.image.create({
       data: {
         filename: imageName,
-        url: `/images/${imageName}`,
+        url: clientURL.origin + `/images/${imageName}`,
         mimetype,
         encoding,
       },

@@ -104,10 +104,7 @@ export const BookForm: React.FC<BookFormProps> = ({
             }}
           >
             {images.map((image) => (
-              <ImageCustomRadio
-                key={image.id}
-                value={process.env.NEXT_PUBLIC_API_URL + image.url}
-              >
+              <ImageCustomRadio key={image.id} value={image.url}>
                 <Image
                   src={image.url}
                   width={300}
