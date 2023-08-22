@@ -4,6 +4,9 @@ import { Book as BookModel } from "@prisma/client";
 export const booksService = {
   getAll,
   getById,
+  create,
+  update,
+  delete: _delete,
 };
 
 async function getAll() {
@@ -19,4 +22,28 @@ async function getById(id: string) {
   });
 
   return book as BookModel;
+}
+
+async function create(params: any) {
+  const book = await fetchClient("/books", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params),
+  });
+
+  return book as BookModel;
+}
+
+async function update(id: string, params: any) {
+  const book = await fetchClient(`/books/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params),
+  });
+
+  return book as BookModel;
+}
+
+async function _delete(id: string) {
+  await fetchClient(`/books/${id}`, { method: "DELETE", headers: {} });
 }
