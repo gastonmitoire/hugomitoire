@@ -38,7 +38,9 @@ export async function POST(request: NextRequest): Promise<Response> {
     }
 
     const [fieldName, imageFile] = imageField;
-    const imageName = imageFile.name;
+
+    // remove spaces from the filename
+    const imageName = imageFile.name.replace(/\s/g, "-");
 
     // Set mimetype and encoding values
     const mimetype = imageFile.type;
