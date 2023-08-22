@@ -1,5 +1,9 @@
 export const fetchClient = (url: string, options: {}): Promise<any> => {
-  const defaultOptions = {};
+  const defaultOptions = {
+    next: {
+      revalidate: 60,
+    },
+  };
 
   const mergedOptions = { ...defaultOptions, ...options };
 
