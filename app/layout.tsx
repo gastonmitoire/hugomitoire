@@ -5,6 +5,7 @@ import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({ subsets: ["latin-ext"] });
 
+import { register } from "swiper/element/bundle";
 import { Providers } from "./providers";
 
 import { Topbar } from "./_components/Topbar";
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 export default function RootLayout(props: RootLayoutProps) {
   const headersList = headers();
   const activePath = headersList.get("x-invoke-path");
-  console.log("LANDING", props.landing);
+  register(); // Register Swiper elements
   return (
     <html lang="en">
       <body
