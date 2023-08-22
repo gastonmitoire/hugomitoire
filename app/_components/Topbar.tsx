@@ -1,24 +1,25 @@
 "use client";
 
 import React from "react";
-import { Cinzel } from "next/font/google";
+import { Cinzel, Reggae_One } from "next/font/google";
 
+const reggaeOne = Reggae_One({ weight: "400", subsets: ["latin"] });
 const cinzel = Cinzel({ subsets: ["latin-ext"] });
 
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from "@nextui-org/navbar";
-import { Link } from "@nextui-org/link";
+import { Avatar } from "@nextui-org/avatar";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/dropdown";
-import { Avatar } from "@nextui-org/avatar";
+import { Link } from "@nextui-org/link";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+} from "@nextui-org/navbar";
 
 interface TopbarProps {
   pathname: string | null;
@@ -37,7 +38,7 @@ const adminRoutes = [
 
 export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
   return (
-    <Navbar>
+    <Navbar maxWidth="2xl">
       <NavbarContent className="hidden sm:flex gap-4" justify="start">
         {adminRoutes.map((route) => (
           <NavbarItem key={route.name} isActive={pathname === route.href}>
@@ -45,6 +46,7 @@ export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
               href={route.href}
               color={pathname === route.href ? "secondary" : "foreground"}
               aria-current={pathname === route.href ? "page" : undefined}
+              className={`${reggaeOne.className}`}
             >
               {route.name}
             </Link>
