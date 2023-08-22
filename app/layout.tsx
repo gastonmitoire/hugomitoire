@@ -12,7 +12,6 @@ import { Topbar } from "./_components/Topbar";
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  landing: React.ReactNode;
 }
 
 export const metadata: Metadata = {
@@ -31,7 +30,7 @@ export default function RootLayout(props: RootLayoutProps) {
       >
         <Providers>
           <Topbar pathname={activePath} />
-          {activePath === "/" ? props.landing : props.children}
+          {props.children}
         </Providers>
       </body>
     </html>

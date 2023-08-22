@@ -1,9 +1,16 @@
-import Image from "next/image";
+import { Suspense } from "react";
 
-export default async function Home() {
+import Loading from "./loading";
+
+import { HeroWithSwiper } from "@/app/_components/HeroWithSwiper";
+
+export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      OLAS COMO TE VA
+    <main>
+      <Suspense fallback={<Loading />}>
+        <HeroWithSwiper />
+      </Suspense>
+      <section className="container mx-auto">landing</section>
     </main>
   );
 }
