@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from "react";
 import "swiper/swiper-bundle.css"; // Asegúrate de importar los estilos de Swiper
 import Swiper from "swiper/bundle";
-import { Reggae_One } from "next/font/google";
+import { Bellefair, Reggae_One } from "next/font/google";
 
+const bellefair = Bellefair({ weight: "400", subsets: ["latin"] });
 const reggaeOne = Reggae_One({ weight: "400", subsets: ["latin"] });
 
 import { Button } from "@nextui-org/button";
@@ -40,7 +41,7 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
           {books.map((book) => (
             <div
               key={book.id}
-              className="swiper-slide relative -z-0"
+              className="swiper-slide relative overflow-hidden"
               style={{
                 backgroundImage: `url(${book.secondaryImage})`,
                 backgroundSize: "cover",
@@ -48,9 +49,9 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
                 backgroundRepeat: "no-repeat",
               }}
             >
-              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
+              <div className="z-10 absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
 
-              <div className="container mx-auto py-3 px-3 sm:px-0 flex flex-col items-center sm:flex-row justify-between h-full">
+              <div className="container mx-auto py-3 px-3 sm:px-0 flex flex-col items-center sm:flex-row justify-between gap-3 h-full">
                 <div className="flex-auto flex flex-col items-center sm:items-start sm:justify-end gap-3 h-full">
                   <Image
                     src={book.cover}
@@ -74,14 +75,23 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
                   </div>
                 </div>
 
-                <div className="z-50 flex-1 self-end flex flex-col gap-3">
+                <div className="z-10 flex-1 sm:self-end flex flex-col gap-3">
+                  <p
+                    className={`z-10 text-2xl text-center sm:text-left ${bellefair.className}`}
+                  >
+                    {book.description.length > 200
+                      ? book.description.slice(0, 200) + "..."
+                      : book.description}
+                  </p>
                   <Button
                     as={Link}
-                    href={`/libros/${book.title}`}
+                    href={`/libros/${book.title
+                      .replaceAll(" ", "-")
+                      .toLocaleLowerCase()}`}
                     size="lg"
                     color="primary"
                     variant="ghost"
-                    className="uppercase z-10"
+                    className="uppercase"
                     onClick={() => console.log(book)}
                   >
                     Ver Libro
