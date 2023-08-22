@@ -35,7 +35,7 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
 
   return (
     <div className="relative overflow-x-hidden">
-      <div className="swiper-container h-[700px]">
+      <div className="swiper-container h-full sm:h-[700px]">
         <div className="swiper-wrapper">
           {books.map((book) => (
             <div
@@ -50,8 +50,8 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
             >
               <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
 
-              <div className="container mx-auto py-3 flex justify-between h-full">
-                <div className="flex-auto flex flex-col justify-end gap-3 h-full">
+              <div className="container mx-auto py-3 px-3 sm:px-0 flex flex-col items-center sm:flex-row justify-between h-full">
+                <div className="flex-auto flex flex-col items-center sm:items-start sm:justify-end gap-3 h-full">
                   <Image
                     src={book.cover}
                     alt={book.title}
