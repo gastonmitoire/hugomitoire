@@ -25,7 +25,6 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest): Promise<Response> {
-  const clientURL = new URL(request.nextUrl.toString());
   try {
     const form = await request.formData();
 
@@ -49,7 +48,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     const createdImage = await prisma.image.create({
       data: {
         filename: imageName,
-        url: clientURL.origin + `/images/${imageName}`,
+        url: `/images/${imageName}`,
         mimetype,
         encoding,
       },
