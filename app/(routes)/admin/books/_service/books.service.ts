@@ -53,5 +53,10 @@ async function update(id: string, params: any) {
 }
 
 async function _delete(id: string) {
-  await fetchClient(`/books/${id}`, { method: "DELETE", headers: {} });
+  const book = await fetchClient(`/books/${id}`, {
+    method: "DELETE",
+    headers: {},
+  });
+
+  return book as BookModel;
 }

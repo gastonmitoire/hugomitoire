@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 
 import { Book as BookModel } from "@prisma/client";
 
@@ -10,8 +11,15 @@ import { Image } from "@nextui-org/image";
 import { booksService } from "../(routes)/admin/books/_service/books.service";
 
 export const BookCard: React.FC<{ book: BookModel }> = ({ book }) => {
-  function handleDelete(id: string) {
-    booksService.delete(id);
+  const router = useRouter();
+  async function handleDelete(id: string) {
+    const deletedBook = await booksService.delete(id);
+
+    console.log("deleted book: ", deletedBook);
+
+    if (deletedBook) {
+      router.refresh();
+    }
   }
   return (
     <div key={book.id} className="w-1/4 p-2">
