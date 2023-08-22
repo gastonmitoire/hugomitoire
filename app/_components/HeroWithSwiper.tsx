@@ -4,9 +4,15 @@ import React, { useEffect } from "react";
 import "swiper/swiper-bundle.css"; // Asegúrate de importar los estilos de Swiper
 import Swiper from "swiper/bundle";
 
+import { Book as BookModel } from "@prisma/client";
+
 import { Image } from "@nextui-org/react";
 
-export const HeroWithSwiper: React.FC = () => {
+interface HeroWithSwiperProps {
+  books: BookModel[];
+}
+
+export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
   useEffect(() => {
     new Swiper(".swiper-container", {
       speed: 500,
@@ -25,41 +31,21 @@ export const HeroWithSwiper: React.FC = () => {
     <div className="relative overflow-x-hidden">
       <div className="swiper-container h-[700px]">
         <div className="swiper-wrapper">
-          <div
-            className="swiper-slide"
-            style={{
-              backgroundImage: "url(https://picsum.photos/200/300?grayscale)",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <p>olas</p>
-            <p>olas2</p>
-          </div>
-          <div
-            className="swiper-slide"
-            style={{
-              backgroundImage: "url(https://picsum.photos/200/300?grayscale)",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            Slide 2
-          </div>
-          <div
-            className="swiper-slide"
-            style={{
-              backgroundImage: "url(https://picsum.photos/200/300?grayscale)",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            Slide 3
-          </div>
-          {/* ... Más diapositivas */}
+          {books.map((book) => (
+            <div
+              key={book.id}
+              className="swiper-slide"
+              style={{
+                backgroundImage: `url(${book.secondaryImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            >
+              <p>olas</p>
+              <p>olas2</p>
+            </div>
+          ))}
         </div>
         <div className="swiper-pagination"></div>
       </div>
