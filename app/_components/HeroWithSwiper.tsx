@@ -1,19 +1,27 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "swiper/swiper-bundle.css"; // Asegúrate de importar los estilos de Swiper
 import Swiper from "swiper/bundle";
+import { Reggae_One } from "next/font/google";
 
-import { Book as BookModel } from "@prisma/client";
+const reggaeOne = Reggae_One({ weight: "400", subsets: ["latin"] });
 
-import { Image } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
+import { Divider } from "@nextui-org/divider";
+import { Image } from "@nextui-org/image";
+
+import { EnhancedBookModel } from "../(routes)/admin/books/_service/books.service";
 
 interface HeroWithSwiperProps {
-  books: BookModel[];
+  books: EnhancedBookModel[];
 }
 
 export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     new Swiper(".swiper-container", {
       speed: 500,
       loop: true,
@@ -34,7 +42,7 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
           {books.map((book) => (
             <div
               key={book.id}
-              className="swiper-slide"
+              className="swiper-slide relative -z-0"
               style={{
                 backgroundImage: `url(${book.secondaryImage})`,
                 backgroundSize: "cover",
@@ -42,8 +50,43 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
                 backgroundRepeat: "no-repeat",
               }}
             >
-              <p>olas</p>
-              <p>olas2</p>
+              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
+
+              <div className="container mx-auto py-3 flex justify-between h-full">
+                <div className="flex-auto flex flex-col justify-end gap-3 h-full">
+                  <Image
+                    src={book.cover}
+                    alt={book.title}
+                    height={400}
+                    width={350}
+                    radius="none"
+                    isBlurred
+                  />
+                  <span
+                    className={`z-10 text-5xl font-bold ${reggaeOne.className}`}
+                  >
+                    {book.title}
+                  </span>
+                  <div className="z-10 flex items-center gap-3 w-full text-xl">
+                    <span>{book.type}</span>
+                    <Divider orientation="vertical" />
+                    <span>{book.genre.name}</span>
+                    <Divider orientation="vertical" />
+                    <span>{book.genre.ageRange}</span>
+                  </div>
+                </div>
+
+                <div className="flex-1 self-end flex flex-col gap-3">
+                  <Button
+                    size="lg"
+                    color="primary"
+                    variant="ghost"
+                    className="uppercase"
+                  >
+                    Ver Libro
+                  </Button>
+                </div>
+              </div>
             </div>
           ))}
         </div>

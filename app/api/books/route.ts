@@ -7,6 +7,8 @@ export async function GET() {
   const books = await prisma.book.findMany({
     include: {
       genre: true,
+      illustrator: true,
+      publisher: true,
     },
   });
 

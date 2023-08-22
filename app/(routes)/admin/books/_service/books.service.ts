@@ -1,5 +1,13 @@
 import { fetchClient } from "@/app/_utils";
 import { Book as BookModel } from "@prisma/client";
+import { Genre as GenreModel } from "@prisma/client";
+import { User as UserModel } from "@prisma/client";
+
+export interface EnhancedBookModel extends BookModel {
+  genre: Pick<GenreModel, "name" | "ageRange">;
+  illustrator: Pick<UserModel, "username">;
+  publisher: Pick<UserModel, "username">;
+}
 
 export const booksService = {
   getAll,
@@ -12,7 +20,7 @@ export const booksService = {
 async function getAll() {
   const books = await fetchClient("/books", { method: "GET", headers: {} });
 
-  return books as BookModel[];
+  return books as EnhancedBookModel[];
 }
 
 async function getById(id: string) {
