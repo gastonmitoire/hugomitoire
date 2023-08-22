@@ -1,9 +1,10 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { promises as fsPromises } from "fs";
-import path from "path";
 
 import prisma from "@/app/_lib/prisma";
+
+import { promises as fsPromises } from "fs";
+import path from "path";
 const imagePath = path.join(process.cwd(), "public", "images");
 
 export async function GET() {
@@ -61,12 +62,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     const imageFilePath = path.join(imagePath, imageName);
     await fsPromises.writeFile(imageFilePath, imageBuffer);
 
-    return new Response(null, {
-      status: 303, // See Other
-      headers: {
-        Location: clientURL.origin + "/admin/images",
-      },
-    });
+    return NextResponse.json(createdImage, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
 

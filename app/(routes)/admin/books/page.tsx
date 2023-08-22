@@ -1,11 +1,12 @@
+import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
+
+import { BookCard } from "@/app/_components/BookCard";
 
 import { booksService } from "./_service/books.service";
 
 export default async function AdminBooksPage() {
   const books = await booksService.getAll();
-
-  console.log(books);
 
   return (
     <main className="container mx-auto">
@@ -13,14 +14,7 @@ export default async function AdminBooksPage() {
 
       <div className="flex flex-wrap">
         {books.map((book) => (
-          <div key={book.id} className="w-1/4 p-2">
-            <Image src={book.cover} alt={book.title} />
-            <h2 className="text-xl font-bold">{book.title}</h2>
-            <p>{book.description}</p>
-
-            <button className="btn btn-primary">Edit</button>
-            <button className="btn btn-danger">Delete</button>
-          </div>
+          <BookCard key={book.id} book={book} />
         ))}
       </div>
     </main>
