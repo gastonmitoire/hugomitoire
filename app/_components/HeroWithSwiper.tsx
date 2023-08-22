@@ -10,6 +10,7 @@ const reggaeOne = Reggae_One({ weight: "400", subsets: ["latin"] });
 import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import { Image } from "@nextui-org/image";
+import { Link } from "@nextui-org/link";
 
 import { EnhancedBookModel } from "../(routes)/admin/books/_service/books.service";
 
@@ -18,10 +19,7 @@ interface HeroWithSwiperProps {
 }
 
 export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
     new Swiper(".swiper-container", {
       speed: 500,
       loop: true,
@@ -76,12 +74,15 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
                   </div>
                 </div>
 
-                <div className="flex-1 self-end flex flex-col gap-3">
+                <div className="z-50 flex-1 self-end flex flex-col gap-3">
                   <Button
+                    as={Link}
+                    href={`/libros/${book.title}`}
                     size="lg"
                     color="primary"
                     variant="ghost"
-                    className="uppercase"
+                    className="uppercase z-10"
+                    onClick={() => console.log(book)}
                   >
                     Ver Libro
                   </Button>
