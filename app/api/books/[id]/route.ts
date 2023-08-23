@@ -4,6 +4,33 @@ import prisma from "@/app/_lib/prisma";
 
 import { Book as BookModel } from "@prisma/client";
 
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+): Promise<Response> {
+  try {
+    const { id } = params;
+
+    // Get the image from the database
+    const book = await prisma.book.findUnique({
+      where: { id },
+      include: {
+        genre: true,
+        illustrator: true,
+        publisher: true,
+      },
+    });
+
+    return NextResponse.json(book, {
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+
+    return new Response("Error getting book", { status: 500 });
+  }
+}
+
 export async function PUT(request: NextRequest): Promise<Response> {
   try {
     const form = await request.formData();
