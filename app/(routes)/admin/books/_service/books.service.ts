@@ -29,7 +29,9 @@ async function getById(id: string) {
     headers: {},
   });
 
-  return book as BookModel;
+  console.log(book);
+
+  return book as EnhancedBookModel;
 }
 
 async function create(params: any) {
@@ -39,7 +41,7 @@ async function create(params: any) {
     body: JSON.stringify(params),
   });
 
-  return book as BookModel;
+  return book as EnhancedBookModel;
 }
 
 async function update(id: string, params: any) {
@@ -49,7 +51,7 @@ async function update(id: string, params: any) {
     body: JSON.stringify(params),
   });
 
-  return book as BookModel;
+  return book as EnhancedBookModel;
 }
 
 async function _delete(id: string) {
@@ -58,5 +60,5 @@ async function _delete(id: string) {
     headers: {},
   });
 
-  return book as BookModel;
+  return book as EnhancedBookModel;
 }
