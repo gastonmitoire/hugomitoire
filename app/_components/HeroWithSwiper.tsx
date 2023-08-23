@@ -25,12 +25,11 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
       speed: 500,
       loop: true,
       cssMode: true,
-      grabCursor: true,
       pagination: {
         el: ".swiper-pagination",
         clickable: true, // Esto permite hacer clic en los puntos de paginación para cambiar las diapositivas
       },
-      simulateTouch: true,
+      parallax: true,
     });
   }, []);
 
@@ -73,29 +72,6 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
                     <Divider orientation="vertical" />
                     <span>{book.genre.ageRange}</span>
                   </div>
-                </div>
-
-                <div className="z-10 flex-1 sm:self-end flex flex-col gap-3">
-                  <p
-                    className={`z-10 text-2xl text-center sm:text-left ${bellefair.className}`}
-                  >
-                    {book.description.length > 200
-                      ? book.description.slice(0, 200) + "..."
-                      : book.description}
-                  </p>
-                  <Button
-                    as={Link}
-                    href={`/libros/${book.title
-                      .replaceAll(" ", "-")
-                      .toLocaleLowerCase()}`}
-                    size="lg"
-                    color="primary"
-                    variant="ghost"
-                    className="uppercase"
-                    onClick={() => console.log(book)}
-                  >
-                    Ver Libro
-                  </Button>
                 </div>
               </div>
             </div>
