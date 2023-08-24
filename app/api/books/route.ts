@@ -17,33 +17,50 @@ export async function GET() {
 
 export async function POST(request: NextRequest): Promise<Response> {
   try {
-    const form = await request.formData();
-
-    // generate book object
-    const book: Omit<BookModel, "id"> = {
-      title: form.get("title") as string,
-      slug: form.get("slug") as string,
-      description: form.get("description") as string,
-      cover: form.get("cover") as string,
-      secondaryImage: form.get("secondaryImage") as string,
-      genreId: form.get("genreId") as string,
-      illustratorId: form.get("illustratorId") as string,
-      publisherId: form.get("publisherId") as string,
-      publicationDate: new Date(form.get("publicationDate") as string),
-      type: form.get("type") as string,
-    };
+    const data = await request.json();
 
     // Create the image in the database
     const createdBook = await prisma.book.create({
-      data: book,
+      data: {
+        title: data.title,
+        description: data.description,
+        cover: data.cover,
+        secondaryImage: data.secondaryImage,
+        slug: data.slug,
+        type: data.type,
+        publicationDate: data.publicationDate,
+        genre: {
+          connect: {
+            id: data.genreId,
+          },
+        },
+        illustrator: {
+          connect: {
+            id: data.illustratorId,
+          },
+        },
+        publisher: {
+          connect: {
+            id: data.publisherId,
+          },
+        },
+      },
     });
 
     return NextResponse.json(createdBook, {
       status: 200,
     });
   } catch (error) {
-    console.error("Error:", error);
-
-    return new Response("Error creating book", { status: 500 });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Unknown error",
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 }

@@ -41,7 +41,7 @@ async function create(params: any) {
     body: JSON.stringify(params),
   });
 
-  return book as EnhancedBookModel;
+  return book as BookModel;
 }
 
 async function update(id: string, params: any) {
