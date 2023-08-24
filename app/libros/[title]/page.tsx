@@ -9,9 +9,9 @@ import { Divider } from "@nextui-org/divider";
 import { Image } from "@nextui-org/image";
 
 import { ChapterList } from "../_components/ChaptersList";
-import { Hero } from "../_components/Hero";
+import { BookHero } from "../_components/BookHero";
 
-import { booksService } from "../_service/books.service";
+import { booksService } from "../_service/libros.service";
 interface LibroByTitleProps {
   params: {
     title: string;
@@ -29,7 +29,7 @@ export default async function LibroByTitle({
   const book = await booksService.getById(id);
   return (
     <main>
-      <Hero
+      <BookHero
         item={{
           title: book.title,
           subtitle: book.type,

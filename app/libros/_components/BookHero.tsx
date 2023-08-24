@@ -32,7 +32,7 @@ const itemAnimation = {
   show: { opacity: 1, x: 0 },
 };
 
-export function Hero({ item, actions, className }: HeroProps) {
+export function BookHero({ item, actions, className }: HeroProps) {
   const { title, image, subtitle } = item;
 
   return (

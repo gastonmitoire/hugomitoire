@@ -13,9 +13,9 @@ import { Divider } from "@nextui-org/divider";
 import { Image } from "@nextui-org/image";
 import { Link } from "@nextui-org/link";
 
-import { Hero } from "../libros/_components/Hero";
+import { BookHero } from "../libros/_components/BookHero";
 
-import { EnhancedBookModel } from "../libros/_service/books.service";
+import { EnhancedBookModel } from "../libros/_service/libros.service";
 
 interface HeroWithSwiperProps {
   books: EnhancedBookModel[];
@@ -44,7 +44,7 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
               key={book.id}
               className="swiper-slide relative overflow-hidden"
             >
-              <Hero
+              <BookHero
                 item={{
                   cover: book.cover,
                   title: book.title,

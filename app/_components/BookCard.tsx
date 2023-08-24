@@ -8,7 +8,7 @@ import { Book as BookModel } from "@prisma/client";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 
-import { booksService } from "../libros/_service/books.service";
+import { booksService } from "../libros/_service/libros.service";
 
 export const BookCard: React.FC<{ book: BookModel }> = ({ book }) => {
   const router = useRouter();

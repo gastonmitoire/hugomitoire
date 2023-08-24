@@ -1,14 +1,14 @@
 import { Image } from "@nextui-org/image";
 import Link from "next/link";
 
-import { booksService } from "./_service/books.service";
+import { booksService } from "./_service/libros.service";
 
 export default async function LibrosPage() {
   const books = await booksService.getAll();
 
   return (
     <main className="container mx-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {books.map((book) => (
           <Link
             key={book.id}
