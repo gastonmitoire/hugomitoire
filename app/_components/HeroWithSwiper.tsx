@@ -29,7 +29,7 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
       cssMode: true,
       pagination: {
         el: ".swiper-pagination",
-        clickable: true, // Esto permite hacer clic en los puntos de paginación para cambiar las diapositivas
+        clickable: true,
       },
       parallax: true,
     });
@@ -55,7 +55,7 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
             </div>
           ))}
         </div>
-        <div className="swiper-pagination"></div>
+        <div className="swiper-pagination [&>span]:bg-white"></div>
       </div>
     </div>
   );
