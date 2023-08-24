@@ -1,0 +1,93 @@
+"use client";
+
+import React from "react";
+import { motion } from "framer-motion";
+
+export interface ItemProps {
+  image: string;
+  title: string;
+  subtitle: string;
+  cover: string;
+}
+
+interface HeroProps {
+  item: ItemProps;
+  actions?: React.ReactNode;
+  className?: string;
+}
+
+// Framer Motion config
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemAnimation = {
+  hidden: { opacity: 0, x: -100 },
+  show: { opacity: 1, x: 0 },
+};
+
+export function Hero({ item, actions, className }: HeroProps) {
+  const { title, image, subtitle } = item;
+
+  return (
+    <div className={`h-[90vh] w-full ${className}`}>
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
+        transition={{ duration: 0.7 }}
+        className="h-4/5 w-full"
+        style={{
+          background: `url(${image})`,
+          backgroundSize: "cover",
+          backgroundPosition: "50% 30%",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
+        <div
+          className="h-full w-full"
+          style={{
+            background: `linear-gradient(3deg, rgba(0, 0, 0, 1) 5rem, rgba(0,0,0, 0.7), rgba(0,0,0, 0.3), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0))`,
+          }}
+        >
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="container relative mx-auto flex h-full w-full flex-col items-start justify-end space-y-4 px-[3rem]"
+          >
+            <div className="w-full">
+              <motion.img
+                src={item.cover}
+                className="w-64 2xl:w-80"
+                variants={itemAnimation}
+                alt={`tapa-${title}`}
+              />
+            </div>
+            <div className="flex flex-col items-start justify-end">
+              <motion.div variants={itemAnimation}>
+                <h1 className="text-5xl font-bold">{title}</h1>
+              </motion.div>
+              <motion.div
+                variants={itemAnimation}
+                className="font-body flex items-start gap-5 text-sm uppercase tracking-wide text-neutral-400 2xl:items-center"
+              >
+                <p>{subtitle}</p>
+              </motion.div>
+            </div>
+            {actions && actions}
+          </motion.div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
