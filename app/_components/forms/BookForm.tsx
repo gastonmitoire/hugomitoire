@@ -42,6 +42,7 @@ export const BookForm: React.FC<BookFormProps> = ({
   publishers,
 }) => {
   const [error, setError] = useState<Record<string, string>>({});
+  const [slug, setSlug] = useState("");
 
   function validateForm(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -88,12 +89,20 @@ export const BookForm: React.FC<BookFormProps> = ({
     }
   }
 
+  function generateSlug(title: string) {
+    const slug = title
+      .toLowerCase()
+      .replace(/ /g, "-")
+      .replace(/[^\w-]+/g, "");
+
+    setSlug(slug);
+  }
+
   return (
     <>
       <div className="grid grid-cols-5">
         <form
-          action="/api/books"
-          method="POST"
+          onSubmit={validateForm}
           className="col-start-2 col-end-5 flex flex-col gap-3"
         >
           <RadioGroup
@@ -148,6 +157,20 @@ export const BookForm: React.FC<BookFormProps> = ({
               validationState={error.title ? "invalid" : "valid"}
               errorMessage={error.title}
               onChange={handleOnValueChange}
+              onValueChange={generateSlug}
+            />
+            <Spacer y={3} />
+            <Input
+              size="lg"
+              name="slug"
+              label="Slug"
+              placeholder="Slug"
+              required
+              validationState={error.slug ? "invalid" : "valid"}
+              errorMessage={error.slug}
+              onChange={handleOnValueChange}
+              disabled
+              value={slug}
             />
             <Spacer y={3} />
             <Textarea
