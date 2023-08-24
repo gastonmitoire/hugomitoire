@@ -63,6 +63,7 @@ model Book {
     publisherId     String?
     comments        Comment[]
     title           String    @unique
+    slug            String    @unique
     description     String
     type            String
     publicationDate DateTime
