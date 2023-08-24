@@ -24,6 +24,7 @@ interface BookFormProps {
 
 interface BookModel {
   title: string;
+  slug: string;
   description: string;
   type: string;
   cover: string;
@@ -49,6 +50,7 @@ export const BookForm: React.FC<BookFormProps> = ({
 
     const book: Omit<BookModel, "id"> = {
       title: formData.get("title") as string,
+      slug: formData.get("slug") as string,
       description: formData.get("description") as string,
       type: formData.get("type") as string,
       cover: formData.get("cover") as string,

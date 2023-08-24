@@ -38,6 +38,7 @@ export async function PUT(request: NextRequest): Promise<Response> {
     // generate book object
     const book: Omit<BookModel, "id"> = {
       title: form.get("title") as string,
+      slug: form.get("slug") as string,
       description: form.get("description") as string,
       cover: form.get("cover") as string,
       secondaryImage: form.get("secondaryImage") as string,
