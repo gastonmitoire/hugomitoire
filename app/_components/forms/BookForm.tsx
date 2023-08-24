@@ -15,6 +15,8 @@ import { Spacer } from "@nextui-org/spacer";
 
 import { ImageCustomRadio } from "@/app/_components/ImageCustomRadio";
 
+import { booksService } from "@/app/(admin)/dashboard/books/_service/books.service";
+
 interface BookFormProps {
   images: ImageModel[];
   genres: GenreModel[];
@@ -49,9 +51,13 @@ export const BookForm: React.FC<BookFormProps> = ({
     const form = event.currentTarget;
     const formData = new FormData(form);
 
+    if (!slug) {
+      setError((prev) => ({ ...prev, slug: "Este campo es obligatorio" }));
+    }
+
     const book: Omit<BookModel, "id"> = {
       title: formData.get("title") as string,
-      slug: formData.get("slug") as string,
+      slug: slug,
       description: formData.get("description") as string,
       type: formData.get("type") as string,
       cover: formData.get("cover") as string,
@@ -76,6 +82,7 @@ export const BookForm: React.FC<BookFormProps> = ({
 
     if (Object.keys(fieldErrors).length === 0) {
       // Realizar la acción deseada si el formulario es válido
+      booksService.create(book);
     }
   }
 
