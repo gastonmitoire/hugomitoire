@@ -12,9 +12,6 @@ export interface EnhancedBookModel extends BookModel {
 export const booksService = {
   getAll,
   getById,
-  create,
-  update,
-  delete: _delete,
 };
 
 async function getAll() {
@@ -30,35 +27,6 @@ async function getById(id: string) {
   });
 
   console.log(book);
-
-  return book as EnhancedBookModel;
-}
-
-async function create(params: any) {
-  const book = await fetchClient("/books", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(params),
-  });
-
-  return book as EnhancedBookModel;
-}
-
-async function update(id: string, params: any) {
-  const book = await fetchClient(`/books/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(params),
-  });
-
-  return book as EnhancedBookModel;
-}
-
-async function _delete(id: string) {
-  const book = await fetchClient(`/books/${id}`, {
-    method: "DELETE",
-    headers: {},
-  });
 
   return book as EnhancedBookModel;
 }
