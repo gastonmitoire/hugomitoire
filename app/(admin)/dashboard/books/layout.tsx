@@ -12,10 +12,10 @@ export default function AdminBooksLayout(props: {
   return (
     <main className="container mx-auto pt-5">
       <div className="flex justify-end gap-3">
-        <Button as={Link} color="secondary" href="/admin/books/new">
+        <Button as={Link} color="secondary" href="/dashboard/books/new">
           Crear libro
         </Button>
-        <Button as={Link} color="secondary" href="/admin/genres/new">
+        <Button as={Link} color="secondary" href="/dashboard/genres/new">
           Crear género
         </Button>
       </div>

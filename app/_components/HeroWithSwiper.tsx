@@ -13,7 +13,7 @@ import { Divider } from "@nextui-org/divider";
 import { Image } from "@nextui-org/image";
 import { Link } from "@nextui-org/link";
 
-import { EnhancedBookModel } from "../(routes)/admin/books/_service/books.service";
+import { EnhancedBookModel } from "../(books)/admin/books/_service/books.service";
 
 interface HeroWithSwiperProps {
   books: EnhancedBookModel[];

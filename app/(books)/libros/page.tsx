@@ -1,7 +1,7 @@
 import { Image } from "@nextui-org/image";
 import Link from "next/link";
 
-import { booksService } from "../admin/books/_service/books.service";
+import { booksService } from "../_service/books.service";
 
 export default async function LibrosPage() {
   const books = await booksService.getAll();

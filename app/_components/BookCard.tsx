@@ -8,19 +8,19 @@ import { Book as BookModel } from "@prisma/client";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 
-import { booksService } from "../(routes)/admin/books/_service/books.service";
+// import { booksService } from "../(routes)/admin/books/_service/books.service";
 
 export const BookCard: React.FC<{ book: BookModel }> = ({ book }) => {
-  const router = useRouter();
-  async function handleDelete(id: string) {
-    const deletedBook = await booksService.delete(id);
+  // const router = useRouter();
+  // async function handleDelete(id: string) {
+  //   const deletedBook = await booksService.delete(id);
 
-    console.log("deleted book: ", deletedBook);
+  //   console.log("deleted book: ", deletedBook);
 
-    if (deletedBook) {
-      router.refresh();
-    }
-  }
+  //   if (deletedBook) {
+  //     router.refresh();
+  //   }
+  // }
   return (
     <div key={book.id} className="w-1/4 p-2">
       <Image src={book.cover} alt={book.title} />
@@ -29,7 +29,7 @@ export const BookCard: React.FC<{ book: BookModel }> = ({ book }) => {
       <Image src={book.secondaryImage} alt={book.title} height={100} />
 
       <Button color="warning">Edit</Button>
-      <Button color="danger" onClick={() => handleDelete(book.id)}>
+      <Button color="danger" onClick={() => {}}>
         Delete
       </Button>
     </div>
