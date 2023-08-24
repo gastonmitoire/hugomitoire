@@ -8,9 +8,9 @@ const reggaeOne = Reggae_One({ weight: "400", subsets: ["latin"] });
 import { Divider } from "@nextui-org/divider";
 import { Image } from "@nextui-org/image";
 
-import { ChapterList } from "../../_components/ChaptersList";
+import { ChapterList } from "../_components/ChaptersList";
 
-import { booksService } from "../../_service/books.service";
+import { booksService } from "../_service/books.service";
 interface LibroByTitleProps {
   params: {
     title: string;
