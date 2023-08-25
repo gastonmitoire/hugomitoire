@@ -44,14 +44,7 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
               key={book.id}
               className="swiper-slide relative overflow-hidden"
             >
-              <BookHero
-                item={{
-                  cover: book.cover,
-                  title: book.title,
-                  image: book.secondaryImage,
-                  subtitle: book.type,
-                }}
-              />
+              <BookHero book={book} />
             </div>
           ))}
         </div>
