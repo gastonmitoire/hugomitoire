@@ -19,7 +19,7 @@ export default async function Home() {
         <HeroWithSwiper books={books} />
       </Suspense>
       <Spacer y={24} />
-      <section className="container mx-auto">
+      <section className="container mx-auto px-3 sm:px-0">
         <Suspense fallback={<Loading />}>
           <CardWithSwiper books={books} />
         </Suspense>

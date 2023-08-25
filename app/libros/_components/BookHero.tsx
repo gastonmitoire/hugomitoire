@@ -47,7 +47,7 @@ export function BookHero({
         opacity: 1,
       }}
       transition={{ duration: 0.7 }}
-      className={`relative h-[4/5] w-full ${className || ""}`}
+      className={`relative h-full w-full ${className || ""}`}
       style={{
         background: `url(${secondaryImage})`,
         backgroundSize: "cover",
@@ -57,7 +57,7 @@ export function BookHero({
       }}
     >
       <div
-        className="h-full w-full pb-10"
+        className="h-full w-full px-3 pb-10 pt-20 sm:px-0"
         style={{
           background: `linear-gradient(3deg, rgba(0, 0, 0, 1) 5rem, rgba(0,0,0, 0.7), rgba(0,0,0, 0.3), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0))`,
         }}
@@ -87,7 +87,7 @@ export function BookHero({
               <Spacer y={5} />
               <motion.div
                 variants={itemAnimation}
-                className="font-body flex items-start gap-1.5 text-sm font-medium uppercase tracking-wide text-white text-opacity-50 2xl:items-center"
+                className="font-body flex items-center gap-1.5 text-sm font-medium uppercase tracking-wide text-white text-opacity-50 2xl:items-center"
               >
                 <p className={`uppercase ${cinzel.className}`}>{type}</p>
                 <Divider orientation="vertical" />

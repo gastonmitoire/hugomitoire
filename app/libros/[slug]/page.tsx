@@ -23,7 +23,7 @@ export default async function LibroByTitle({ params }: LibroByTitleProps) {
   const book = await booksService.getBySlug(slug);
   return (
     <main>
-      <BookHero book={book} className="h-[75vh] sm:h-[80vh]" />
+      <BookHero book={book} />
       <section>
         <div className="bg-gradient-to-b from-black via-transparent to-black py-10">
           <div className="container mx-auto">

@@ -30,7 +30,7 @@ export const CardWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
       cssMode: true,
       breakpoints: {
         320: {
-          slidesPerView: 1,
+          slidesPerView: 1.3,
           spaceBetween: 10,
         },
         640: {
@@ -54,7 +54,6 @@ export const CardWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
         el: ".swiper-pagination",
         clickable: true,
       },
-      parallax: true,
     });
   }, []);
 
@@ -68,20 +67,19 @@ export const CardWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
       <div className="swiper-cards-container">
         <div className="swiper-wrapper">
           {books.map((book) => (
-            <div
-              key={book.id}
-              className="swiper-slide relative overflow-hidden"
-            >
+            <div key={book.id} className="swiper-slide flex overflow-hidden">
               <Image
                 src={book.cover}
                 alt={book.title}
-                height={300}
-                width={300}
+                height="100%"
+                style={{
+                  objectFit: "cover",
+                }}
+                radius="sm"
               />
             </div>
           ))}
         </div>
-        <div className="swiper-pagination [&>span]:bg-white"></div>
       </div>
     </div>
   );
