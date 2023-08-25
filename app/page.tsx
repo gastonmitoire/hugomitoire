@@ -2,9 +2,11 @@ import { Suspense } from "react";
 
 import Loading from "./loading";
 
+import { CardWithSwiper } from "./_components/CardWithSwiper";
 import { HeroWithSwiper } from "@/app/_components/HeroWithSwiper";
 
 import { booksService } from "./libros/_service/libros.service";
+import { Spacer } from "@nextui-org/spacer";
 
 export default async function Home() {
   const books = await booksService.getAll();
@@ -16,7 +18,12 @@ export default async function Home() {
       <Suspense fallback={<Loading />}>
         <HeroWithSwiper books={books} />
       </Suspense>
-      <section className="container mx-auto">landing</section>
+      <Spacer y={24} />
+      <section className="container mx-auto">
+        <Suspense fallback={<Loading />}>
+          <CardWithSwiper books={books} />
+        </Suspense>
+      </section>
     </main>
   );
 }
