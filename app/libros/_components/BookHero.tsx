@@ -39,72 +39,71 @@ export function BookHero({
   className,
 }: HeroProps) {
   return (
-    <div className={`h-[90vh] w-full ${className}`}>
-      <motion.div
-        initial={{
-          opacity: 0,
-        }}
-        animate={{
-          opacity: 1,
-        }}
-        transition={{ duration: 0.7 }}
-        className="h-4/5 w-full"
+    <motion.div
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      transition={{ duration: 0.7 }}
+      className={`relative h-[4/5] w-full ${className || ""}`}
+      style={{
+        background: `url(${secondaryImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "50% 30%",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <div
+        className="h-full w-full pb-10"
         style={{
-          background: `url(${secondaryImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "50% 30%",
-          backgroundRepeat: "no-repeat",
+          background: `linear-gradient(3deg, rgba(0, 0, 0, 1) 5rem, rgba(0,0,0, 0.7), rgba(0,0,0, 0.3), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0))`,
         }}
       >
-        <div
-          className="h-full w-full"
-          style={{
-            background: `linear-gradient(3deg, rgba(0, 0, 0, 1) 5rem, rgba(0,0,0, 0.7), rgba(0,0,0, 0.3), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0))`,
-          }}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="container relative mx-auto flex h-full w-full flex-col items-start justify-end space-y-4 px-[3rem]"
         >
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="container relative mx-auto flex h-full w-full flex-col items-start justify-end space-y-4 px-[3rem]"
-          >
-            <div className="w-full">
-              <Image
-                as={motion.img}
-                src={cover}
-                className="w-64 2xl:w-80"
-                variants={itemAnimation}
-                alt={`tapa-${title}`}
-                radius="none"
-              />
-            </div>
-            <div className="flex flex-col items-start justify-end gap-5">
-              <motion.div variants={itemAnimation}>
-                <h1 className={`text-5xl font-bold ${reggaeOne.className}`}>
-                  {title}
-                </h1>
-              </motion.div>
-              <motion.div
-                variants={itemAnimation}
-                className="font-body flex items-start gap-1.5 text-sm font-medium uppercase tracking-wide text-white text-opacity-50 2xl:items-center"
-              >
-                <p className={`uppercase ${cinzel.className}`}>{type}</p>
-                <Divider orientation="vertical" />
-                <p className={`uppercase ${cinzel.className}`}>{genre.name}</p>
-                <span className="relative flex h-6 w-6 items-center justify-center rounded-full border px-1 text-center text-white opacity-50">
-                  <span className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-black text-lg font-normal">
-                    +
-                  </span>
-                  <p className={`z-10 uppercase ${cinzel.className}`}>
-                    {genre.ageRange.replaceAll("+", "")}
-                  </p>
+          <div className="w-full">
+            <Image
+              as={motion.img}
+              src={cover}
+              className="w-64 2xl:w-80"
+              variants={itemAnimation}
+              alt={`tapa-${title}`}
+              radius="none"
+            />
+          </div>
+          <div className="flex flex-col items-start justify-end gap-5">
+            <motion.div variants={itemAnimation}>
+              <h1 className={`text-5xl font-bold ${reggaeOne.className}`}>
+                {title}
+              </h1>
+            </motion.div>
+            <motion.div
+              variants={itemAnimation}
+              className="font-body flex items-start gap-1.5 text-sm font-medium uppercase tracking-wide text-white text-opacity-50 2xl:items-center"
+            >
+              <p className={`uppercase ${cinzel.className}`}>{type}</p>
+              <Divider orientation="vertical" />
+              <p className={`uppercase ${cinzel.className}`}>{genre.name}</p>
+              <span className="relative flex h-6 w-6 items-center justify-center rounded-full border px-1 text-center text-white opacity-50">
+                <span className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5 items-center justify-center rounded-full bg-black text-lg font-normal">
+                  +
                 </span>
-              </motion.div>
-            </div>
-            {actions && actions}
-          </motion.div>
-        </div>
-      </motion.div>
-    </div>
+                <p className={`z-10 uppercase ${cinzel.className}`}>
+                  {genre.ageRange.replaceAll("+", "")}
+                </p>
+              </span>
+            </motion.div>
+          </div>
+          {actions && actions}
+        </motion.div>
+      </div>
+    </motion.div>
   );
 }

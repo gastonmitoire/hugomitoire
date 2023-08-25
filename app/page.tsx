@@ -12,7 +12,7 @@ export default async function Home() {
   console.log("books", books);
 
   return (
-    <main>
+    <main className="min-h-screen">
       <Suspense fallback={<Loading />}>
         <HeroWithSwiper books={books} />
       </Suspense>

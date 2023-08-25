@@ -26,10 +26,12 @@ export default function RootLayout(props: RootLayoutProps) {
   return (
     <html lang="en">
       <body
-        className={`dark text-foreground bg-background min-h-screen ${montserrat.className}`}
+        className={`min-h-screen bg-background text-foreground dark ${montserrat.className}`}
       >
         <Providers>
-          <Topbar pathname={activePath} />
+          <span className="fixed top-0 z-30 w-full">
+            <Topbar pathname={activePath} />
+          </span>
           {props.children}
         </Providers>
       </body>

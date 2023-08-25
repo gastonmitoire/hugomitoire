@@ -37,14 +37,14 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
 
   return (
     <div className="relative overflow-x-hidden">
-      <div className="swiper-container h-full sm:h-[700px]">
-        <div className="swiper-wrapper">
+      <div className="swiper-container">
+        <div className="swiper-wrapper h-[90vh]">
           {books.map((book) => (
             <div
               key={book.id}
               className="swiper-slide relative overflow-hidden"
             >
-              <BookHero book={book} />
+              <BookHero book={book} className="h-[75vh] sm:h-[80vh]" />
             </div>
           ))}
         </div>

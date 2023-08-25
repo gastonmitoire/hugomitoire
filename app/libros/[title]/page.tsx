@@ -29,22 +29,8 @@ export default async function LibroByTitle({
   const book = await booksService.getById(id);
   return (
     <main>
-      <BookHero
-        item={{
-          title: book.title,
-          subtitle: book.type,
-          image: book.cover,
-          cover: book.cover,
-        }}
-      />
-      <section
-        style={{
-          backgroundImage: `url(${book.secondaryImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "50% 30%",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
+      <BookHero book={book} className="h-[75vh] sm:h-[80vh]" />
+      <section>
         <div className="bg-gradient-to-b from-black via-transparent to-black py-10">
           <div className="container mx-auto">
             <ChapterList
