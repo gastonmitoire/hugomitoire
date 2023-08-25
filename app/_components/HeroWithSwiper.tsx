@@ -44,7 +44,17 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
               key={book.id}
               className="swiper-slide relative overflow-hidden"
             >
-              <BookHero book={book} className="h-[75vh] sm:h-[80vh]" />
+              <BookHero
+                book={book}
+                className="h-[75vh] sm:h-[90vh]"
+                actions={
+                  <Link href={`/libros/${book.slug}`}>
+                    <Button color="primary" size="sm">
+                      Ver más
+                    </Button>
+                  </Link>
+                }
+              />
             </div>
           ))}
         </div>

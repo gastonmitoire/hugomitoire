@@ -14,19 +14,13 @@ import { BookHero } from "../_components/BookHero";
 import { booksService } from "../_service/libros.service";
 interface LibroByTitleProps {
   params: {
-    title: string;
-  };
-  searchParams: {
-    id: string;
+    slug: string;
   };
 }
 
-export default async function LibroByTitle({
-  params,
-  searchParams,
-}: LibroByTitleProps) {
-  const { id } = searchParams;
-  const book = await booksService.getById(id);
+export default async function LibroByTitle({ params }: LibroByTitleProps) {
+  const { slug } = params;
+  const book = await booksService.getBySlug(slug);
   return (
     <main>
       <BookHero book={book} className="h-[75vh] sm:h-[80vh]" />

@@ -12,6 +12,7 @@ export interface EnhancedBookModel extends BookModel {
 export const booksService = {
   getAll,
   getById,
+  getBySlug,
 };
 
 async function getAll() {
@@ -27,6 +28,15 @@ async function getById(id: string) {
   });
 
   console.log(book);
+
+  return book as EnhancedBookModel;
+}
+
+async function getBySlug(slug: string) {
+  const book = await fetchClient(`/books/${slug}`, {
+    method: "GET",
+    headers: {},
+  });
 
   return book as EnhancedBookModel;
 }
