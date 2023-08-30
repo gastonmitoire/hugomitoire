@@ -1,12 +1,14 @@
 import { Suspense } from "react";
 
+import { Spacer } from "@nextui-org/spacer";
+
 import Loading from "./loading";
 
-import { HeroWithSwiper } from "@/app/_components/HeroWithSwiper";
 import { BooksSwiper } from "./libros/_components/BooksSwiper";
+import { CustomParticles } from "./shared/_components/CustomParticles";
+import { HeroWithSwiper } from "@/app/_components/HeroWithSwiper";
 
 import { booksService } from "./libros/_service/libros.service";
-import { Spacer } from "@nextui-org/spacer";
 
 export default async function Home() {
   const books = await booksService.getAll();
@@ -33,6 +35,8 @@ export default async function Home() {
           <BooksSwiper slides={booksCover} />
         </Suspense>
       </section>
+
+      <CustomParticles />
     </main>
   );
 }
