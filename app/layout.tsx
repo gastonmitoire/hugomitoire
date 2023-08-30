@@ -9,6 +9,7 @@ import { register } from "swiper/element/bundle";
 import { Providers } from "./providers";
 
 import { Topbar } from "./_components/Topbar";
+import { Footer } from "./_components/Footer";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -32,7 +33,10 @@ export default function RootLayout(props: RootLayoutProps) {
           <span className="fixed top-0 z-30 w-full">
             <Topbar pathname={activePath} />
           </span>
+
           {props.children}
+
+          <Footer />
         </Providers>
       </body>
     </html>
