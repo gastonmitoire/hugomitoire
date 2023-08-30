@@ -18,6 +18,7 @@ export async function GET(
         genre: true,
         illustrator: true,
         publisher: true,
+        chapters: true,
       },
     });
 

@@ -20,7 +20,7 @@ export default function AdminBooksLayout(props: {
         </Button>
       </div>
       <Divider className="my-3" />
-      <div className="flex justify-end">{props.children}</div>
+      {props.children}
     </main>
   );
 }

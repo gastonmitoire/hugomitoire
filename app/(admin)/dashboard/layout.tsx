@@ -15,5 +15,5 @@ export default function AdminLayout({
   const headersList = headers();
   const activePath = headersList.get("x-invoke-path");
 
-  return <>{children}</>;
+  return <div className="pt-20">{children}</div>;
 }

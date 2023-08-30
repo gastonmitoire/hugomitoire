@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { Book as BookModel } from "@prisma/client";
 
-import { Button } from "@nextui-org/button";
-import { Image } from "@nextui-org/image";
+import { Button, Image, Link } from "@nextui-org/react";
 
 import { booksService } from "../(admin)/dashboard/books/_service/books.service";
 
@@ -23,7 +22,9 @@ export const BookCard: React.FC<{ book: BookModel }> = ({ book }) => {
   }
   return (
     <div key={book.id} className="w-1/4 p-2">
-      <Image src={book.cover} alt={book.title} />
+      <Link href={`books/${book.slug}`}>
+        <Image src={book.cover} alt={book.title} />
+      </Link>
       <h2 className="text-xl font-bold">{book.title}</h2>
       <p>{book.description}</p>
       <Image src={book.secondaryImage} alt={book.title} height={100} />
