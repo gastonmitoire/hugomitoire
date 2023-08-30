@@ -4,11 +4,11 @@ import { Spacer } from "@nextui-org/spacer";
 
 import Loading from "./loading";
 
-import { BooksSwiper } from "./libros/_components/BooksSwiper";
-import { CustomParticles } from "./shared/_components/CustomParticles";
-import { HeroWithSwiper } from "@/app/_components/HeroWithSwiper";
+import { BooksSwiper } from "@/app/libros/_components/BooksSwiper";
+import { CustomParticles } from "@/app/shared/_components/CustomParticles";
+import { HeroWithSwiper } from "./_components/HeroWithSwiper";
 
-import { booksService } from "./libros/_service/libros.service";
+import { booksService } from "@/app/libros/_service/libros.service";
 
 export default async function Home() {
   const books = await booksService.getAll();
