@@ -13,9 +13,9 @@ import { Divider } from "@nextui-org/divider";
 import { Image } from "@nextui-org/image";
 import { Link } from "@nextui-org/link";
 
-import { BookHero } from "../../libros/_components/BookHero";
+import { BookHero } from "../../(main)/libros/_components/BookHero";
 
-import { EnhancedBookModel } from "../../libros/_service/libros.service";
+import { EnhancedBookModel } from "../../(main)/libros/_service/libros.service";
 
 interface HeroWithSwiperProps {
   books: EnhancedBookModel[];
