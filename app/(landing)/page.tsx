@@ -5,7 +5,7 @@ import { Spacer } from "@nextui-org/spacer";
 import Loading from "./loading";
 
 import { BooksSwiper } from "@/app/libros/_components/BooksSwiper";
-import { CustomParticles } from "@/app/shared/_components/CustomParticles";
+import { CustomParticles } from "@components/index";
 import { HeroWithSwiper } from "./_components/HeroWithSwiper";
 
 import { booksService } from "@/app/libros/_service/libros.service";
