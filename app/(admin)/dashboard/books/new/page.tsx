@@ -14,11 +14,9 @@ export default async function AdminBooksNewPage() {
   const illustrators = await usersService.getByRole("ILLUSTRATOR");
   const publishers = await usersService.getByRole("PUBLISHER");
 
-  console.log("illustrators", illustrators);
-
   return (
     <div className="container mx-auto">
-      <h2 className="text-2xl text-center font-bold">Crear libro</h2>
+      <h2 className="text-center text-2xl font-bold">Crear libro</h2>
       <Divider className="my-5" />
       <BookForm
         images={images}

@@ -66,7 +66,6 @@ export const BookForm: React.FC<BookFormProps> = ({
     };
 
     const response = await booksService.create(newBook);
-    console.log(response);
   };
 
   const handleInputChange = (

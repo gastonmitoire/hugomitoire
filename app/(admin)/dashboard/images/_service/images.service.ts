@@ -8,7 +8,5 @@ export const imagesService = {
 async function getAll() {
   const images = await fetchClient("/images", { method: "GET", headers: {} });
 
-  console.log("images", images);
-
   return images as ImageModel[];
 }

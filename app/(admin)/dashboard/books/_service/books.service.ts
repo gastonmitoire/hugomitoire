@@ -31,8 +31,6 @@ async function getById(id: string) {
     headers: {},
   });
 
-  console.log(book);
-
   return book as EnhancedBookModel;
 }
 

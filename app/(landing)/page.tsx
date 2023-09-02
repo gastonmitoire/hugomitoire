@@ -13,8 +13,6 @@ import { booksService } from "@/app/(main)/libros/_service/libros.service";
 export default async function Home() {
   const books = await booksService.getAll();
 
-  console.log("books", books);
-
   const booksCover = [...books, ...books, ...books].map((book) => {
     return {
       id: book.id,

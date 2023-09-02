@@ -14,8 +14,6 @@ export const BookCard: React.FC<{ book: BookModel }> = ({ book }) => {
   async function handleDelete(id: string) {
     const deletedBook = await booksService.delete(id);
 
-    console.log("deleted book: ", deletedBook);
-
     if (deletedBook) {
       router.refresh();
     }
