@@ -3,7 +3,11 @@ import React from "react";
 
 import { Button, Input } from "@nextui-org/react";
 
-export const ChapterForm: React.FC = () => {
+interface ChapterFormProps {
+  bookId: string;
+}
+
+export const ChapterForm: React.FC<ChapterFormProps> = ({ bookId }) => {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     // send data to server as json
@@ -23,7 +27,10 @@ export const ChapterForm: React.FC = () => {
         type="number"
         className="min-w-unit-24 flex-1"
       />
-      <Input name="title" label="Título" className="flex-auto" />
+      <Input name="title" label="Título" type="text" className="flex-auto" />
+
+      <input type="hidden" name="bookId" value={bookId} />
+
       <Button type="submit" color="primary">
         Crear capítulo
       </Button>

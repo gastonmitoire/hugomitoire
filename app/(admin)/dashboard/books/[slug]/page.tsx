@@ -40,7 +40,7 @@ export default async function BooksBySlugPage({
           </Button>
         </div>
         <Spacer y={3} />
-        <ChapterForm />
+        <ChapterForm bookId={book.id} />
         <Spacer y={3} />
         <ul className="py-3">
           {book.chapters.map((chapter) => (
