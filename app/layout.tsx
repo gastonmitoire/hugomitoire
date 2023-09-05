@@ -8,6 +8,9 @@ const montserrat = Montserrat({ subsets: ["latin-ext"] });
 import { register } from "swiper/element/bundle";
 import { Providers } from "./providers";
 
+import { Image } from "@nextui-org/image";
+import { Textarea } from "@nextui-org/input";
+
 import { Topbar } from "./_components/Topbar";
 import { Footer } from "./_components/Footer";
 
@@ -30,13 +33,31 @@ export default function RootLayout(props: RootLayoutProps) {
         className={`min-h-screen bg-background text-foreground dark ${montserrat.className}`}
       >
         <Providers>
-          <span className="fixed top-0 z-30 w-full">
+          {/* <span className="fixed top-0 z-30 w-full">
             <Topbar pathname={activePath} />
-          </span>
+          </span> */}
 
-          {props.children}
+          {/* {props.children} */}
 
-          <Footer />
+          {/* <Footer /> */}
+
+          <div className="flex min-h-screen flex-col items-center justify-center py-2">
+            <Image
+              src="images/coronel.jpg"
+              alt="Vercel Logo"
+              width={270}
+              height={36}
+              className="mb-4"
+            />
+
+            <Textarea
+              isReadOnly
+              variant="flat"
+              placeholder="El sitio web se encuentra en mantenimiento, por favor intente más tarde."
+              defaultValue="El sitio web se encuentra en mantenimiento, por favor intente más tarde."
+              className="max-w-xs"
+            />
+          </div>
         </Providers>
       </body>
     </html>
