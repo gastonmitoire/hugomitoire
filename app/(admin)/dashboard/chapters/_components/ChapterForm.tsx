@@ -3,6 +3,8 @@ import React from "react";
 
 import { Button, Input } from "@nextui-org/react";
 
+import { chaptersService } from "../_service/chapters.service";
+
 interface ChapterFormProps {
   bookId: string;
 }
@@ -16,7 +18,7 @@ export const ChapterForm: React.FC<ChapterFormProps> = ({ bookId }) => {
 
     const data = Object.fromEntries(formData.entries());
 
-    console.log(data);
+    chaptersService.create(data);
   }
 
   return (
