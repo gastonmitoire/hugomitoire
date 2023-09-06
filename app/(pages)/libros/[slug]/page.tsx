@@ -12,7 +12,7 @@ interface LibroPageProps {
 
 export default async function LibroPage({ params }: LibroPageProps) {
   const { slug } = params;
-  const { title, cover, secondaryImage, genre, description, type } =
+  const { title, cover, secondaryImage, genre, description, type, chapters } =
     await booksService.getBySlug(slug);
 
   return (
@@ -44,6 +44,7 @@ export default async function LibroPage({ params }: LibroPageProps) {
                 description,
                 genre,
                 type,
+                chapters,
               }}
             />
           </section>
