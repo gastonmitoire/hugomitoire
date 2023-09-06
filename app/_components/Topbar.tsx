@@ -39,7 +39,7 @@ const adminRoutes = [
 export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
   return (
     <Navbar maxWidth="2xl">
-      <NavbarContent className="hidden sm:flex gap-4" justify="start">
+      <NavbarContent className="hidden gap-4 sm:flex" justify="start">
         {adminRoutes.map((route) => (
           <NavbarItem key={route.name} isActive={pathname === route.href}>
             <Link
@@ -56,7 +56,7 @@ export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
 
       <NavbarBrand className="justify-center">
         <Link href="/admin" color="foreground">
-          <p className={`font-bold text-inherit text-3xl ${cinzel.className}`}>
+          <p className={`text-3xl font-bold text-inherit ${cinzel.className}`}>
             Hugo Mitoire
           </p>
         </Link>

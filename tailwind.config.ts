@@ -2,6 +2,48 @@ import type { Config } from "tailwindcss";
 
 const { nextui } = require("@nextui-org/react");
 
+// dark: #333533;
+// light: #CFDBD5;
+// darker: #242423;
+// lighter: #E8EDDF;
+// primary: #F5CB5C;
+// secondary: #087f8c;
+
+const colorTokens = {
+  dark: {
+    DEFAULT: "#333533",
+    foreground: "#CFDBD5",
+  },
+  light: {
+    DEFAULT: "#CFDBD5",
+    foreground: "#333533",
+  },
+  darker: {
+    DEFAULT: "#242423",
+    foreground: "#E8EDDF",
+  },
+  lighter: {
+    DEFAULT: "#E8EDDF",
+    foreground: "#242423",
+  },
+  primary: {
+    DEFAULT: "#F5CB5C",
+    foreground: "#333533",
+  },
+  secondary: {
+    DEFAULT: "#087f8c",
+    foreground: "#333533",
+  },
+  background: {
+    DEFAULT: "#242423", // darker
+    foreground: "#E8EDDF", // lighter
+  },
+  foreground: {
+    DEFAULT: "#E8EDDF", // lighter
+    foreground: "#242423", // darker
+  },
+};
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -22,16 +64,7 @@ const config: Config = {
     nextui({
       themes: {
         dark: {
-          colors: {
-            primary: {
-              DEFAULT: "#FFCC33",
-              foreground: "#000000",
-            },
-            secondary: {
-              DEFAULT: "#38bc95",
-              foreground: "#000000",
-            },
-          },
+          colors: colorTokens,
         },
       },
     }),
