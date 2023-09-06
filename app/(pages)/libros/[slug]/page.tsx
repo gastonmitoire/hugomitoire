@@ -1,5 +1,4 @@
 import { Image } from "@nextui-org/image";
-import { Skeleton } from "@nextui-org/skeleton";
 
 import { BookDetail } from "@/app/books/_components/BookDetail.component";
 
