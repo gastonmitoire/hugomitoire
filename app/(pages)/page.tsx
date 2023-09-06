@@ -2,13 +2,13 @@ import { Suspense } from "react";
 
 import { Spacer } from "@nextui-org/spacer";
 
-import Loading from "./loading";
+import Loading from "../(landing)/loading";
 
-import { BooksSwiper } from "@/app/(main)/libros/_components/BooksSwiper";
+import { BooksSwiper } from "@/app/(main)/libros2/_components/BooksSwiper";
 import { CustomParticles } from "@components/index";
-import { HeroWithSwiper } from "./_components/HeroWithSwiper";
+import { HeroWithSwiper } from "../(landing)/_components/HeroWithSwiper";
 
-import { booksService } from "@/app/(main)/libros/_service/libros.service";
+import { booksService } from "@/app/(main)/libros2/_service/libros.service";
 
 export default async function Home() {
   const books = await booksService.getAll();
