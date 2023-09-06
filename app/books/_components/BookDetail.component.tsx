@@ -11,7 +11,6 @@ const reggaeOne = Reggae_One({ weight: "400", subsets: ["latin"] });
 
 interface BookDetailProps {
   book: {
-    id: string;
     title: string;
     genre: {
       name: string;
@@ -48,7 +47,7 @@ const BookDetailHeading: React.FC<BookDetailHeadingProps> = ({
 };
 
 export const BookDetail: React.FC<BookDetailProps> = ({
-  book: { id, title, genre, description, type },
+  book: { title, genre, description, type },
 }) => {
   function handleSectionClick(section: string) {
     // if section is details, scroll to book-detail top
