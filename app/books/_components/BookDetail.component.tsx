@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 
+import { motion } from "framer-motion";
+
 import { Spacer } from "@nextui-org/spacer";
 
 import { Cinzel, Bellefair, Reggae_One } from "next/font/google";
@@ -71,8 +73,33 @@ export const BookDetail: React.FC<BookDetailProps> = ({
     }
   }
 
+  // TODO: add chapters
+
+  // motion config for book detail (slide in from bottom slowly)
+  const bookDetailVariants = {
+    hidden: {
+      y: 100,
+      opacity: 0,
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 20,
+        stiffness: 100,
+      },
+    },
+  };
+
   return (
-    <div id="book-detail" className="overflow-y-auto scrollbar-hide">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={bookDetailVariants}
+      id="book-detail"
+      className="overflow-y-auto scrollbar-hide"
+    >
       <BookDetailHeading section="details" onClick={handleSectionClick}>
         Detalles
       </BookDetailHeading>
@@ -270,6 +297,6 @@ export const BookDetail: React.FC<BookDetailProps> = ({
           tempore eius repellendus quasi est. Recusandae?
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
