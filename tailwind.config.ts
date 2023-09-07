@@ -42,6 +42,18 @@ const colorTokens = {
     DEFAULT: "#E8EDDF", // lighter
     foreground: "#242423", // darker
   },
+  success: {
+    DEFAULT: "#4b9c44",
+    foreground: "#242423", // darker
+  },
+  warning: {
+    DEFAULT: "#ffa801",
+    foreground: "#242423", // darker
+  },
+  danger: {
+    DEFAULT: "#f36f42",
+    foreground: "#242423", // darker
+  },
 };
 
 const config: Config = {

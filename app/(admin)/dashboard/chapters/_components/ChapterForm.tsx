@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 import { Button, Input } from "@nextui-org/react";
 
@@ -10,15 +11,22 @@ interface ChapterFormProps {
 }
 
 export const ChapterForm: React.FC<ChapterFormProps> = ({ bookId }) => {
+  const router = useRouter();
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // send data to server as json
 
     const formData = new FormData(event.currentTarget);
 
-    const data = Object.fromEntries(formData.entries());
+    const orderValue = parseInt(formData.get("order") as string, 10);
+
+    const data = {
+      ...Object.fromEntries(formData.entries()),
+      order: orderValue,
+    };
 
     chaptersService.create(data);
+
+    router.refresh();
   }
 
   return (

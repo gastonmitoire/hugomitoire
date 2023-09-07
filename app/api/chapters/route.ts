@@ -9,28 +9,17 @@ export async function POST(request: NextRequest): Promise<Response> {
       data: {
         title: data.title,
         order: data.order,
-        book: {
-          connect: {
-            id: data.bookId,
-          },
-        },
+        bookId: data.bookId,
       },
     });
+
+    console.log(createdChapter);
 
     return NextResponse.json(createdChapter, {
       status: 200,
     });
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : "Unknown error",
-      }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    console.log(error);
+    return NextResponse.error();
   }
 }
