@@ -56,12 +56,7 @@ export function BookHero({
         backgroundAttachment: "fixed",
       }}
     >
-      <div
-        className="h-full w-full px-3 pb-10 pt-20 sm:px-0"
-        style={{
-          background: `linear-gradient(3deg, rgba(0, 0, 0, 1) 5rem, rgba(0,0,0, 0.7), rgba(0,0,0, 0.3), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0))`,
-        }}
-      >
+      <div className="bg-gradient-from-bottom-dark h-full w-full px-3 pb-10 pt-20 sm:px-0">
         <motion.div
           variants={container}
           initial="hidden"

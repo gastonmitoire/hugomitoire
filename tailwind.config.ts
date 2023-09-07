@@ -57,6 +57,10 @@ const config: Config = {
         "auto-fill-100": "repeat(auto-fill, minmax(100px, 1fr))",
         "auto-fit-100": "repeat(auto-fit, minmax(100px, 1fr))",
       },
+      backgroundImage: {
+        "gradient-from-bottom-dark":
+          "linear-gradient(3deg, rgba(36, 36, 35, 1) 5rem, rgba(36, 36, 35, 0.7), rgba(36, 36, 35, 0.3), rgba(36, 36, 35, 0.2), rgba(36, 36, 35, 0))",
+      },
     },
   },
   darkMode: "class",
