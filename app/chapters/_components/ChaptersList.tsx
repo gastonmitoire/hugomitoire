@@ -39,13 +39,13 @@ export function ChapterList({ chapters }: ChapterListProps) {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          transition={{ delayChildren: 0.5 }}
+          transition={{ delayChildren: 0.3 }}
           variants={container}
         >
           <AnimatePresence>
             <motion.span
               className="h-full w-full rounded-sm border border-transparent duration-300 hover:border-primary hover:transition-colors"
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: 0.1 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               variants={item}
