@@ -11,8 +11,12 @@ import { Cinzel } from "next/font/google";
 
 const cinzel = Cinzel({ subsets: ["latin"] });
 
+type EnhancedChapter = Chapter & {
+  text: string[];
+};
+
 interface ChapterListProps {
-  chapters: Chapter[];
+  chapters: EnhancedChapter[];
 }
 
 const container = {
@@ -32,7 +36,7 @@ const item = {
 export function ChapterList({ chapters }: ChapterListProps) {
   return (
     <section className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-2">
-      {chapters.map((chapter, index) => (
+      {chapters.map(({ title, order, text }, index) => (
         <motion.div
           key={index}
           className="flex w-full"
@@ -44,22 +48,34 @@ export function ChapterList({ chapters }: ChapterListProps) {
         >
           <AnimatePresence>
             <motion.span
-              className="h-full w-full rounded-sm border border-transparent duration-300 hover:border-primary hover:transition-colors"
+              className={`h-full w-full select-none rounded-sm border border-transparent ${
+                cinzel.className
+              } ${
+                text.length > 0
+                  ? "duration-300 hover:border-primary hover:transition-colors"
+                  : ""
+              }`}
               transition={{ delay: 0.1 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               variants={item}
             >
-              <Link
-                href={`/libros/${chapter.title.replace(/ /g, "_")}/${
-                  chapter.order
-                }`}
-                className={`flex bg-darker bg-opacity-50 p-5 text-lg ${cinzel.className}`}
-              >
-                <span className="truncate">
-                  {chapter.order}. {chapter.title}
+              {text.length > 0 ? (
+                <Link
+                  href={`/libros/${title.replace(/ /g, "_")}/${order}`}
+                  className={`flex bg-darker bg-opacity-50 p-5 text-lg`}
+                >
+                  <span className="truncate">
+                    {order}. {title}
+                  </span>
+                </Link>
+              ) : (
+                <span className={`flex bg-darker bg-opacity-50 p-5 text-lg`}>
+                  <span className="truncate">
+                    {order}. {title}
+                  </span>
                 </span>
-              </Link>
+              )}
             </motion.span>
           </AnimatePresence>
         </motion.div>
