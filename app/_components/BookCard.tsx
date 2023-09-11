@@ -18,6 +18,7 @@ export const BookCard: React.FC<{ book: BookModel }> = ({ book }) => {
       router.refresh();
     }
   }
+
   return (
     <div key={book.id} className="w-1/4 p-2">
       <Link href={`books/${book.slug}`}>
@@ -28,7 +29,7 @@ export const BookCard: React.FC<{ book: BookModel }> = ({ book }) => {
       <Image src={book.secondaryImage} alt={book.title} height={100} />
 
       <Button color="warning">Edit</Button>
-      <Button color="danger" onClick={() => handleDelete(book.id)}>
+      <Button color="danger" onClick={() => handleDelete(book.slug)}>
         Delete
       </Button>
     </div>

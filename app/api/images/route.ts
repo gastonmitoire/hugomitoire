@@ -46,11 +46,15 @@ export async function POST(request: NextRequest): Promise<Response> {
     const mimetype = imageFile.type;
     const encoding = "base64"; // Typically used for binary files
 
+    // Format image name with date and time whitout double points
+    const date = new Date();
+    const formattedImageName = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${imageName}`;
+
     // Create the image in the database
     const createdImage = await prisma.image.create({
       data: {
-        filename: imageName,
-        url: `/images/${imageName}`,
+        filename: formattedImageName,
+        url: `/images/${formattedImageName}`,
         mimetype,
         encoding,
       },
@@ -60,7 +64,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     const imageBuffer = Buffer.from(await imageFile.arrayBuffer());
 
     // Write the image file to the public/images folder
-    const imageFilePath = path.join(imagePath, imageName);
+    const imageFilePath = path.join(imagePath, formattedImageName);
     await fsPromises.writeFile(imageFilePath, imageBuffer);
 
     return NextResponse.json(createdImage, { status: 200 });

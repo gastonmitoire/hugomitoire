@@ -34,14 +34,14 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { slug: string } }
 ): Promise<Response> {
   try {
-    const { id } = params;
+    const { slug } = params;
 
     // Delete the image from the database
     const deletedBook = await prisma.book.delete({
-      where: { id },
+      where: { slug },
     });
 
     return NextResponse.json(deletedBook, {

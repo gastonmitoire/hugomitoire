@@ -54,8 +54,8 @@ async function update(id: string, params: any) {
   return book as EnhancedBookModel;
 }
 
-async function _delete(id: string) {
-  const book = await fetchClient(`/books/${id}`, {
+async function _delete(slug: string) {
+  const book = await fetchClient(`/books/${slug}`, {
     method: "DELETE",
     headers: {},
   });
