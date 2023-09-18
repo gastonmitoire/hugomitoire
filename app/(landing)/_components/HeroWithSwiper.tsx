@@ -48,9 +48,7 @@ export const HeroWithSwiper: React.FC<HeroWithSwiperProps> = ({ books }) => {
                 book={book}
                 actions={
                   <Link href={`/libros/${book.slug}`}>
-                    <Button color="primary" size="sm">
-                      Ver más
-                    </Button>
+                    <Button color="primary">Ver más</Button>
                   </Link>
                 }
               />

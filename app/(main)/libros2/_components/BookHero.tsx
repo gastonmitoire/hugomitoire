@@ -56,23 +56,15 @@ export function BookHero({
         backgroundAttachment: "fixed",
       }}
     >
-      <div className="bg-gradient-from-bottom-dark h-full w-full px-3 pb-10 pt-20 sm:px-0">
+      <div className="h-full w-full bg-gradient-from-bottom-dark px-3 pb-10 pt-20 sm:px-0">
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
           className="container mx-auto h-full w-full"
         >
-          <div className="relative flex h-full w-full flex-col items-start justify-end space-y-4 ">
+          <div className="relative grid h-full min-h-[75vh] grid-cols-2">
             <div className="flex flex-col items-start justify-end">
-              <Image
-                as={motion.img}
-                src={cover}
-                className="w-64 2xl:w-80"
-                variants={itemAnimation}
-                alt={`tapa-${title}`}
-                radius="none"
-              />
               <Spacer y={3} />
               <motion.div variants={itemAnimation}>
                 <h1 className={`text-5xl font-bold ${reggaeOne.className}`}>
@@ -102,6 +94,17 @@ export function BookHero({
                   {actions}
                 </>
               )}
+            </div>
+
+            <div className="relative grid place-items-center">
+              <Image
+                as={motion.img}
+                src={cover}
+                className="w-96"
+                variants={itemAnimation}
+                alt={`tapa-${title}`}
+                radius="none"
+              />
             </div>
           </div>
         </motion.div>
