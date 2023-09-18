@@ -4,11 +4,15 @@ import { Chapter as ChapterModel } from "@prisma/client";
 import { Genre as GenreModel } from "@prisma/client";
 import { User as UserModel } from "@prisma/client";
 
+export type EnhancedChapter = ChapterModel & {
+  text: string[];
+};
+
 export interface EnhancedBookModel extends BookModel {
   genre: Pick<GenreModel, "name" | "ageRange">;
   illustrator: Pick<UserModel, "username">;
   publisher: Pick<UserModel, "username">;
-  chapters: ChapterModel[];
+  chapters: EnhancedChapter[];
 }
 
 export const booksService = {

@@ -25,8 +25,8 @@ export default async function LibroPage({ params }: LibroPageProps) {
       }}
     >
       <div className="bg-black bg-opacity-50">
-        <div className="container mx-auto flex h-screen items-end ">
-          <section className="grid h-[90%] w-[45%] place-items-center">
+        <div className="container mx-auto flex h-screen items-end gap-5 xl:gap-0">
+          <section className="grid h-[90%] w-[45%] items-center xl:place-items-center">
             <Image
               src={cover}
               width={500}

@@ -11,10 +11,7 @@ import { Cinzel } from "next/font/google";
 
 const cinzel = Cinzel({ subsets: ["latin"] });
 
-type EnhancedChapter = Chapter & {
-  text: string[];
-};
-
+import { EnhancedChapter } from "@/app/books/_service/libros.service";
 interface ChapterListProps {
   chapters: EnhancedChapter[];
 }

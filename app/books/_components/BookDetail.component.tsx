@@ -59,6 +59,7 @@ export const BookDetail: React.FC<BookDetailProps> = ({
           "bg-darker"
         );
         bookDetail.scrollTo({ top: 0, behavior: "smooth" });
+        bookDetail.scrollIntoView({ behavior: "smooth" });
       }
     }
 
