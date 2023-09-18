@@ -10,6 +10,10 @@ import { HeroWithSwiper } from "../(landing)/_components/HeroWithSwiper";
 
 import { booksService } from "@/app/(main)/libros2/_service/libros.service";
 
+import { Cinzel } from "next/font/google";
+
+const cinzel = Cinzel({ subsets: ["latin-ext"] });
+
 export default async function Home() {
   const books = await booksService.getAll();
 
@@ -23,8 +27,8 @@ export default async function Home() {
   });
 
   return (
-    <main className="min-h-screen pb-20">
-      <Suspense fallback={<Loading />}>
+    <main className="min-h-screen">
+      {/* <Suspense fallback={<Loading />}>
         <HeroWithSwiper books={books} />
       </Suspense>
       <Spacer y={24} />
@@ -32,9 +36,21 @@ export default async function Home() {
         <Suspense fallback={<Loading />}>
           <BooksSwiper slides={booksCover} />
         </Suspense>
-      </section>
+      </section> */}
 
-      <CustomParticles />
+      {/* maintenance mode */}
+      <div className="flex h-screen select-none flex-col items-center justify-center">
+        <h1 className={`text-8xl font-bold text-white ${cinzel.className}`}>
+          Hugo Mitoire
+        </h1>
+        <Spacer y={5} />
+        <h3 className="text-4xl font-bold text-secondary">
+          Sitio en mantenimiento
+        </h3>
+        <p className="text-gray-600">Vuelve pronto</p>
+      </div>
+
+      {/* <CustomParticles /> */}
     </main>
   );
 }
