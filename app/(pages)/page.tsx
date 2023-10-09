@@ -28,7 +28,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen">
-      {/* <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
         <HeroWithSwiper books={books} />
       </Suspense>
       <Spacer y={24} />
@@ -36,21 +36,9 @@ export default async function Home() {
         <Suspense fallback={<Loading />}>
           <BooksSwiper slides={booksCover} />
         </Suspense>
-      </section> */}
+      </section>
 
-      {/* maintenance mode */}
-      <div className="flex h-screen select-none flex-col items-center justify-center">
-        <h1 className={`text-8xl font-bold text-white ${cinzel.className}`}>
-          Hugo Mitoire
-        </h1>
-        <Spacer y={5} />
-        <h3 className="text-4xl font-bold text-secondary">
-          Sitio en mantenimiento
-        </h3>
-        <p className="text-gray-600">Vuelve pronto</p>
-      </div>
-
-      {/* <CustomParticles /> */}
+      <CustomParticles />
     </main>
   );
 }

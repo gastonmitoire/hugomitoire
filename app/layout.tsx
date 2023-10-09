@@ -33,13 +33,13 @@ export default function RootLayout(props: RootLayoutProps) {
         className={`min-h-screen bg-background text-foreground dark ${montserrat.className}`}
       >
         <Providers>
-          {/* <span className="fixed top-0 z-30 w-full">
+          <span className="fixed top-0 z-30 w-full">
             <Topbar pathname={activePath} />
-          </span> */}
+          </span>
 
           {props.children}
 
-          {/* <Footer /> */}
+          <Footer />
         </Providers>
       </body>
     </html>

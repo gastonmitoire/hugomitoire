@@ -8,7 +8,7 @@ const cinzel = Cinzel({ subsets: ["latin-ext"] });
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-dark z-10 flex h-32 w-full flex-col items-center justify-center">
+    <footer className="z-10 flex h-32 w-full flex-col items-center justify-center bg-darker">
       <h3 className={`text-3xl font-bold text-inherit ${cinzel.className}`}>
         Hugo Mitoire
       </h3>
