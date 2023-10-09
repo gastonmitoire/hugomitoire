@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "@nextui-org/react": "latest",
     "@prisma/client": "^5.1.1",
     "@types/node": "20.5.0",
