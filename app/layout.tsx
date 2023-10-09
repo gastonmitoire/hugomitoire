@@ -38,8 +38,6 @@ export default function RootLayout(props: RootLayoutProps) {
           </span>
 
           {props.children}
-
-          <Footer />
         </Providers>
       </body>
     </html>
