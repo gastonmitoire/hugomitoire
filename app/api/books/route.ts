@@ -1,66 +1,62 @@
 import { NextResponse, NextRequest } from "next/server";
+import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
-import { Book as BookModel } from "@prisma/client";
+async function getBooks(): Promise<Response> {
+  try {
+    const books = await prisma.book.findMany();
 
-export async function GET() {
-  const books = await prisma.book.findMany({
-    include: {
-      genre: true,
-      illustrator: true,
-      publisher: true,
-    },
-  });
+    return new NextResponse(JSON.stringify(books), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    const errorResponse: ErrorProps = {
+      statusCode: 500,
+      title: "Error getting the books",
+    };
 
-  return NextResponse.json(books);
+    return new Response(JSON.stringify(errorResponse), {
+      status: errorResponse.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }
 
-export async function POST(request: NextRequest): Promise<Response> {
+async function createBook(request: NextRequest): Promise<Response> {
   try {
     const data = await request.json();
 
-    // Create the image in the database
-    const createdBook = await prisma.book.create({
-      data: {
-        title: data.title,
-        description: data.description,
-        cover: data.cover,
-        secondaryImage: data.secondaryImage,
-        slug: data.slug,
-        type: data.type,
-        publicationDate: data.publicationDate,
-        genre: {
-          connect: {
-            id: data.genreId,
-          },
-        },
-        illustrator: {
-          connect: {
-            id: data.illustratorId,
-          },
-        },
-        publisher: {
-          connect: {
-            id: data.publisherId,
-          },
-        },
-      },
+    const generateSlug = (title: string) => {
+      return title
+        .toLowerCase()
+        .replace(/ /g, "-")
+        .replace(/[^\w-]+/g, "");
+    };
+
+    data.slug = generateSlug(data.title);
+
+    const newBook = await prisma.book.create({
+      data: data,
     });
 
-    return NextResponse.json(createdBook, {
-      status: 200,
+    return new Response(JSON.stringify(newBook), {
+      status: 201,
+      headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    return new Response(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : "Unknown error",
-      }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    console.error("Error:", error);
+    const errorResponse: ErrorProps = {
+      statusCode: 500,
+      title: "Error creating the book",
+    };
+
+    return new Response(JSON.stringify(errorResponse), {
+      status: errorResponse.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
+
+export { getBooks as GET, createBook as POST };
