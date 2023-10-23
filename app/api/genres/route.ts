@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
-async function getGenres(): Promise<Response> {
+async function getGenres(): Promise<NextResponse> {
   try {
     const genres = await prisma.genre.findMany();
 
@@ -17,14 +17,14 @@ async function getGenres(): Promise<Response> {
       title: "Error getting the genres",
     };
 
-    return new Response(JSON.stringify(errorResponse), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
   }
 }
 
-async function createGenre(request: NextRequest): Promise<Response> {
+async function createGenre(request: NextRequest): Promise<NextResponse> {
   try {
     const data = await request.json();
 
@@ -41,7 +41,7 @@ async function createGenre(request: NextRequest): Promise<Response> {
       data: data,
     });
 
-    return new Response(JSON.stringify(newGenre), {
+    return new NextResponse(JSON.stringify(newGenre), {
       status: 201,
       headers: { "Content-Type": "application/json" },
     });
@@ -52,7 +52,7 @@ async function createGenre(request: NextRequest): Promise<Response> {
       title: "Error creating the genre",
     };
 
-    return new Response(JSON.stringify(errorResponse), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
