@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
-async function getUsers(): Promise<Response> {
+async function getUsers(): Promise<NextResponse> {
   try {
     const users = await prisma.user.findMany();
 
@@ -17,14 +17,14 @@ async function getUsers(): Promise<Response> {
       title: "Error getting the users",
     };
 
-    return new Response(JSON.stringify(errorResponse), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
   }
 }
 
-async function createUser(request: NextRequest): Promise<Response> {
+async function createUser(request: NextRequest): Promise<NextResponse> {
   try {
     const data = await request.json();
 
@@ -37,7 +37,7 @@ async function createUser(request: NextRequest): Promise<Response> {
       },
     });
 
-    return new Response(JSON.stringify(newUser), {
+    return new NextResponse(JSON.stringify(newUser), {
       status: 201,
       headers: { "Content-Type": "application/json" },
     });
@@ -48,7 +48,7 @@ async function createUser(request: NextRequest): Promise<Response> {
       title: "Error creating the user",
     };
 
-    return new Response(JSON.stringify(errorResponse), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });

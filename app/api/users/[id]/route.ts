@@ -3,9 +3,9 @@ import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
 export async function updateUser(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
-): Promise<Response> {
+): Promise<NextResponse> {
   try {
     const { id } = params;
 
@@ -15,7 +15,7 @@ export async function updateUser(
         title: "Missing user id",
       };
 
-      return new Response(JSON.stringify(errorResponse), {
+      return new NextResponse(JSON.stringify(errorResponse), {
         status: errorResponse.statusCode,
         headers: { "Content-Type": "application/json" },
       });
@@ -33,7 +33,7 @@ export async function updateUser(
       },
     });
 
-    return new Response(JSON.stringify(updatedUser), {
+    return new NextResponse(JSON.stringify(updatedUser), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -44,7 +44,7 @@ export async function updateUser(
       title: "Error updating the user",
     };
 
-    return new Response(JSON.stringify(errorResponse), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
@@ -52,13 +52,13 @@ export async function updateUser(
 }
 
 async function deleteUser(
-  request: Request,
+  request: NextRequest,
   {
     params,
   }: {
     params: { id: string };
   }
-): Promise<Response> {
+): Promise<NextResponse> {
   try {
     const { id } = params;
 
@@ -68,7 +68,7 @@ async function deleteUser(
         title: "Missing user id",
       };
 
-      return new Response(JSON.stringify(errorResponse), {
+      return new NextResponse(JSON.stringify(errorResponse), {
         status: errorResponse.statusCode,
         headers: { "Content-Type": "application/json" },
       });
@@ -78,7 +78,7 @@ async function deleteUser(
       where: { id: id },
     });
 
-    return new Response(JSON.stringify(deletedUser), {
+    return new NextResponse(JSON.stringify(deletedUser), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -89,7 +89,7 @@ async function deleteUser(
       title: "Error deleting the user",
     };
 
-    return new Response(JSON.stringify(errorResponse), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
