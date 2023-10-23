@@ -108,7 +108,7 @@ model Genre {
     id       String @id @default(uuid())
     books    Book[]
     name     String
-    nameSlug String @unique
+    slug     String @unique
     ageRange String
 }
 
