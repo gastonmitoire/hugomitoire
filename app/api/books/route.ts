@@ -35,7 +35,12 @@ async function createBook(request: NextRequest): Promise<Response> {
         .replace(/[^\w-]+/g, "");
     };
 
+    const checkDateISO = (date: string) => {
+      return new Date(date).toISOString();
+    };
+
     data.slug = generateSlug(data.title);
+    data.publicationDate = checkDateISO(data.publicationDate);
 
     const newBook = await prisma.book.create({
       data: data,

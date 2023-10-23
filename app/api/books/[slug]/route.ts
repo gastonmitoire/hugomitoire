@@ -1,59 +1,94 @@
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
-import { Book as BookModel } from "@prisma/client";
-
-export async function GET(
+async function updateBook(
   request: NextRequest,
   { params }: { params: { slug: string } }
-): Promise<Response> {
+): Promise<NextResponse> {
   try {
     const { slug } = params;
 
-    // Get the image from the database
-    const book = await prisma.book.findUnique({
-      where: { slug },
-      include: {
-        genre: true,
-        illustrator: true,
-        publisher: true,
-        chapters: {
-          include: {
-            text: true,
-          },
-        },
-      },
+    if (!slug) {
+      const errorResponse: ErrorProps = {
+        statusCode: 400,
+        title: "Missing book slug",
+      };
+
+      return new NextResponse(JSON.stringify(errorResponse), {
+        status: errorResponse.statusCode,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const data = await request.json();
+
+    const updatedBook = await prisma.book.update({
+      where: { slug: slug },
+      data: data,
     });
 
-    return NextResponse.json(book, {
+    return new NextResponse(JSON.stringify(updatedBook), {
       status: 200,
+      headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Error:", error);
+    const errorResponse: ErrorProps = {
+      statusCode: 500,
+      title: "Error updating the book",
+    };
 
-    return new Response("Error getting book", { status: 500 });
+    return new NextResponse(JSON.stringify(errorResponse), {
+      status: errorResponse.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
 
-export async function DELETE(
+async function deleteBook(
   request: NextRequest,
-  { params }: { params: { slug: string } }
-): Promise<Response> {
+  {
+    params,
+  }: {
+    params: { slug: string };
+  }
+): Promise<NextResponse> {
   try {
     const { slug } = params;
 
-    // Delete the image from the database
+    if (!slug) {
+      const errorResponse: ErrorProps = {
+        statusCode: 400,
+        title: "Missing book slug",
+      };
+
+      return new NextResponse(JSON.stringify(errorResponse), {
+        status: errorResponse.statusCode,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     const deletedBook = await prisma.book.delete({
-      where: { slug },
+      where: { slug: slug },
     });
 
-    return NextResponse.json(deletedBook, {
+    return new NextResponse(JSON.stringify(deletedBook), {
       status: 200,
+      headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Error:", error);
+    const errorResponse: ErrorProps = {
+      statusCode: 500,
+      title: "Error deleting the book",
+    };
 
-    return new Response("Error deleting book", { status: 500 });
+    return new NextResponse(JSON.stringify(errorResponse), {
+      status: errorResponse.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
+
+export { updateBook as PUT, deleteBook as DELETE };
