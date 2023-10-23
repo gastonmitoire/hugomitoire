@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
-async function getBooks(): Promise<Response> {
+async function getBooks(): Promise<NextResponse> {
   try {
     const books = await prisma.book.findMany();
 
@@ -17,14 +17,14 @@ async function getBooks(): Promise<Response> {
       title: "Error getting the books",
     };
 
-    return new Response(JSON.stringify(errorResponse), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
   }
 }
 
-async function createBook(request: NextRequest): Promise<Response> {
+async function createBook(request: NextRequest): Promise<NextResponse> {
   try {
     const data = await request.json();
 
@@ -46,7 +46,7 @@ async function createBook(request: NextRequest): Promise<Response> {
       data: data,
     });
 
-    return new Response(JSON.stringify(newBook), {
+    return new NextResponse(JSON.stringify(newBook), {
       status: 201,
       headers: { "Content-Type": "application/json" },
     });
@@ -57,7 +57,7 @@ async function createBook(request: NextRequest): Promise<Response> {
       title: "Error creating the book",
     };
 
-    return new Response(JSON.stringify(errorResponse), {
+    return new NextResponse(JSON.stringify(errorResponse), {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
