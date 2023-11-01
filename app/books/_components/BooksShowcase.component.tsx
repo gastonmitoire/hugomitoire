@@ -3,6 +3,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Image } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/books.service";
+import { CustomParticles } from "@/app/shared/_components";
 
 interface BooksShowcaseProps {
   books: EnhancedBookModel[];
@@ -76,7 +77,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="grid h-screen w-full grid-cols-3 items-center justify-items-center gap-10 px-20"
+      className="relative grid h-screen w-full grid-cols-3 items-center justify-items-center gap-10 px-20"
     >
       <div className="h-full w-full py-20">
         <FeaturedItem />

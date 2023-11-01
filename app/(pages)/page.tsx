@@ -9,10 +9,6 @@ import { CustomParticles } from "@components/index";
 import { BookFeaturedWrapper } from "../books/_components/BookFeaturedWrapper.component";
 import { BooksShowcaseWrapper } from "../books/_components/BooksShowcaseWrapper.component";
 
-import { Cinzel } from "next/font/google";
-
-const cinzel = Cinzel({ subsets: ["latin-ext"] });
-
 export default async function Home() {
   return (
     <main className="min-h-screen">
@@ -20,7 +16,6 @@ export default async function Home() {
         <BooksShowcaseWrapper />
 
         <BookFeaturedWrapper />
-        <CustomParticles />
       </Suspense>
     </main>
   );

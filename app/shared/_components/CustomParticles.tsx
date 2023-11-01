@@ -21,15 +21,16 @@ export const CustomParticles = () => {
       id="tsparticles"
       init={particlesInit}
       loaded={particlesLoaded}
+      className="absolute left-0 top-0 z-0 h-full w-full"
       options={{
         background: {
           color: {
-            value: "transparent",
+            value: "#ffffff",
           },
         },
         fpsLimit: 120,
         interactivity: {
-          detect_on: "window",
+          detect_on: "parent",
           events: {
             onClick: {
               enable: true,
