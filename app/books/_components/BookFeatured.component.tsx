@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Image } from "@nextui-org/image";
+
 interface BookFeaturedProps {
   title: string;
   description: string;
@@ -14,9 +16,9 @@ export const BookFeatured: React.FC<BookFeaturedProps> = ({
   featuredText,
 }) => {
   return (
-    <div className="book-featured">
+    <div className="bg-black">
       <div className="book-featured__image-wrapper">
-        <img className="book-featured__image" src={coverImageUrl} alt={title} />
+        <Image src={coverImageUrl} alt={title} width={300} height={450} />
       </div>
       <div className="book-featured__text">
         <div className="book-featured__title">{title}</div>
