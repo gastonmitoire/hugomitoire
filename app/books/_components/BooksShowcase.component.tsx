@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Image } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/libros.service";
 
@@ -17,12 +17,17 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
       hidden: {
         opacity: 0,
         scale: 0.5,
-        rotate: rotation,
+        rotate: 0,
       },
       visible: {
         opacity: 0.5,
         scale: 1,
         rotate: rotation,
+        transition: {
+          delay: index * 0.1, // Agregar un retraso al ingreso basado en la posición
+          duration: 0.3,
+          ease: "easeInOut",
+        },
       },
       whileHover: {
         opacity: 1,
@@ -50,11 +55,19 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
     return (
       <motion.div
         variants={bookItemVariants(index)}
-        whileHover="whileHover"
         initial="hidden"
         animate="visible"
-        className="h-full w-full cursor-pointer bg-gray-200"
-      ></motion.div>
+        whileHover="whileHover"
+        className="flex h-full w-full items-center"
+      >
+        <Image
+          src={books[index].cover}
+          width="100%"
+          height="100%"
+          alt="Book Cover"
+          radius="none"
+        />
+      </motion.div>
     );
   };
 
@@ -69,14 +82,18 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         <FeaturedItem />
       </div>
       <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-10 py-20">
-        {[0, 1, 2, 3].map((index) => (
-          <BookItem key={index} index={index} />
-        ))}
+        <AnimatePresence>
+          {[0, 1, 2, 3].map((index) => (
+            <BookItem key={index} index={index} />
+          ))}
+        </AnimatePresence>
       </div>
       <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-10 py-20">
-        {[4, 5, 6, 7].map((index) => (
-          <BookItem key={index} index={index} />
-        ))}
+        <AnimatePresence>
+          {[4, 5, 6, 7].map((index) => (
+            <BookItem key={index} index={index} />
+          ))}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
