@@ -29,25 +29,32 @@ const adminRoutes = [
   },
 ];
 
+function isActiveRoute(pathname: string, href: string) {
+  return pathname === href;
+}
+
+function LinkItem({ href, pathname, children }: any) {
+  const isActive = isActiveRoute(pathname, href);
+
+  const activeClass = isActive ? "opacity-30" : "opacity-100";
+
+  return (
+    <Link
+      href={href}
+      color="foreground"
+      aria-current={isActive ? "page" : undefined}
+      className={`select-none font-bold text-inherit ${reggaeOne.className} ${activeClass}`}
+      isDisabled={isActive}
+    >
+      {children}
+    </Link>
+  );
+}
+
 export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
   return (
-    <Navbar maxWidth="2xl">
-      <NavbarContent className="hidden gap-4 sm:flex" justify="start">
-        {adminRoutes.map((route) => (
-          <NavbarItem key={route.name} isActive={pathname === route.href}>
-            <Link
-              href={route.href}
-              color={pathname === route.href ? "secondary" : "foreground"}
-              aria-current={pathname === route.href ? "page" : undefined}
-              className={`${reggaeOne.className}`}
-            >
-              {route.name}
-            </Link>
-          </NavbarItem>
-        ))}
-      </NavbarContent>
-
-      <NavbarBrand className="justify-center">
+    <Navbar maxWidth="full" className="px-5">
+      <NavbarBrand>
         <Link href="/admin" color="foreground">
           <p className={`text-3xl font-bold text-inherit ${cinzel.className}`}>
             Hugo Mitoire
@@ -55,7 +62,15 @@ export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
         </Link>
       </NavbarBrand>
 
-      <NavbarContent as="div" justify="end"></NavbarContent>
+      <NavbarContent className="hidden gap-10 sm:flex" justify="end">
+        {adminRoutes.map((route) => (
+          <NavbarItem key={route.name} isActive={pathname === route.href}>
+            <LinkItem href={route.href} pathname={pathname}>
+              {route.name}
+            </LinkItem>
+          </NavbarItem>
+        ))}
+      </NavbarContent>
     </Navbar>
   );
 };
