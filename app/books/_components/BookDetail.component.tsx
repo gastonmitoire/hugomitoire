@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import { EnhancedBookModel } from "../_service/libros.service";
+import { EnhancedBookModel } from "../_service/books.service";
 
 import { motion } from "framer-motion";
 

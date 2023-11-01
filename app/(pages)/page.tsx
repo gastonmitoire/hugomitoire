@@ -6,6 +6,7 @@ import Loading from "./loading";
 
 import { CustomParticles } from "@components/index";
 
+import { BookFeaturedWrapper } from "../books/_components/BookFeaturedWrapper.component";
 import { BooksShowcaseWrapper } from "../books/_components/BooksShowcaseWrapper.component";
 
 import { Cinzel } from "next/font/google";
@@ -17,6 +18,8 @@ export default async function Home() {
     <main className="min-h-screen">
       <Suspense fallback={<Loading />}>
         <BooksShowcaseWrapper />
+
+        <BookFeaturedWrapper />
         <CustomParticles />
       </Suspense>
     </main>
