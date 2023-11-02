@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Image } from "@nextui-org/react";
+import { Image, Skeleton } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/books.service";
 import { CustomParticles } from "@/app/shared/_components";
 
@@ -11,6 +11,8 @@ interface BooksShowcaseProps {
 
 export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
   const rotations = [3, -5, -4, 4, 3, -5, -4, 4]; // Conjunto predefinido de rotaciones
+
+  const isLoaded = books.length > 0;
 
   const bookItemVariants = (index: number) => {
     const rotation = rotations[index % rotations.length]; // Asignar rotación en función de la posición
@@ -41,13 +43,17 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
   const FeaturedItem = () => {
     return (
       <div className="flex h-full w-full cursor-pointer items-center">
-        <Image
-          src={books[0].cover}
-          width="100%"
-          height="100%"
-          alt="Book Cover"
-          radius="none"
-        />
+        {isLoaded ? (
+          <Image
+            src={books[0].cover}
+            width="100%"
+            height="100%"
+            alt="Book Cover"
+            radius="none"
+          />
+        ) : (
+          <Skeleton className="h-full w-full"></Skeleton>
+        )}
       </div>
     );
   };
@@ -61,14 +67,18 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         whileHover="whileHover"
         className="flex h-full w-full max-w-sm cursor-pointer items-center justify-center"
       >
-        <Image
-          src={books[index].cover}
-          width="100%"
-          height="100%"
-          alt="Book Cover"
-          radius="none"
-          className="mx-auto"
-        />
+        {isLoaded ? (
+          <Image
+            src={books[index].cover}
+            width="100%"
+            height="100%"
+            alt="Book Cover"
+            radius="none"
+            className="mx-auto"
+          />
+        ) : (
+          <Skeleton className="h-full w-full"></Skeleton>
+        )}
       </motion.div>
     );
   };
