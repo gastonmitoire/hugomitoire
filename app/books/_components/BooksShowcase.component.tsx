@@ -40,7 +40,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
 
   const FeaturedItem = () => {
     return (
-      <div className="flex h-full w-full items-center">
+      <div className="flex h-full w-full cursor-pointer items-center">
         <Image
           src={books[0].cover}
           width="100%"
@@ -59,7 +59,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         initial="hidden"
         animate="visible"
         whileHover="whileHover"
-        className="flex h-full w-full max-w-sm items-center justify-center"
+        className="flex h-full w-full max-w-sm cursor-pointer items-center justify-center"
       >
         <Image
           src={books[index].cover}
