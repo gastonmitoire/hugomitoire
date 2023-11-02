@@ -19,7 +19,7 @@ async function getBook(
         title: "Missing book slug",
       };
 
-      return new NextResponse(JSON.stringify(errorResponse), {
+      return NextResponse.json(errorResponse, {
         status: errorResponse.statusCode,
         headers: { "Content-Type": "application/json" },
       });
@@ -35,7 +35,7 @@ async function getBook(
       },
     });
 
-    return new NextResponse(JSON.stringify(book), {
+    return NextResponse.json(book, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -46,7 +46,7 @@ async function getBook(
       title: "Error getting the book",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
@@ -66,7 +66,7 @@ async function updateBook(
         title: "Missing book slug",
       };
 
-      return new NextResponse(JSON.stringify(errorResponse), {
+      return NextResponse.json(errorResponse, {
         status: errorResponse.statusCode,
         headers: { "Content-Type": "application/json" },
       });
@@ -79,7 +79,7 @@ async function updateBook(
       data: data,
     });
 
-    return new NextResponse(JSON.stringify(updatedBook), {
+    return NextResponse.json(updatedBook, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -90,7 +90,7 @@ async function updateBook(
       title: "Error updating the book",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
@@ -114,7 +114,7 @@ async function deleteBook(
         title: "Missing book slug",
       };
 
-      return new NextResponse(JSON.stringify(errorResponse), {
+      return NextResponse.json(errorResponse, {
         status: errorResponse.statusCode,
         headers: { "Content-Type": "application/json" },
       });
@@ -124,7 +124,7 @@ async function deleteBook(
       where: { slug: slug },
     });
 
-    return new NextResponse(JSON.stringify(deletedBook), {
+    return NextResponse.json(deletedBook, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -135,7 +135,7 @@ async function deleteBook(
       title: "Error deleting the book",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });

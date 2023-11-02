@@ -6,7 +6,7 @@ async function getGenres(): Promise<NextResponse> {
   try {
     const genres = await prisma.genre.findMany();
 
-    return new NextResponse(JSON.stringify(genres), {
+    return NextResponse.json(genres, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -17,7 +17,7 @@ async function getGenres(): Promise<NextResponse> {
       title: "Error getting the genres",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
@@ -41,7 +41,7 @@ async function createGenre(request: NextRequest): Promise<NextResponse> {
       data: data,
     });
 
-    return new NextResponse(JSON.stringify(newGenre), {
+    return NextResponse.json(newGenre, {
       status: 201,
       headers: { "Content-Type": "application/json" },
     });
@@ -52,7 +52,7 @@ async function createGenre(request: NextRequest): Promise<NextResponse> {
       title: "Error creating the genre",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });

@@ -6,7 +6,7 @@ async function getBooks(): Promise<NextResponse> {
   try {
     const books = await prisma.book.findMany();
 
-    return new NextResponse(JSON.stringify(books), {
+    return NextResponse.json(books, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -46,7 +46,7 @@ async function createBook(request: NextRequest): Promise<NextResponse> {
       data: data,
     });
 
-    return new NextResponse(JSON.stringify(newBook), {
+    return NextResponse.json(newBook, {
       status: 201,
       headers: { "Content-Type": "application/json" },
     });
@@ -57,7 +57,7 @@ async function createBook(request: NextRequest): Promise<NextResponse> {
       title: "Error creating the book",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
