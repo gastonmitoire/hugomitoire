@@ -18,7 +18,7 @@ export default async function Home() {
 
         <BookFeaturedWrapper />
 
-        {/* <BookGridWrapper /> */}
+        <BookGridWrapper />
       </Suspense>
     </main>
   );
