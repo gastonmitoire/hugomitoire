@@ -7,6 +7,7 @@ import Loading from "./loading";
 import { CustomParticles } from "@components/index";
 
 import { BookFeaturedWrapper } from "../books/_components/BookFeaturedWrapper.component";
+import { BookGridWrapper } from "../books/_components/BookGridWrapper.component";
 import { BooksShowcaseWrapper } from "../books/_components/BooksShowcaseWrapper.component";
 
 export default async function Home() {
@@ -16,6 +17,8 @@ export default async function Home() {
         <BooksShowcaseWrapper />
 
         <BookFeaturedWrapper />
+
+        <BookGridWrapper />
       </Suspense>
     </main>
   );
