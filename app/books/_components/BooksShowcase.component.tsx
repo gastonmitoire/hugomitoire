@@ -78,19 +78,19 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative grid min-h-screen w-full grid-flow-row items-center justify-center gap-10 px-20 py-20 xl:grid-cols-3 xl:gap-10 xl:py-0"
+      className="relative grid min-h-screen w-full grid-flow-row items-center justify-center gap-10 px-3 py-20 sm:px-20 xl:grid-cols-3 xl:gap-10 xl:py-0"
     >
       <div className="grid h-full w-full justify-center xl:flex xl:py-20">
         <FeaturedItem />
       </div>
-      <div className="grid h-full w-full grid-cols-4 place-items-center gap-10 xl:grid-cols-2 xl:grid-rows-2 xl:py-20">
+      <div className="grid h-full w-full grid-cols-2 place-items-center gap-10 sm:grid-cols-4 xl:grid-cols-2 xl:grid-rows-2 xl:py-20">
         <AnimatePresence>
           {[0, 1, 2, 3].map((index) => (
             <BookItem key={index} index={index} />
           ))}
         </AnimatePresence>
       </div>
-      <div className="grid h-full w-full grid-cols-4 place-items-center gap-10 xl:grid-cols-2 xl:grid-rows-2 xl:py-20">
+      <div className="grid h-full w-full grid-cols-2 place-items-center gap-10 sm:grid-cols-4 xl:grid-cols-2 xl:grid-rows-2 xl:py-20">
         <AnimatePresence>
           {[4, 5, 6, 7].map((index) => (
             <BookItem key={index} index={index} />
