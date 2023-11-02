@@ -1,6 +1,7 @@
 import NextImage from "next/image";
 
 import { Image } from "@nextui-org/image";
+import { Spacer } from "@nextui-org/spacer";
 
 import { EnhancedBookModel } from "../_service/books.service";
 
@@ -55,7 +56,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
           >
             {book.title}
           </span>
-          <br />
+          <Spacer y={1} />
           <span
             className={`max-w-[75%] text-xl font-bold text-white ${bellefair.className}`}
           >
@@ -70,7 +71,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
   };
 
   return (
-    <section className="grid grid-cols-2 grid-rows-2">
+    <section className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2">
       <GridItemContainer className={"bg-darker"}>
         <GridItem book={books[0]} imagePlacement="right" />
       </GridItemContainer>
