@@ -26,8 +26,8 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
     className,
   }) => {
     return (
-      <section className={`[&>*]:h-[430px] ${className}`}>
-        <div className="p-20">{children}</div>
+      <section className={`[&>*]:min-h-[430px] ${className}`}>
+        <div className="px-3 py-10 sm:p-20">{children}</div>
       </section>
     );
   };
@@ -42,10 +42,11 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
     imagePlacement = "left",
   }) => {
     return (
-      <div className="relative flex h-full items-center justify-center gap-5">
+      <div className="relative flex h-full flex-col items-center justify-center gap-5 sm:flex-row">
         {imagePlacement === "left" && (
           <Image src={book.cover} alt={book.title} />
         )}
+
         <p
           className={`flex flex-auto flex-col justify-center gap-5 ${
             imagePlacement === "right" ? "items-end text-right" : "text-left"
@@ -63,6 +64,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
             {book.description}
           </span>
         </p>
+
         {imagePlacement === "right" && (
           <Image src={book.cover} alt={book.title} />
         )}
@@ -71,7 +73,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
   };
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2">
+    <section className="grid grid-cols-1 xl:grid-cols-2 xl:grid-rows-2">
       <GridItemContainer className={"bg-darker"}>
         <GridItem book={books[0]} imagePlacement="right" />
       </GridItemContainer>
