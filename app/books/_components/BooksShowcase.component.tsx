@@ -59,7 +59,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         initial="hidden"
         animate="visible"
         whileHover="whileHover"
-        className="flex h-full w-full items-center"
+        className="flex h-full w-full max-w-sm items-center justify-center"
       >
         <Image
           src={books[index].cover}
@@ -67,6 +67,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
           height="100%"
           alt="Book Cover"
           radius="none"
+          className="mx-auto"
         />
       </motion.div>
     );
@@ -77,19 +78,19 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative grid h-screen w-full grid-cols-3 items-center justify-items-center gap-10 px-20"
+      className="relative grid min-h-screen w-full grid-flow-row items-center justify-center gap-10 px-20 py-20 xl:grid-cols-3 xl:gap-10 xl:py-0"
     >
-      <div className="h-full w-full py-20">
+      <div className="grid h-full w-full justify-center xl:flex xl:py-20">
         <FeaturedItem />
       </div>
-      <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-10 py-20">
+      <div className="grid h-full w-full grid-cols-4 place-items-center gap-10 xl:grid-cols-2 xl:grid-rows-2 xl:py-20">
         <AnimatePresence>
           {[0, 1, 2, 3].map((index) => (
             <BookItem key={index} index={index} />
           ))}
         </AnimatePresence>
       </div>
-      <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-10 py-20">
+      <div className="grid h-full w-full grid-cols-4 place-items-center gap-10 xl:grid-cols-2 xl:grid-rows-2 xl:py-20">
         <AnimatePresence>
           {[4, 5, 6, 7].map((index) => (
             <BookItem key={index} index={index} />
