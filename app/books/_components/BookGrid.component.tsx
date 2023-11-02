@@ -50,7 +50,11 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
             imagePlacement === "right" ? "items-end text-right" : "text-left"
           }`}
         >
-          <span className="text-2xl font-bold text-white">{book.title}</span>
+          <span
+            className={`text-3xl font-bold text-white ${reggaeOne.className}`}
+          >
+            {book.title}
+          </span>
           <br />
           <span
             className={`max-w-[75%] text-xl font-bold text-white ${bellefair.className}`}
