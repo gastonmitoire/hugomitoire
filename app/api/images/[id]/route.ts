@@ -1,19 +1,30 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { ErrorProps } from "next/error";
 import { promises as fsPromises } from "fs";
 import path from "path";
 
 import prisma from "@/app/_lib/prisma";
 const imagePath = path.join(process.cwd(), "public", "images");
 
-export async function DELETE(
+async function deleteImage(
   request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<Response> {
-  const clientURL = new URL(request.nextUrl.toString());
-
   try {
     const { id } = params;
+
+    if (!id) {
+      const errorResponse: ErrorProps = {
+        statusCode: 400,
+        title: "Missing image id",
+      };
+
+      return NextResponse.json(errorResponse, {
+        status: errorResponse.statusCode,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     // Find the image in the database
     const image = await prisma.image.findUnique({
@@ -21,7 +32,15 @@ export async function DELETE(
     });
 
     if (!image) {
-      throw new Error(`Image with id ${id} not found`);
+      const errorResponse: ErrorProps = {
+        statusCode: 404,
+        title: "Image not found",
+      };
+
+      return NextResponse.json(errorResponse, {
+        status: errorResponse.statusCode,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
     // Delete the image from the database
@@ -33,10 +52,22 @@ export async function DELETE(
     const imageFilePath = path.join(imagePath, image.filename);
     await fsPromises.unlink(imageFilePath);
 
-    return NextResponse.redirect(clientURL.origin + "/admin/images");
+    return NextResponse.json(image, {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Error:", error);
+    const errorResponse: ErrorProps = {
+      statusCode: 500,
+      title: "Error deleting the image",
+    };
 
-    return new Response("Error deleting the image", { status: 500 });
+    return NextResponse.json(errorResponse, {
+      status: errorResponse.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
+
+export { deleteImage as DELETE };

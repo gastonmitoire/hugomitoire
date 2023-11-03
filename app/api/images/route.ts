@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { ErrorProps } from "next/error";
 
 import prisma from "@/app/_lib/prisma";
 
@@ -7,7 +8,7 @@ import { promises as fsPromises } from "fs";
 import path from "path";
 const imagePath = path.join(process.cwd(), "public", "images");
 
-export async function GET() {
+async function getImages() {
   try {
     // Find all images in the database
     const images = await prisma.image.findMany();
@@ -23,10 +24,12 @@ export async function GET() {
     return new Response("Error getting the images", { status: 500 });
   }
 }
-
-export async function POST(request: NextRequest): Promise<Response> {
+async function createImage(request: NextRequest): Promise<Response> {
   try {
     const form = await request.formData();
+
+    // Capture the userId field from the form data and verify it exists
+    const userId = form.get("userId");
 
     // Find the 'image' field in the form data
     const imageField = Array.from(form.entries()).find(
@@ -46,17 +49,22 @@ export async function POST(request: NextRequest): Promise<Response> {
     const mimetype = imageFile.type;
     const encoding = "base64"; // Typically used for binary files
 
-    // Format image name with date and time whitout double points
+    // Format image name with date and time without double points
     const date = new Date();
     const formattedImageName = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${imageName}`;
 
-    // Create the image in the database
+    // Create the image in the database, including userId
     const createdImage = await prisma.image.create({
       data: {
         filename: formattedImageName,
         url: `/images/${formattedImageName}`,
         mimetype,
         encoding,
+        user: {
+          connect: {
+            id: userId as string,
+          },
+        },
       },
     });
 
@@ -74,3 +82,5 @@ export async function POST(request: NextRequest): Promise<Response> {
     return new Response("Error processing the form", { status: 500 });
   }
 }
+
+export { getImages as GET, createImage as POST };
