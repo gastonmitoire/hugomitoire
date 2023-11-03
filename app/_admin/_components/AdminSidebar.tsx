@@ -6,25 +6,30 @@ import { UserMenuWrapper } from "@/app/_users/_components/UserMenuWrapper";
 
 import {
   UserIcon,
-  BuildingLibraryIcon,
+  BookOpenIcon,
   PhotoIcon,
   CubeIcon,
-  FunnelIcon,
+  Squares2X2Icon,
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
 
 export const AdminSidebar: React.FC = () => {
   const adminLinks = [
-    { name: "Dashboard", href: "/admin", current: true, icon: UserIcon },
+    { name: "Dashboard", href: "/admin", current: true, icon: Squares2X2Icon },
     {
       name: "Users",
       href: "/admin/users",
       current: false,
-      icon: BuildingLibraryIcon,
+      icon: UserIcon,
     },
-    { name: "Books", href: "/admin/books", current: false, icon: PhotoIcon },
-    { name: "Images", href: "/admin/images", current: false, icon: CubeIcon },
-    { name: "Genres", href: "/admin/genres", current: false, icon: FunnelIcon },
+    {
+      name: "Books",
+      href: "/admin/books",
+      current: false,
+      icon: BookOpenIcon,
+    },
+    { name: "Images", href: "/admin/images", current: false, icon: PhotoIcon },
+    { name: "Genres", href: "/admin/genres", current: false, icon: CubeIcon },
   ];
 
   return (
