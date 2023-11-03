@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 import { Spacer } from "@nextui-org/spacer";
 
-import { ChapterList } from "@/app/chapters/_components/ChaptersList";
+import { ChapterList } from "@/app/_chapters/_components/ChaptersList";
 
 import { Cinzel, Bellefair, Reggae_One } from "next/font/google";
 

@@ -11,8 +11,7 @@ import { Providers } from "./providers";
 import { Image } from "@nextui-org/image";
 import { Textarea } from "@nextui-org/input";
 
-import { Topbar } from "./_components/Topbar";
-import { Footer } from "./_components/Footer";
+import { Topbar } from "./_shared/_components/Topbar";
 
 interface RootLayoutProps {
   children: React.ReactNode;

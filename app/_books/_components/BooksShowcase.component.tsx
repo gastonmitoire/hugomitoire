@@ -3,7 +3,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Image, Skeleton } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/books.service";
-import { CustomParticles } from "@/app/shared/_components";
+import { CustomParticles } from "@/app/_shared/_components";
 
 interface BooksShowcaseProps {
   books: EnhancedBookModel[];
