@@ -1,3 +1,5 @@
+import React from "react";
+
 export default function AdminImagesPage() {
   return (
     <section className="grid h-full grid-cols-2 grid-rows-2 gap-10">
