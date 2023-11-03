@@ -4,8 +4,7 @@ import { AdminDashboardWrapper } from "@/app/_admin/_components/AdminDashboardWr
 
 export default function AdminPage() {
   return (
-    <main className="container mx-auto py-20">
-      Admin Page
+    <main className="container mx-auto h-screen py-20">
       <AdminDashboardWrapper />
     </main>
   );
