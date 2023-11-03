@@ -51,7 +51,7 @@ const colorTokens = {
     foreground: "#242423", // darker
   },
   danger: {
-    DEFAULT: "#f36f42",
+    DEFAULT: "#d1495b",
     foreground: "#242423", // darker
   },
 };
