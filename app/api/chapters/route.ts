@@ -1,25 +1,53 @@
 import { NextResponse, NextRequest } from "next/server";
+import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
-export async function POST(request: NextRequest): Promise<Response> {
+async function getChapters(): Promise<NextResponse> {
+  try {
+    const chapters = await prisma.chapter.findMany();
+
+    return NextResponse.json(chapters, {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    const errorResponse: ErrorProps = {
+      statusCode: 500,
+      title: "Error getting the chapters",
+    };
+
+    return new NextResponse(JSON.stringify(errorResponse), {
+      status: errorResponse.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+}
+
+async function createChapter(request: NextRequest): Promise<NextResponse> {
   try {
     const data = await request.json();
 
-    const createdChapter = await prisma.chapter.create({
-      data: {
-        title: data.title,
-        order: data.order,
-        bookId: data.bookId,
-      },
+    const newChapter = await prisma.chapter.create({
+      data: data,
     });
 
-    console.log(createdChapter);
-
-    return NextResponse.json(createdChapter, {
-      status: 200,
+    return NextResponse.json(newChapter, {
+      status: 201,
+      headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.log(error);
-    return NextResponse.error();
+    console.error("Error:", error);
+    const errorResponse: ErrorProps = {
+      statusCode: 500,
+      title: "Error creating the chapter",
+    };
+
+    return NextResponse.json(errorResponse, {
+      status: errorResponse.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
+
+export { getChapters as GET, createChapter as POST };
