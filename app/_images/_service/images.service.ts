@@ -34,7 +34,7 @@ async function update(image: ImageModel) {
   return response as ImageModel;
 }
 
-async function _delete(id: number) {
+async function _delete(id: string) {
   const response = await fetchClient(`/images/${id}`, {
     method: "DELETE",
     headers: {},
