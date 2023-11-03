@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-import { Button, Image } from "@nextui-org/react";
+import { Button, Image, Spacer } from "@nextui-org/react";
 
 import { DropdownZone } from "@/app/_images/_components/DropdownZone";
 
@@ -78,10 +78,18 @@ export function AdminImages({ images }: AdminImagesProps) {
             </picture>
           ))
         ) : (
-          <span className="col-span-full flex items-center justify-center gap-3 py-20 text-white text-opacity-50">
-            <ArchiveBoxXMarkIcon className="h-6 w-6" />
-            Not images found
-          </span>
+          <div className="col-span-full py-20 text-center text-white text-opacity-50">
+            <span className="flex items-center justify-center gap-3">
+              <ArchiveBoxXMarkIcon className="h-6 w-6" />
+              Not images found
+            </span>
+
+            <Spacer y={5} />
+
+            <span className="text-xl font-bold text-lighter text-opacity-30">
+              Drop images here
+            </span>
+          </div>
         )}
       </section>
     </DropdownZone>

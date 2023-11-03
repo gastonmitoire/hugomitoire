@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       : headersList.get("x-invoke-path");
 
   return (
-    <div className="container mx-auto grid h-screen grid-cols-5 py-20">
+    <div className="container mx-auto grid min-h-screen grid-cols-5 py-20">
       <AdminSidebar />
 
       <main className="col-span-4 px-10 pb-3 pt-5">
