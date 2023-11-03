@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
-export async function updateUser(
+async function updateUser(
   request: NextRequest,
   { params }: { params: { id: string } }
 ): Promise<NextResponse> {

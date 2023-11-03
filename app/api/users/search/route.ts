@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/_lib/prisma";
 
-export async function findUser(request: NextRequest): Promise<Response> {
+async function findUser(request: NextRequest): Promise<Response> {
   try {
     const searchParams = request.nextUrl.searchParams;
     const query = searchParams.get("q");
