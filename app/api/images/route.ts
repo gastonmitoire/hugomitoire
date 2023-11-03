@@ -24,6 +24,7 @@ async function getImages() {
     return new Response("Error getting the images", { status: 500 });
   }
 }
+
 async function createImage(request: NextRequest): Promise<Response> {
   try {
     const form = await request.formData();
@@ -60,11 +61,7 @@ async function createImage(request: NextRequest): Promise<Response> {
         url: `/images/${formattedImageName}`,
         mimetype,
         encoding,
-        user: {
-          connect: {
-            id: userId as string,
-          },
-        },
+        userId: userId as string,
       },
     });
 

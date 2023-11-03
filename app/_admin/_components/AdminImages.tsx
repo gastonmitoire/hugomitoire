@@ -3,14 +3,15 @@ import React, { useState } from "react";
 
 import { Button, Image } from "@nextui-org/react";
 
-import { Image as ImageProps } from "@prisma/client";
+import { DropdownZone } from "@/app/_images/_components/DropdownZone";
 
 import { ArchiveBoxXMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
 
+import { Image as ImageModel } from "@prisma/client";
 import { imagesService } from "@/app/_images/_service/images.service";
 
 interface AdminImagesProps {
-  images: ImageProps[];
+  images: ImageModel[];
 }
 
 export function AdminImages({ images }: AdminImagesProps) {
@@ -26,35 +27,63 @@ export function AdminImages({ images }: AdminImagesProps) {
     }
   };
 
-  return (
-    <section className="grid-cols-auto-fill-300 grid gap-5 rounded-3xl border border-light border-opacity-30">
-      {images.length > 0 ? (
-        images.map((image) => (
-          <picture key={image.id} className="relative p-3">
-            <Image
-              src={image.url}
-              alt={image.filename}
-              width={"100%"}
-              height={"100%"}
-            />
+  const handleDrop = async (files: FileList) => {
+    if (files.length > 0) {
+      const image = files[0];
 
-            <Button
-              isIconOnly
-              className="absolute right-0 top-0 z-10"
-              onClick={() => handleOnDelete(image.id)}
-              size="sm"
-              color="danger"
-            >
-              <TrashIcon className="h-6 w-6 text-light" />
-            </Button>
-          </picture>
-        ))
-      ) : (
-        <span className="col-span-full flex items-center justify-center gap-3 py-20 text-white text-opacity-50">
-          <ArchiveBoxXMarkIcon className="h-6 w-6" />
-          Not images found
-        </span>
-      )}
-    </section>
+      // Crear un objeto FormData para enviar la imagen al servidor
+      const formData = new FormData();
+      formData.append("image", image);
+
+      try {
+        // Llamar a tu servicio de creación de imágenes con el FormData directamente
+        const createdImage = await imagesService.create(formData);
+
+        if (createdImage) {
+          // La imagen se creó exitosamente, puedes realizar alguna acción adicional aquí
+          console.log("Imagen creada con éxito:", createdImage);
+
+          // Recargar la página o realizar alguna otra acción necesaria
+          window.location.reload();
+        }
+      } catch (error) {
+        // Manejar cualquier error que pueda ocurrir durante la creación
+        console.error("Error al crear la imagen:", error);
+      }
+    }
+  };
+
+  return (
+    <DropdownZone onDrop={handleDrop}>
+      <section className="grid grid-cols-auto-fill-300 gap-5 rounded-3xl border border-light border-opacity-30">
+        {images.length > 0 ? (
+          images.map((image) => (
+            <picture key={image.id} className="relative p-3">
+              <Image
+                src={image.url}
+                alt={image.filename}
+                width={"100%"}
+                height={"100%"}
+              />
+
+              <Button
+                isIconOnly
+                className="absolute right-0 top-0 z-10"
+                onClick={() => handleOnDelete(image.id)}
+                size="sm"
+                color="danger"
+              >
+                <TrashIcon className="h-6 w-6 text-light" />
+              </Button>
+            </picture>
+          ))
+        ) : (
+          <span className="col-span-full flex items-center justify-center gap-3 py-20 text-white text-opacity-50">
+            <ArchiveBoxXMarkIcon className="h-6 w-6" />
+            Not images found
+          </span>
+        )}
+      </section>
+    </DropdownZone>
   );
 }
