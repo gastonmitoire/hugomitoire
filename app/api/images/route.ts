@@ -58,7 +58,9 @@ async function createImage(request: NextRequest): Promise<Response> {
     const createdImage = await prisma.image.create({
       data: {
         filename: formattedImageName,
-        url: `/images/${formattedImageName}`,
+        url: `${
+          process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") ?? ""
+        }/images/${formattedImageName}`,
         mimetype,
         encoding,
         userId: userId as string,
