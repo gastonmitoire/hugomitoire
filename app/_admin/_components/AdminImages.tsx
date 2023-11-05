@@ -10,6 +10,8 @@ import { ArchiveBoxXMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { Image as ImageModel } from "@prisma/client";
 import { imagesService } from "@/app/_images/_service/images.service";
 
+import { toast } from "sonner";
+
 interface AdminImagesProps {
   images: ImageModel[];
 }
@@ -24,6 +26,8 @@ export function AdminImages({ images }: AdminImagesProps) {
 
     if (deleted) {
       window.location.reload();
+
+      toast.success("Imagen eliminada con éxito", { duration: 3000 });
     }
   };
 
@@ -48,9 +52,15 @@ export function AdminImages({ images }: AdminImagesProps) {
 
         // Recargar la página o realizar alguna otra acción necesaria después de crear todas las imágenes
         window.location.reload();
+
+        // Esperar un corto período de tiempo antes de mostrar el toast
+        toast.success(`${files.length} imágenes creadas con éxito`, {
+          duration: 3000,
+        });
       } catch (error) {
         // Manejar cualquier error que pueda ocurrir durante la creación
         console.error("Error al crear la imagen:", error);
+        toast.error("Error al crear la imagen");
       }
     }
   };
