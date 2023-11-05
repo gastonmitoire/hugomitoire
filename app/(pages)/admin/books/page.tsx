@@ -2,7 +2,7 @@ import { BookFormWrapper } from "@/app/_books/_components/BookFormWrapper.compon
 
 export default function AdminBooksPage() {
   return (
-    <div>
+    <div className="h-full">
       <h1>AdminBooksPage</h1>
 
       <BookFormWrapper />
