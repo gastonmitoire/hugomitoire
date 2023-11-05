@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 
 interface DropdownZoneProps {
-  onDrop: (files: FileList) => void;
+  onDrop: (files: FileList | File | null) => void;
   children: React.ReactNode;
   multiple?: boolean; // Prop opcional para permitir múltiples archivos
 }
