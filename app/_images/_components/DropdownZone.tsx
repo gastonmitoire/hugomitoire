@@ -4,12 +4,14 @@ interface DropdownZoneProps {
   onDrop: (files: FileList | File | null) => void;
   children: React.ReactNode;
   multiple?: boolean; // Prop opcional para permitir múltiples archivos
+  className?: string;
 }
 
 export function DropdownZone({
   onDrop,
   children,
   multiple = false,
+  className,
 }: DropdownZoneProps) {
   const dropZoneRef = useRef(null);
 
@@ -35,7 +37,7 @@ export function DropdownZone({
       ref={dropZoneRef}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      style={{ border: "2px dashed #ccc", padding: "20px" }}
+      className={`border-2 border-dashed border-light p-4 ${className}`}
     >
       <input
         type="file"
