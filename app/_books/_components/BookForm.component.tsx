@@ -226,8 +226,9 @@ export const BookForm: React.FC<BookFormProps> = ({
             name="illustratorId"
             control={control}
             render={({ field }) => (
-              <Input
+              <Select
                 {...field}
+                items={users}
                 label="Illustrator Id"
                 placeholder="Illustrator Id"
                 fullWidth
@@ -237,7 +238,13 @@ export const BookForm: React.FC<BookFormProps> = ({
                   errors.illustratorId?.message ? "invalid" : "valid"
                 }
                 errorMessage={errors.illustratorId?.message}
-              />
+              >
+                {(user) => (
+                  <SelectItem key={user.id} value={user.id}>
+                    {user.username}
+                  </SelectItem>
+                )}
+              </Select>
             )}
           />
 
@@ -259,7 +266,7 @@ export const BookForm: React.FC<BookFormProps> = ({
                 errorMessage={errors.publisherId?.message}
               >
                 {(user) => (
-                  <SelectItem key={user.id} textValue={user.id}>
+                  <SelectItem key={user.id} value={user.id}>
                     {user.username}
                   </SelectItem>
                 )}
