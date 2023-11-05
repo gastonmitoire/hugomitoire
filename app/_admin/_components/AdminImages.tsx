@@ -29,23 +29,25 @@ export function AdminImages({ images }: AdminImagesProps) {
 
   const handleDrop = async (files: FileList) => {
     if (files.length > 0) {
-      const image = files[0];
-
-      // Crear un objeto FormData para enviar la imagen al servidor
-      const formData = new FormData();
-      formData.append("image", image);
-
       try {
-        // Llamar a tu servicio de creación de imágenes con el FormData directamente
-        const createdImage = await imagesService.create(formData);
+        for (let i = 0; i < files.length; i++) {
+          const image = files[i];
 
-        if (createdImage) {
-          // La imagen se creó exitosamente, puedes realizar alguna acción adicional aquí
-          console.log("Imagen creada con éxito:", createdImage);
+          // Crear un objeto FormData para enviar la imagen al servidor
+          const formData = new FormData();
+          formData.append("images", image);
 
-          // Recargar la página o realizar alguna otra acción necesaria
-          window.location.reload();
+          // Llamar a tu servicio de creación de imágenes con el FormData
+          const createdImage = await imagesService.create(formData);
+
+          if (createdImage) {
+            // La imagen se creó exitosamente, puedes realizar alguna acción adicional aquí
+            console.log("Imagen creada con éxito:", createdImage);
+          }
         }
+
+        // Recargar la página o realizar alguna otra acción necesaria después de crear todas las imágenes
+        window.location.reload();
       } catch (error) {
         // Manejar cualquier error que pueda ocurrir durante la creación
         console.error("Error al crear la imagen:", error);
