@@ -59,7 +59,7 @@ async function createImage(request: NextRequest): Promise<Response> {
       data: {
         filename: formattedImageName,
         url: `${
-          process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") ?? ""
+          process.env.NEXT_PUBLIC_API_URL ?? ""
         }/images/${formattedImageName}`,
         mimetype,
         encoding,

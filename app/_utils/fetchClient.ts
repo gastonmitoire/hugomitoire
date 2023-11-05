@@ -7,7 +7,9 @@ export const fetchClient = (url: string, options: {}): Promise<any> => {
 
   const mergedOptions = { ...defaultOptions, ...options };
 
-  return fetch(process.env.NEXT_PUBLIC_API_URL + url, mergedOptions)
+  const formatedUrl = process.env.NEXT_PUBLIC_API_URL + "/api" + url;
+
+  return fetch(formatedUrl, mergedOptions)
     .then((res) => {
       if (res.ok) {
         return res.json();
@@ -16,6 +18,7 @@ export const fetchClient = (url: string, options: {}): Promise<any> => {
       throw new Error("Network response was not ok.");
     })
     .catch((err) => {
+      console.log(formatedUrl, "FORMATED URL");
       throw err;
     });
 };
