@@ -3,9 +3,14 @@ import React, { useRef } from "react";
 interface DropdownZoneProps {
   onDrop: (files: FileList) => void;
   children: React.ReactNode;
+  multiple?: boolean; // Prop opcional para permitir múltiples archivos
 }
 
-export function DropdownZone({ onDrop, children }: DropdownZoneProps) {
+export function DropdownZone({
+  onDrop,
+  children,
+  multiple = false,
+}: DropdownZoneProps) {
   const dropZoneRef = useRef(null);
 
   const handleDrop = (e: React.DragEvent) => {
@@ -35,7 +40,7 @@ export function DropdownZone({ onDrop, children }: DropdownZoneProps) {
       <input
         type="file"
         accept="image/*"
-        multiple={true}
+        multiple={multiple} // Utiliza el prop "multiple" para habilitar/deshabilitar la carga múltiple
         className="hidden"
         onChange={handleFileInput}
       />

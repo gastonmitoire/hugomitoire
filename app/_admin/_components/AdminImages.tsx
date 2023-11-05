@@ -66,7 +66,7 @@ export function AdminImages({ images }: AdminImagesProps) {
   };
 
   return (
-    <DropdownZone onDrop={handleDrop}>
+    <DropdownZone onDrop={handleDrop} multiple>
       <section className="grid grid-cols-auto-fill-300 gap-5 rounded-3xl border border-light border-opacity-30">
         {images.length > 0 ? (
           images.map((image) => (
