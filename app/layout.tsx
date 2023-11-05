@@ -39,7 +39,7 @@ export default function RootLayout(props: RootLayoutProps) {
 
           {props.children}
 
-          <Toaster />
+          <Toaster richColors />
         </Providers>
       </body>
     </html>

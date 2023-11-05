@@ -1,11 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm, Controller, SubmitHandler, Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "sonner";
 
 import {
+  Avatar,
   Button,
   Input,
   Image,
@@ -15,10 +17,7 @@ import {
 } from "@nextui-org/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
-import { DropdownZone } from "@/app/_images/_components/DropdownZone";
-
 import { booksService } from "../_service/books.service";
-import { imagesService } from "@/app/_images/_service/images.service";
 
 import {
   Book as BookModel,
@@ -39,6 +38,8 @@ const schema = yup.object().shape({
   description: yup.string().required(),
   type: yup.string().required(),
   publicationDate: yup.string().required(),
+  cover: yup.string().required(),
+  secondaryImage: yup.string().required(),
   genreId: yup.string().required(),
   illustratorId: yup.string().required(),
   publisherId: yup.string().required(),
@@ -54,12 +55,12 @@ export const BookForm: React.FC<BookFormProps> = ({
   users,
   genres,
 }) => {
-  const [cover, setCover] = useState<string>("");
-  const [secondaryImage, setSecondaryImage] = useState<string>("");
+  const router = useRouter();
 
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors, isDirty, isValid },
   } = useForm<BookFormValues>({
     resolver,
@@ -68,75 +69,34 @@ export const BookForm: React.FC<BookFormProps> = ({
       description: "",
       type: "",
       publicationDate: "",
+      cover: "",
+      secondaryImage: "",
       genreId: "",
       illustratorId: "",
       publisherId: "",
     },
   });
 
+  const watchCover = watch("cover");
+
+  console.log(watchCover);
+
   const onSubmit: SubmitHandler<BookFormValues> = async (data) => {
-    console.log(data);
-    // if (!cover || !secondaryImage) {
-    //   toast.error("Debes seleccionar una imagen y una imagen secundaria", {
-    //     duration: 3000,
-    //   });
-    //   return;
-    // }
-    // // Crear un objeto FormData para enviar la imagen al servidor
-    // const formData = new FormData();
-    // formData.append("images", cover);
-    // formData.append("images", secondaryImage);
+    // Formatear date a type Date
+    const formattedData = {
+      ...data,
+      publicationDate: new Date(data.publicationDate),
+    };
 
-    // const createdImages = (await imagesService.create(
-    //   formData
-    // )) as unknown as ImageModel[];
+    const createdBook = await booksService.create(formattedData);
 
-    // // Obtener urls de las imágenes creadas
-    // const coverUrl = createdImages[0].url;
-    // const secondaryImageUrl = createdImages[1].url;
-
-    // // Formatear date a type Date
-
-    // const formattedData = {
-    //   ...data,
-    //   cover: coverUrl,
-    //   secondaryImage: secondaryImageUrl,
-    //   publicationDate: new Date(data.publicationDate),
-    // };
-
-    // const createdBook = await booksService.create(formattedData);
-
-    // if (createdBook) {
-    //   toast.success("Libro creado con éxito", { duration: 3000 });
-    // }
-  };
-
-  const handleCoverChange = (files: FileList) => {
-    if (files.length > 0) {
-      const file = files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target) {
-          const previewURL = e.target.result;
-          setCover(previewURL as string);
-        }
-      };
-      reader.readAsDataURL(file);
+    if (createdBook) {
+      toast.success("Libro creado con éxito", { duration: 3000 });
     }
-  };
 
-  const handleSecondaryImageChange = (files: FileList) => {
-    if (files.length > 0) {
-      const file = files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target) {
-          const previewURL = e.target.result;
-          setSecondaryImage(previewURL as string);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
+    setTimeout(() => {
+      router.push("/admin/books");
+    }, 1500);
   };
 
   return (
@@ -146,7 +106,7 @@ export const BookForm: React.FC<BookFormProps> = ({
     >
       <span className="col-span-5 flex justify-end">
         <Button type="submit" color="primary">
-          Crear libro
+          Create
         </Button>
       </span>
 
@@ -209,16 +169,27 @@ export const BookForm: React.FC<BookFormProps> = ({
             name="genreId"
             control={control}
             render={({ field }) => (
-              <Input
+              <Select
                 {...field}
-                label="Genre Id"
-                placeholder="Genre Id"
+                items={genres}
+                label="Genre"
+                placeholder="Genre"
                 fullWidth
                 size="lg"
                 variant="bordered"
                 validationState={errors.genreId?.message ? "invalid" : "valid"}
                 errorMessage={errors.genreId?.message}
-              />
+              >
+                {(genre) => (
+                  <SelectItem
+                    key={genre.id}
+                    value={genre.id}
+                    textValue={genre.name}
+                  >
+                    {genre.name}
+                  </SelectItem>
+                )}
+              </Select>
             )}
           />
 
@@ -229,8 +200,8 @@ export const BookForm: React.FC<BookFormProps> = ({
               <Select
                 {...field}
                 items={users}
-                label="Illustrator Id"
-                placeholder="Illustrator Id"
+                label="Illustrator"
+                placeholder="Illustrator"
                 fullWidth
                 size="lg"
                 variant="bordered"
@@ -240,7 +211,11 @@ export const BookForm: React.FC<BookFormProps> = ({
                 errorMessage={errors.illustratorId?.message}
               >
                 {(user) => (
-                  <SelectItem key={user.id} value={user.id}>
+                  <SelectItem
+                    key={user.id}
+                    value={user.id}
+                    textValue={user.username}
+                  >
                     {user.username}
                   </SelectItem>
                 )}
@@ -255,8 +230,8 @@ export const BookForm: React.FC<BookFormProps> = ({
               <Select
                 {...field}
                 items={users}
-                label="Publisher Id"
-                placeholder="Publisher Id"
+                label="Publisher"
+                placeholder="Publisher"
                 fullWidth
                 size="lg"
                 variant="bordered"
@@ -266,7 +241,11 @@ export const BookForm: React.FC<BookFormProps> = ({
                 errorMessage={errors.publisherId?.message}
               >
                 {(user) => (
-                  <SelectItem key={user.id} value={user.id}>
+                  <SelectItem
+                    key={user.id}
+                    value={user.id}
+                    textValue={user.username}
+                  >
                     {user.username}
                   </SelectItem>
                 )}
@@ -296,59 +275,115 @@ export const BookForm: React.FC<BookFormProps> = ({
         </fieldset>
 
         <fieldset className="col-span-2 flex h-full flex-col gap-5">
-          <DropdownZone onDrop={handleCoverChange} className="flex-1">
-            <div className="relative flex h-full items-center justify-center">
-              {cover ? (
-                <>
-                  <Button
-                    color="primary"
-                    variant="ghost"
-                    isIconOnly
-                    className="absolute right-0 top-0"
-                    onClick={() => setCover("")}
-                  >
-                    <XMarkIcon className="h-6 w-6" />
-                  </Button>
-                  <Image src={cover} width={200} height={200} alt="Cover" />
-                </>
-              ) : (
-                <span className="text-center">
-                  <p>Arrastra o selecciona la tapa del libro</p>
-                </span>
+          <div>
+            <Controller
+              name="cover"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  items={images}
+                  label="Cover"
+                  placeholder="Cover"
+                  fullWidth
+                  size="lg"
+                  variant="bordered"
+                  validationState={errors.cover?.message ? "invalid" : "valid"}
+                  errorMessage={errors.cover?.message}
+                  renderValue={(items) => {
+                    return items.map((item) => (
+                      <div key={item.key} className="flex items-center gap-2">
+                        <Avatar
+                          alt={item.data?.filename}
+                          className="flex-shrink-0"
+                          size="sm"
+                          src={item.data?.url}
+                        />
+                        <div className="flex flex-col">
+                          <span>{item.data?.filename}</span>
+                        </div>
+                      </div>
+                    ));
+                  }}
+                >
+                  {(image) => (
+                    <SelectItem
+                      key={image.url}
+                      value={image.url}
+                      textValue={image.url}
+                      startContent={
+                        <Image
+                          src={image.url}
+                          width={50}
+                          height={50}
+                          alt={image.filename}
+                        />
+                      }
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>{image.filename}</span>
+                      </div>
+                    </SelectItem>
+                  )}
+                </Select>
               )}
-            </div>
-          </DropdownZone>
+            />
+          </div>
 
-          <DropdownZone
-            onDrop={handleSecondaryImageChange}
-            className="flex-0 min-h-[30%]"
-          >
-            <div className="relative flex h-full items-center justify-center">
-              {secondaryImage ? (
-                <>
-                  <Button
-                    color="primary"
-                    variant="ghost"
-                    isIconOnly
-                    className="absolute right-0 top-0"
-                    onClick={() => setSecondaryImage("")}
+          <Controller
+            name="secondaryImage"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                items={images}
+                label="Secondary Image"
+                placeholder="Secondary Image"
+                fullWidth
+                size="lg"
+                variant="bordered"
+                validationState={
+                  errors.secondaryImage?.message ? "invalid" : "valid"
+                }
+                errorMessage={errors.secondaryImage?.message}
+                renderValue={(items) => {
+                  return items.map((item) => (
+                    <div key={item.key} className="flex items-center gap-2">
+                      <Avatar
+                        alt={item.data?.filename}
+                        className="flex-shrink-0"
+                        size="sm"
+                        src={item.data?.url}
+                      />
+                      <div className="flex flex-col">
+                        <span>{item.data?.filename}</span>
+                      </div>
+                    </div>
+                  ));
+                }}
+              >
+                {(image) => (
+                  <SelectItem
+                    key={image.url}
+                    value={image.url}
+                    textValue={image.url}
+                    startContent={
+                      <Image
+                        src={image.url}
+                        width={50}
+                        height={50}
+                        alt={image.filename}
+                      />
+                    }
                   >
-                    <XMarkIcon className="h-6 w-6" />
-                  </Button>
-                  <Image
-                    src={secondaryImage}
-                    width={200}
-                    height={200}
-                    alt="Secondary Image"
-                  />
-                </>
-              ) : (
-                <span className="text-center">
-                  <p>Arrastra o selecciona la imagen secundaria del libro</p>
-                </span>
-              )}
-            </div>
-          </DropdownZone>
+                    <div className="flex items-center justify-between">
+                      <span>{image.filename}</span>
+                    </div>
+                  </SelectItem>
+                )}
+              </Select>
+            )}
+          />
         </fieldset>
       </div>
     </form>
