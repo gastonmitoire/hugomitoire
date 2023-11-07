@@ -8,6 +8,7 @@ const montserrat = Montserrat({ subsets: ["latin-ext"] });
 import { register } from "swiper/element/bundle";
 import { Providers } from "./providers";
 
+import { Toaster } from "sonner";
 import { Image } from "@nextui-org/image";
 import { Textarea } from "@nextui-org/input";
 
@@ -37,6 +38,8 @@ export default function RootLayout(props: RootLayoutProps) {
           </span>
 
           {props.children}
+
+          <Toaster richColors />
         </Providers>
       </body>
     </html>

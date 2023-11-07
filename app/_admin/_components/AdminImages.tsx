@@ -10,6 +10,8 @@ import { ArchiveBoxXMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { Image as ImageModel } from "@prisma/client";
 import { imagesService } from "@/app/_images/_service/images.service";
 
+import { toast } from "sonner";
+
 interface AdminImagesProps {
   images: ImageModel[];
 }
@@ -24,37 +26,47 @@ export function AdminImages({ images }: AdminImagesProps) {
 
     if (deleted) {
       window.location.reload();
+
+      toast.success("Imagen eliminada con éxito", { duration: 3000 });
     }
   };
 
   const handleDrop = async (files: FileList) => {
     if (files.length > 0) {
-      const image = files[0];
-
-      // Crear un objeto FormData para enviar la imagen al servidor
-      const formData = new FormData();
-      formData.append("image", image);
-
       try {
-        // Llamar a tu servicio de creación de imágenes con el FormData directamente
-        const createdImage = await imagesService.create(formData);
+        for (let i = 0; i < files.length; i++) {
+          const image = files[i];
 
-        if (createdImage) {
-          // La imagen se creó exitosamente, puedes realizar alguna acción adicional aquí
-          console.log("Imagen creada con éxito:", createdImage);
+          // Crear un objeto FormData para enviar la imagen al servidor
+          const formData = new FormData();
+          formData.append("images", image);
 
-          // Recargar la página o realizar alguna otra acción necesaria
-          window.location.reload();
+          // Llamar a tu servicio de creación de imágenes con el FormData
+          const createdImage = await imagesService.create(formData);
+
+          if (createdImage) {
+            // La imagen se creó exitosamente, puedes realizar alguna acción adicional aquí
+            console.log("Imagen creada con éxito:", createdImage);
+          }
         }
+
+        // Recargar la página o realizar alguna otra acción necesaria después de crear todas las imágenes
+        window.location.reload();
+
+        // Esperar un corto período de tiempo antes de mostrar el toast
+        toast.success(`${files.length} imágenes creadas con éxito`, {
+          duration: 3000,
+        });
       } catch (error) {
         // Manejar cualquier error que pueda ocurrir durante la creación
         console.error("Error al crear la imagen:", error);
+        toast.error("Error al crear la imagen");
       }
     }
   };
 
   return (
-    <DropdownZone onDrop={handleDrop}>
+    <DropdownZone onDrop={handleDrop} multiple>
       <section className="grid grid-cols-auto-fill-300 gap-5 rounded-3xl border border-light border-opacity-30">
         {images.length > 0 ? (
           images.map((image) => (

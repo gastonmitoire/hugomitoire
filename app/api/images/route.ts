@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { ErrorProps } from "next/error";
+import { File } from "buffer";
 
 import prisma from "@/app/_lib/prisma";
 
@@ -28,54 +29,48 @@ async function getImages() {
 async function createImage(request: NextRequest): Promise<Response> {
   try {
     const form = await request.formData();
-
-    // Capture the userId field from the form data and verify it exists
     const userId = form.get("userId");
 
-    // Find the 'image' field in the form data
-    const imageField = Array.from(form.entries()).find(
-      (entry): entry is [string, File] => entry[0] === "image"
-    );
+    const imageFields = form.getAll("images");
 
-    if (!imageField) {
-      throw new Error("Image field not found in the form data");
+    if (!imageFields.length) {
+      throw new Error("No image files found in the form data");
     }
 
-    const [fieldName, imageFile] = imageField;
+    const createdImages = [];
 
-    // remove spaces from the filename
-    const imageName = imageFile.name.replace(/\s/g, "-");
+    for (const imageField of imageFields) {
+      if (imageField instanceof File) {
+        const imageName = imageField.name.replace(/\s/g, "-");
+        const mimetype = imageField.type;
+        const encoding = "base64";
 
-    // Set mimetype and encoding values
-    const mimetype = imageFile.type;
-    const encoding = "base64"; // Typically used for binary files
+        const date = new Date();
+        const formattedImageName = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${imageName}`;
 
-    // Format image name with date and time without double points
-    const date = new Date();
-    const formattedImageName = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${imageName}`;
+        const createdImage = await prisma.image.create({
+          data: {
+            filename: formattedImageName,
+            url: `${
+              process.env.NEXT_PUBLIC_API_URL ?? ""
+            }/images/${formattedImageName}`,
+            mimetype,
+            encoding,
+            userId: userId as string,
+          },
+        });
 
-    // Create the image in the database, including userId
-    const createdImage = await prisma.image.create({
-      data: {
-        filename: formattedImageName,
-        url: `/images/${formattedImageName}`,
-        mimetype,
-        encoding,
-        userId: userId as string,
-      },
-    });
+        const imageBuffer = Buffer.from(await imageField.arrayBuffer());
+        const imageFilePath = path.join(imagePath, formattedImageName);
+        await fsPromises.writeFile(imageFilePath, imageBuffer);
 
-    // Convert ArrayBuffer to Buffer
-    const imageBuffer = Buffer.from(await imageFile.arrayBuffer());
+        createdImages.push(createdImage);
+      }
+    }
 
-    // Write the image file to the public/images folder
-    const imageFilePath = path.join(imagePath, formattedImageName);
-    await fsPromises.writeFile(imageFilePath, imageBuffer);
-
-    return NextResponse.json(createdImage, { status: 200 });
+    return NextResponse.json(createdImages, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
-
     return new Response("Error processing the form", { status: 500 });
   }
 }
