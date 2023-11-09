@@ -23,7 +23,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         rotate: 0,
       },
       visible: {
-        opacity: 0.5,
+        opacity: 0.7,
         scale: 1,
         rotate: rotation,
         transition: {
@@ -45,7 +45,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
       <div className="flex h-full w-full cursor-pointer items-center">
         {isLoaded ? (
           <Image
-            src={books[0].cover}
+            src={books[8].cover}
             width="100%"
             height="100%"
             alt="Book Cover"
@@ -88,21 +88,21 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative grid min-h-screen w-full grid-flow-row items-center justify-center gap-10 px-3 py-20 sm:px-20 xl:grid-cols-3 xl:gap-10 xl:py-0"
+      className="relative grid min-h-screen w-full grid-flow-row items-center justify-center gap-10 px-3 py-20 sm:px-20 md:grid-cols-3 xl:grid-rows-2 xl:gap-10 xl:py-20"
     >
-      <div className="grid h-full w-full justify-center xl:flex xl:py-20">
+      <div className="col-span-1 grid h-full w-full justify-center md:col-start-2 xl:col-start-auto xl:row-span-2 xl:flex">
         <FeaturedItem />
       </div>
-      <div className="grid h-full w-full grid-cols-2 place-items-center gap-10 sm:grid-cols-4 xl:grid-cols-2 xl:grid-rows-2 xl:py-20">
+      <div className="grid h-full w-full grid-cols-2 place-items-center gap-10 sm:grid-cols-4 md:col-span-3 xl:col-span-2 xl:grid-cols-4">
         <AnimatePresence>
-          {[0, 1, 2, 3].map((index) => (
+          {[7, 6, 5, 4].map((index) => (
             <BookItem key={index} index={index} />
           ))}
         </AnimatePresence>
       </div>
-      <div className="grid h-full w-full grid-cols-2 place-items-center gap-10 sm:grid-cols-4 xl:grid-cols-2 xl:grid-rows-2 xl:py-20">
+      <div className="grid h-full w-full grid-cols-2 place-items-center gap-10 sm:grid-cols-4 md:col-span-3 xl:col-span-2 xl:grid-cols-4">
         <AnimatePresence>
-          {[4, 5, 6, 7].map((index) => (
+          {[3, 2, 1, 0].map((index) => (
             <BookItem key={index} index={index} />
           ))}
         </AnimatePresence>
