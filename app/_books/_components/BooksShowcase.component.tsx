@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Image, Skeleton } from "@nextui-org/react";
+import { Image, Link, Skeleton } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/books.service";
 import { CustomParticles } from "@/app/_shared/_components";
 
@@ -44,13 +44,15 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
     return (
       <div className="flex h-full w-full cursor-pointer items-center">
         {isLoaded ? (
-          <Image
-            src={books[8].cover}
-            width="100%"
-            height="100%"
-            alt="Book Cover"
-            radius="none"
-          />
+          <Link href={`/libros/${books[8].slug}`}>
+            <Image
+              src={books[8].cover}
+              width="100%"
+              height="100%"
+              alt="Book Cover"
+              radius="none"
+            />
+          </Link>
         ) : (
           <Skeleton className="h-full w-full"></Skeleton>
         )}
@@ -60,7 +62,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
 
   const BookItem = ({ index }: { index: number }) => {
     return (
-      <motion.div
+      <motion.figure
         variants={bookItemVariants(index)}
         initial="hidden"
         animate="visible"
@@ -68,18 +70,19 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         className="flex h-full w-full max-w-sm cursor-pointer items-center justify-center"
       >
         {isLoaded ? (
-          <Image
-            src={books[index].cover}
-            width="100%"
-            height="100%"
-            alt="Book Cover"
-            radius="none"
-            className="mx-auto"
-          />
+          <Link href={`/libros/${books[index].slug}`}>
+            <Image
+              src={books[index].cover}
+              width="100%"
+              height="100%"
+              alt="Book Cover"
+              radius="none"
+            />
+          </Link>
         ) : (
           <Skeleton className="h-full w-full"></Skeleton>
         )}
-      </motion.div>
+      </motion.figure>
     );
   };
 
