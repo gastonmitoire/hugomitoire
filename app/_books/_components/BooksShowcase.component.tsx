@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Image, Link, Skeleton } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/books.service";
@@ -10,12 +10,12 @@ interface BooksShowcaseProps {
 }
 
 export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
-  const rotations = [3, -5, -4, 4, 3, -5, -4, 4]; // Conjunto predefinido de rotaciones
+  const rotations = [3, -5, -4, 4, 3, -5, -4, 4];
 
   const isLoaded = books.length > 0;
 
   const bookItemVariants = (index: number) => {
-    const rotation = rotations[index % rotations.length]; // Asignar rotación en función de la posición
+    const rotation = rotations[index % rotations.length];
     return {
       hidden: {
         opacity: 0,
@@ -26,8 +26,9 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         opacity: 0.7,
         scale: 1,
         rotate: rotation,
+        borderRadius: "7%",
         transition: {
-          delay: index * 0.1, // Agregar un retraso al ingreso basado en la posición
+          delay: index * 0.1,
           duration: 0.3,
           ease: "easeInOut",
         },
@@ -36,6 +37,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         opacity: 1,
         scale: 1.1,
         rotate: 0,
+        borderRadius: 0,
       },
     };
   };
@@ -61,13 +63,25 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
   };
 
   const BookItem = ({ index }: { index: number }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleHover = () => {
+      setIsHovered(true);
+    };
+
+    const handleLeave = () => {
+      setTimeout(() => {
+        setIsHovered(false);
+      }, 400);
+    };
+
     return (
       <motion.figure
         variants={bookItemVariants(index)}
         initial="hidden"
         animate="visible"
         whileHover="whileHover"
-        className="flex h-full w-full max-w-sm cursor-pointer items-center justify-center"
+        className="flex h-full w-full max-w-sm cursor-pointer items-center justify-center overflow-hidden"
       >
         {isLoaded ? (
           <Link href={`/libros/${books[index].slug}`}>
