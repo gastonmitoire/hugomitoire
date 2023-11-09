@@ -14,7 +14,7 @@ async function getAll() {
   return genres as GenreModel[];
 }
 
-async function create(genre: Omit<GenreModel, "id">) {
+async function create(genre: Omit<GenreModel, "id" | "slug">) {
   const response = await fetchClient("/genres", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
