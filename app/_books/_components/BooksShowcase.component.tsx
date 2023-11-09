@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Image, Link, Skeleton } from "@nextui-org/react";
+import { Image, Skeleton } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/books.service";
 import { CustomParticles } from "@/app/_shared/_components";
 
@@ -26,7 +27,6 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         opacity: 0.7,
         scale: 1,
         rotate: rotation,
-        borderRadius: "7%",
         transition: {
           delay: index * 0.1,
           duration: 0.3,
@@ -40,6 +40,16 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         borderRadius: 0,
       },
     };
+  };
+
+  const bookItemImageVariants = {
+    whileHover: {
+      borderRadius: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut",
+      },
+    },
   };
 
   const FeaturedItem = () => {
@@ -63,34 +73,24 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
   };
 
   const BookItem = ({ index }: { index: number }) => {
-    const [isHovered, setIsHovered] = useState(false);
-
-    const handleHover = () => {
-      setIsHovered(true);
-    };
-
-    const handleLeave = () => {
-      setTimeout(() => {
-        setIsHovered(false);
-      }, 400);
-    };
-
     return (
       <motion.figure
         variants={bookItemVariants(index)}
         initial="hidden"
         animate="visible"
         whileHover="whileHover"
-        className="flex h-full w-full max-w-sm cursor-pointer items-center justify-center overflow-hidden"
+        className="flex h-full w-full max-w-sm cursor-pointer items-center justify-center"
       >
         {isLoaded ? (
           <Link href={`/libros/${books[index].slug}`}>
             <Image
+              as={motion.img}
+              variants={bookItemImageVariants}
+              whileHover="whileHover"
               src={books[index].cover}
               width="100%"
               height="100%"
               alt="Book Cover"
-              radius="none"
             />
           </Link>
         ) : (
