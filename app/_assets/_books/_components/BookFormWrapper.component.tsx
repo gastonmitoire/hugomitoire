@@ -2,9 +2,9 @@ import React from "react";
 
 import { BookForm } from "./BookForm.component";
 
-import { genresService } from "@/app/_genres/_service/genres.service";
-import { imagesService } from "@/app/_images/_service/images.service";
-import { usersService } from "@/app/_users/_service/users.service";
+import { genresService } from "../../_genres/_service/genres.service";
+import { imagesService } from "../../_images/_service/images.service";
+import { usersService } from "../../_users/_service/users.service";
 
 export const BookFormWrapper: React.FC = async () => {
   const genres = await genresService.getAll();

@@ -3,12 +3,12 @@ import React, { useState } from "react";
 
 import { Button, Image, Spacer } from "@nextui-org/react";
 
-import { DropdownZone } from "@/app/_images/_components/DropdownZone";
+import { DropdownZone } from "../../_images/_components/DropdownZone";
 
 import { ArchiveBoxXMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
 
 import { Image as ImageModel } from "@prisma/client";
-import { imagesService } from "@/app/_images/_service/images.service";
+import { imagesService } from "../../_images/_service/images.service";
 
 import { toast } from "sonner";
 
