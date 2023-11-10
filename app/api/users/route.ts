@@ -6,7 +6,7 @@ async function getUsers(): Promise<NextResponse> {
   try {
     const users = await prisma.user.findMany();
 
-    return new NextResponse(JSON.stringify(users), {
+    return NextResponse.json(users, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -17,7 +17,7 @@ async function getUsers(): Promise<NextResponse> {
       title: "Error getting the users",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
@@ -37,7 +37,7 @@ async function createUser(request: NextRequest): Promise<NextResponse> {
       },
     });
 
-    return new NextResponse(JSON.stringify(newUser), {
+    return NextResponse.json(newUser, {
       status: 201,
       headers: { "Content-Type": "application/json" },
     });
@@ -48,7 +48,7 @@ async function createUser(request: NextRequest): Promise<NextResponse> {
       title: "Error creating the user",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });

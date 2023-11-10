@@ -17,7 +17,7 @@ async function getBooks(): Promise<NextResponse> {
       title: "Error getting the books",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
@@ -38,6 +38,26 @@ async function createBook(request: NextRequest): Promise<NextResponse> {
     const checkDateISO = (date: string) => {
       return new Date(date).toISOString();
     };
+
+    const generatedSlug = generateSlug(data.title);
+
+    const slugExists = await prisma.book.findFirst({
+      where: {
+        slug: generatedSlug,
+      },
+    });
+
+    if (slugExists) {
+      const errorResponse: ErrorProps = {
+        statusCode: 400,
+        title: "A book with this title already exists",
+      };
+
+      return NextResponse.json(errorResponse, {
+        status: errorResponse.statusCode,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     data.slug = generateSlug(data.title);
     data.publicationDate = checkDateISO(data.publicationDate);

@@ -18,11 +18,21 @@ async function getImages() {
       throw new Error("Images not found");
     }
 
-    return NextResponse.json(images);
+    return NextResponse.json(images, {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Error:", error);
+    const errorProps: ErrorProps = {
+      statusCode: 500,
+      title: "Internal Server Error",
+    };
 
-    return new Response("Error getting the images", { status: 500 });
+    return NextResponse.json(errorProps, {
+      status: errorProps.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
 
@@ -41,12 +51,13 @@ async function createImage(request: NextRequest): Promise<Response> {
 
     for (const imageField of imageFields) {
       if (imageField instanceof File) {
-        const imageName = imageField.name.replace(/\s/g, "-");
+        // remove all spaces and special characters from the image name
+        const imageName = imageField.name.replace(/[^a-zA-Z0-9.]/g, "-");
         const mimetype = imageField.type;
         const encoding = "base64";
 
         const date = new Date();
-        const formattedImageName = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${imageName}`;
+        const formattedImageName = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date.getMinutes()}_${imageName}`;
 
         const createdImage = await prisma.image.create({
           data: {
@@ -71,7 +82,15 @@ async function createImage(request: NextRequest): Promise<Response> {
     return NextResponse.json(createdImages, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
-    return new Response("Error processing the form", { status: 500 });
+    const errorProps: ErrorProps = {
+      statusCode: 500,
+      title: "Internal Server Error",
+    };
+
+    return NextResponse.json(errorProps, {
+      status: errorProps.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
 

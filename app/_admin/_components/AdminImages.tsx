@@ -17,7 +17,7 @@ interface AdminImagesProps {
 }
 
 export function AdminImages({ images }: AdminImagesProps) {
-  const handleOnDelete = async (id: string) => {
+  const handleDelete = async (id: string) => {
     const confirm = window.confirm(`Seguro que desea eliminar la imagen?`);
 
     if (!confirm) return;
@@ -81,7 +81,7 @@ export function AdminImages({ images }: AdminImagesProps) {
               <Button
                 isIconOnly
                 className="absolute right-0 top-0 z-10"
-                onClick={() => handleOnDelete(image.id)}
+                onClick={() => handleDelete(image.id)}
                 size="sm"
                 color="danger"
               >
