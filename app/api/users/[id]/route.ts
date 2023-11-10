@@ -15,7 +15,7 @@ async function updateUser(
         title: "Missing user id",
       };
 
-      return new NextResponse(JSON.stringify(errorResponse), {
+      return NextResponse.json(errorResponse, {
         status: errorResponse.statusCode,
         headers: { "Content-Type": "application/json" },
       });
@@ -33,7 +33,7 @@ async function updateUser(
       },
     });
 
-    return new NextResponse(JSON.stringify(updatedUser), {
+    return NextResponse.json(updatedUser, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -44,7 +44,7 @@ async function updateUser(
       title: "Error updating the user",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });
@@ -68,7 +68,7 @@ async function deleteUser(
         title: "Missing user id",
       };
 
-      return new NextResponse(JSON.stringify(errorResponse), {
+      return NextResponse.json(errorResponse, {
         status: errorResponse.statusCode,
         headers: { "Content-Type": "application/json" },
       });
@@ -78,7 +78,7 @@ async function deleteUser(
       where: { id: id },
     });
 
-    return new NextResponse(JSON.stringify(deletedUser), {
+    return NextResponse.json(deletedUser, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -89,7 +89,7 @@ async function deleteUser(
       title: "Error deleting the user",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });

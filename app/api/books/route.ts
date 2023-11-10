@@ -17,7 +17,7 @@ async function getBooks(): Promise<NextResponse> {
       title: "Error getting the books",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });

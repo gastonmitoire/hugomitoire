@@ -17,7 +17,7 @@ async function getChapters(): Promise<NextResponse> {
       title: "Error getting the chapters",
     };
 
-    return new NextResponse(JSON.stringify(errorResponse), {
+    return NextResponse.json(errorResponse, {
       status: errorResponse.statusCode,
       headers: { "Content-Type": "application/json" },
     });

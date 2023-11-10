@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
+import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
 async function findUser(request: NextRequest): Promise<Response> {
@@ -34,14 +35,21 @@ async function findUser(request: NextRequest): Promise<Response> {
       },
     });
 
-    return new NextResponse(JSON.stringify(users), {
+    return NextResponse.json(users, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Error:", error);
+    const errorResponse: ErrorProps = {
+      statusCode: 500,
+      title: "Error finding the user",
+    };
 
-    return new Response("Error getting the users", { status: 500 });
+    return NextResponse.json(errorResponse, {
+      status: errorResponse.statusCode,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
 
