@@ -2,14 +2,15 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import { EnhancedBookModel } from "@/app/_books/_service/books.service";
-
 import { Button, Image } from "@nextui-org/react";
 import { toast } from "sonner";
 
 import { TrashIcon } from "@heroicons/react/20/solid";
 
-import { booksService } from "@/app/_books/_service/books.service";
+import {
+  booksService,
+  EnhancedBookModel,
+} from "../../_books/_service/books.service";
 
 interface AdminBooksProps {
   books: EnhancedBookModel[];

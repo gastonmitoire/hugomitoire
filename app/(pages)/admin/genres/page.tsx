@@ -1,9 +1,9 @@
 import { Spacer } from "@nextui-org/spacer";
 
-import { GenreFormWrapper } from "@/app/_genres/_components/GenreFormWrapper.component";
-import { GenreListWrapper } from "@/app/_genres/_components/GenreListWrapper.component";
+import { GenreFormWrapper } from "@/app/_assets/_genres/_components/GenreFormWrapper.component";
+import { GenreListWrapper } from "@/app/_assets/_genres/_components/GenreListWrapper.component";
 
-import { genresService } from "@/app/_genres/_service/genres.service";
+import { genresService } from "@/app/_assets/_genres/_service/genres.service";
 
 export default async function AdminGenresPage() {
   return (
