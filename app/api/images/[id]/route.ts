@@ -44,7 +44,7 @@ async function deleteImage(
     }
 
     // Delete the image from the database
-    await prisma.image.delete({
+    const deletedImage = await prisma.image.delete({
       where: { id },
     });
 
@@ -52,7 +52,7 @@ async function deleteImage(
     const imageFilePath = path.join(imagePath, image.filename);
     await fsPromises.unlink(imageFilePath);
 
-    return NextResponse.json(image, {
+    return NextResponse.json(deletedImage, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
