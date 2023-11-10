@@ -13,12 +13,11 @@ export const fetchClient = (url: string, options: {}): Promise<any> => {
     .then((res) => {
       if (res.ok) {
         return res.json();
+      } else {
+        return res.json().then((err) => Promise.reject(err));
       }
-
-      throw new Error("Network response was not ok.");
     })
     .catch((err) => {
-      console.log(formatedUrl, "FORMATED URL");
-      throw err;
+      return Promise.reject(err);
     });
 };

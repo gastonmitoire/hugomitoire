@@ -82,21 +82,25 @@ export const BookForm: React.FC<BookFormProps> = ({
   console.log(watchCover);
 
   const onSubmit: SubmitHandler<BookFormValues> = async (data) => {
-    // Formatear date a type Date
-    const formattedData = {
-      ...data,
-      publicationDate: new Date(data.publicationDate),
-    };
+    try {
+      // Formatear date a type Date
+      const formattedData = {
+        ...data,
+        publicationDate: new Date(data.publicationDate),
+      };
 
-    const createdBook = await booksService.create(formattedData);
+      const createdBook = await booksService.create(formattedData);
 
-    if (createdBook) {
-      toast.success("Libro creado con éxito", { duration: 3000 });
+      if (createdBook) {
+        toast.success("Libro creado con éxito", { duration: 3000 });
+      }
+
+      setTimeout(() => {
+        router.push("/admin/books");
+      }, 1500);
+    } catch (error: any | unknown) {
+      toast.error(error.title, { duration: 3000 });
     }
-
-    setTimeout(() => {
-      router.push("/admin/books");
-    }, 1500);
   };
 
   return (
