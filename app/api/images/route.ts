@@ -7,7 +7,7 @@ import prisma from "@/app/_lib/prisma";
 
 import { promises as fsPromises } from "fs";
 import path from "path";
-const imagePath = path.join(process.cwd(), "public", "images");
+const imagePath = path.join(process.cwd(), "public", "assets", "images");
 
 async function getImages() {
   try {
@@ -64,7 +64,7 @@ async function createImage(request: NextRequest): Promise<Response> {
             filename: formattedImageName,
             url: `${
               process.env.NEXT_PUBLIC_API_URL ?? ""
-            }/images/${formattedImageName}`,
+            }/assets/images/${formattedImageName}`,
             mimetype,
             encoding,
             userId: userId as string,

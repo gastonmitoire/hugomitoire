@@ -4,9 +4,9 @@ import { Spacer } from "@nextui-org/spacer";
 
 import Loading from "./loading";
 
-import { BookFeaturedWrapper } from "../_assets/_books/_components/BookFeaturedWrapper.component";
-import { BookGridWrapper } from "../_assets/_books/_components/BookGridWrapper.component";
-import { BooksShowcaseWrapper } from "../_assets/_books/_components/BooksShowcaseWrapper.component";
+import { BookFeaturedWrapper } from "../_books/_components/BookFeaturedWrapper.component";
+import { BookGridWrapper } from "../_books/_components/BookGridWrapper.component";
+import { BooksShowcaseWrapper } from "../_books/_components/BooksShowcaseWrapper.component";
 
 export default async function Home() {
   return (

@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 
 import { Spacer } from "@nextui-org/spacer";
 
-import { AdminSidebar } from "@/app/_assets/_admin/_components/AdminSidebar";
+import { AdminSidebar } from "@/app/_admin/_components/AdminSidebar";
 
 interface AdminLayoutProps extends React.PropsWithChildren<{}> {}
 
