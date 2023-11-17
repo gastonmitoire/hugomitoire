@@ -5,7 +5,7 @@ import { promises as fsPromises } from "fs";
 import path from "path";
 
 import prisma from "@/app/_lib/prisma";
-const imagePath = path.join(process.cwd(), "public", "images");
+const imagePath = path.join(process.cwd(), "public", "assets", "images");
 
 async function deleteImage(
   request: NextRequest,
@@ -44,15 +44,24 @@ async function deleteImage(
     }
 
     // Delete the image from the database
-    await prisma.image.delete({
+    const deletedImage = await prisma.image.delete({
       where: { id },
     });
 
     // Delete the image file from the public/images folder
     const imageFilePath = path.join(imagePath, image.filename);
-    await fsPromises.unlink(imageFilePath);
+    await fsPromises
+      .unlink(imageFilePath)
+      .then(() => {
+        console.log(`Deleted image from filesystem: ${imageFilePath}`);
+      })
+      .catch((error) => {
+        console.error(
+          `Error deleting from filesystem: ${imageFilePath}: ${error}`
+        );
+      });
 
-    return NextResponse.json(image, {
+    return NextResponse.json(deletedImage, {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });

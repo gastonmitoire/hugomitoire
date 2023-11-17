@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Button, Image, Spacer } from "@nextui-org/react";
 
@@ -17,17 +18,24 @@ interface AdminImagesProps {
 }
 
 export function AdminImages({ images }: AdminImagesProps) {
+  const router = useRouter();
+
   const handleDelete = async (id: string) => {
-    const confirm = window.confirm(`Seguro que desea eliminar la imagen?`);
+    try {
+      const confirm = window.confirm(`Seguro que desea eliminar la imagen?`);
 
-    if (!confirm) return;
+      if (!confirm) return;
 
-    const deleted = await imagesService.delete(id);
+      const deleted = await imagesService.delete(id);
 
-    if (deleted) {
-      window.location.reload();
+      if (deleted) {
+        router.refresh();
 
-      toast.success("Imagen eliminada con éxito", { duration: 3000 });
+        toast.success("Imagen eliminada con éxito", { duration: 3000 });
+      }
+    } catch (error: any | unknown) {
+      router.refresh();
+      toast.error(error.title);
     }
   };
 
