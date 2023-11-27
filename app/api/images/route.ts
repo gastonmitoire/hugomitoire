@@ -6,6 +6,7 @@ import { File } from "buffer";
 import prisma from "@/app/_lib/prisma";
 
 import { promises as fsPromises } from "fs";
+const { writeFile } = fsPromises;
 import path from "path";
 const imagePath = path.join(process.cwd(), "public", "assets", "images");
 
@@ -71,9 +72,11 @@ async function createImage(request: NextRequest): Promise<Response> {
           },
         });
 
-        const imageBuffer = Buffer.from(await imageField.arrayBuffer());
-        const imageFilePath = path.join(imagePath, formattedImageName);
-        await fsPromises.writeFile(imageFilePath, imageBuffer);
+        const bytes = await imageField.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+
+        const path = `${imagePath}/${formattedImageName}`;
+        await writeFile(path, buffer);
 
         createdImages.push(createdImage);
       }
