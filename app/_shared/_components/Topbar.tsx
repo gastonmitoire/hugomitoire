@@ -53,7 +53,7 @@ function LinkItem({ href, pathname, children }: any) {
 
 export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
   return (
-    <Navbar maxWidth="full" className="px-5">
+    <Navbar maxWidth="full" className="px-5" shouldHideOnScroll>
       <NavbarBrand>
         <Link href="/admin" color="foreground">
           <p className={`text-3xl font-bold text-inherit ${cinzel.className}`}>

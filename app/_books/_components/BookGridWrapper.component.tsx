@@ -8,10 +8,10 @@ import { booksService } from "../_service/books.service";
 
 export const BookGridWrapper: React.FC = async () => {
   const selectedSlugs = [
-    "los-ojos-de-mariel",
-    "los-ojos-de-mariel",
-    "los-ojos-de-mariel",
-    "los-ojos-de-mariel",
+    "criaturas-celestes",
+    "crispn-soto",
+    "historia-de-un-nio-lobo",
+    "mensajes-del-mas-all",
   ];
 
   const selectedBooks = async () => {

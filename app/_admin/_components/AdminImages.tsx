@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import S3 from "aws-sdk/clients/s3";
-import { v4 as uuidv4 } from "uuid";
 
 import { Button, Image, Spacer } from "@nextui-org/react";
 
@@ -12,6 +10,7 @@ import { ArchiveBoxXMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
 
 import { Image as ImageModel } from "@prisma/client";
 import { imagesService } from "../../_images/_service/images.service";
+import { uploadS3File, deleteS3File } from "@/app/_utils";
 
 import { toast } from "sonner";
 
@@ -19,20 +18,16 @@ interface AdminImagesProps {
   images: ImageModel[];
 }
 
-const s3 = new S3({
-  accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
-  region: process.env.NEXT_PUBLIC_AWS_REGION,
-});
-
 export function AdminImages({ images }: AdminImagesProps) {
   const router = useRouter();
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string, url: string) => {
     try {
       const confirm = window.confirm(`Seguro que desea eliminar la imagen?`);
 
       if (!confirm) return;
+
+      deleteS3File(url);
 
       const deleted = await imagesService.delete(id);
 
@@ -48,42 +43,21 @@ export function AdminImages({ images }: AdminImagesProps) {
   };
 
   const handleDrop = async (files: FileList) => {
-    const bucketName = process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME;
-
-    if (!bucketName) {
-      console.error(
-        "El nombre del bucket S3 no está configurado correctamente."
-      );
-      return;
-    }
-
     if (files.length > 0) {
       try {
         for (let i = 0; i < files.length; i++) {
           const image = files[i];
 
-          const fileName = `${uuidv4()}-${image.name}`;
+          const uploadedUrl = (await uploadS3File(image)) as string;
 
-          const params = {
-            Bucket: bucketName,
-            Key: fileName,
-            Body: image,
-            ContentType: image.type,
-          };
-
-          const uploaded = await s3.upload(params).promise();
-
-          if (!uploaded) {
-            console.error("Error al subir la imagen:", fileName);
+          if (!uploadedUrl) {
             toast.error("Error al subir la imagen");
             return;
           }
 
-          console.log("Imagen subida con éxito:", fileName);
-
           const createdImage = await imagesService.create({
-            filename: fileName,
-            url: uploaded.Location,
+            filename: image.name,
+            url: uploadedUrl,
             encoding: image.type,
             mimetype: image.type,
             userId: null,
@@ -122,7 +96,7 @@ export function AdminImages({ images }: AdminImagesProps) {
               <Button
                 isIconOnly
                 className="absolute right-0 top-0 z-10"
-                onClick={() => handleDelete(image.id)}
+                onClick={() => handleDelete(image.id, image.url)}
                 size="sm"
                 color="danger"
               >
