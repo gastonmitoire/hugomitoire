@@ -1,5 +1,5 @@
 import { fetchClient } from "./fetchClient";
-import { uploadFile } from "./s3Client";
+import { uploadS3File, deleteS3File } from "./s3Client";
 import { capitalize } from "./utils";
 
-export { fetchClient, capitalize, uploadFile };
+export { fetchClient, capitalize, uploadS3File, deleteS3File };

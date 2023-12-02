@@ -10,7 +10,7 @@ import { ArchiveBoxXMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
 
 import { Image as ImageModel } from "@prisma/client";
 import { imagesService } from "../../_images/_service/images.service";
-import { uploadFile } from "@/app/_utils";
+import { uploadS3File, deleteS3File } from "@/app/_utils";
 
 import { toast } from "sonner";
 
@@ -21,11 +21,13 @@ interface AdminImagesProps {
 export function AdminImages({ images }: AdminImagesProps) {
   const router = useRouter();
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string, url: string) => {
     try {
       const confirm = window.confirm(`Seguro que desea eliminar la imagen?`);
 
       if (!confirm) return;
+
+      deleteS3File(url);
 
       const deleted = await imagesService.delete(id);
 
@@ -46,7 +48,7 @@ export function AdminImages({ images }: AdminImagesProps) {
         for (let i = 0; i < files.length; i++) {
           const image = files[i];
 
-          const uploadedUrl = (await uploadFile(image)) as string;
+          const uploadedUrl = (await uploadS3File(image)) as string;
 
           if (!uploadedUrl) {
             toast.error("Error al subir la imagen");
@@ -94,7 +96,7 @@ export function AdminImages({ images }: AdminImagesProps) {
               <Button
                 isIconOnly
                 className="absolute right-0 top-0 z-10"
-                onClick={() => handleDelete(image.id)}
+                onClick={() => handleDelete(image.id, image.url)}
                 size="sm"
                 color="danger"
               >

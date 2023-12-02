@@ -1,4 +1,8 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
 
 const clientParams = {
@@ -13,7 +17,7 @@ const s3Client = new S3Client(clientParams);
 
 const s3BucketName = process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME ?? "";
 
-export const uploadFile = async (file: File) => {
+export const uploadS3File = async (file: File) => {
   const fileKey = `${uuidv4()}-${file.name}`;
   const fileUrl = `https://${s3BucketName}.s3.amazonaws.com/${fileKey}`;
 
@@ -26,6 +30,21 @@ export const uploadFile = async (file: File) => {
   try {
     await s3Client.send(new PutObjectCommand(uploadParams));
     return fileUrl;
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
+export const deleteS3File = async (fileUrl: string) => {
+  const fileKey = fileUrl.split("/").pop();
+
+  const deleteParams = {
+    Bucket: s3BucketName,
+    Key: fileKey,
+  };
+
+  try {
+    await s3Client.send(new DeleteObjectCommand(deleteParams));
   } catch (error) {
     console.log("Error", error);
   }
