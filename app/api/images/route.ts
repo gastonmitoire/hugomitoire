@@ -1,14 +1,9 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { ErrorProps } from "next/error";
-import { File } from "buffer";
+import { Image as ImageModel } from "@prisma/client";
 
 import prisma from "@/app/_lib/prisma";
-
-import { promises as fsPromises } from "fs";
-const { writeFile } = fsPromises;
-import path from "path";
-const imagePath = path.join(process.cwd(), "public", "assets", "images");
 
 async function getImages() {
   try {
@@ -39,50 +34,23 @@ async function getImages() {
 
 async function createImage(request: NextRequest): Promise<Response> {
   try {
-    const form = await request.formData();
-    const userId = form.get("userId");
+    const data = await request.json();
 
-    const imageFields = form.getAll("images");
+    const image = await prisma.image.create({
+      data: {
+        url: data.url,
+        encoding: data.encoding,
+        filename: data.filename,
+        mimetype: data.mimetype,
+        fanarts: data.fanarts,
+        userId: data.userId,
+      },
+    });
 
-    if (!imageFields.length) {
-      throw new Error("No image files found in the form data");
-    }
-
-    const createdImages = [];
-
-    for (const imageField of imageFields) {
-      if (imageField instanceof File) {
-        // remove all spaces and special characters from the image name
-        const imageName = imageField.name.replace(/[^a-zA-Z0-9.]/g, "-");
-        const mimetype = imageField.type;
-        const encoding = "base64";
-
-        const date = new Date();
-        const formattedImageName = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}-${date.getMinutes()}_${imageName}`;
-
-        const createdImage = await prisma.image.create({
-          data: {
-            filename: formattedImageName,
-            url: `${
-              process.env.NEXT_PUBLIC_API_URL ?? ""
-            }/assets/images/${formattedImageName}`,
-            mimetype,
-            encoding,
-            userId: userId as string,
-          },
-        });
-
-        const bytes = await imageField.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-
-        const path = `${imagePath}/${formattedImageName}`;
-        await writeFile(path, buffer);
-
-        createdImages.push(createdImage);
-      }
-    }
-
-    return NextResponse.json(createdImages, { status: 200 });
+    return NextResponse.json(image, {
+      status: 201,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Error:", error);
     const errorProps: ErrorProps = {

@@ -14,10 +14,12 @@ async function getAll() {
   return images as ImageModel[];
 }
 
-async function create(formData: FormData) {
+async function create(
+  image: Omit<ImageModel, "id" | "createdAt" | "updatedAt" | "user">
+) {
   const response = await fetchClient("/images", {
     method: "POST",
-    body: formData, // Envía directamente el FormData
+    body: JSON.stringify(image), // Envía directamente el FormData
   });
 
   return response as ImageModel;
