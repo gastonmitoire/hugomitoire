@@ -23,7 +23,7 @@ export const BookFeatured: React.FC<BookFeaturedProps> = ({
   featuredText,
 }) => {
   return (
-    <div className="relative z-50 flex min-h-screen w-full items-center justify-center bg-dark">
+    <div className="relative flex min-h-screen w-full items-center justify-center bg-dark">
       <div
         className="absolute left-0 top-0 h-full w-full bg-black opacity-20"
         style={{
