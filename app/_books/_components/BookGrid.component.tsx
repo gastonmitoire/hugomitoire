@@ -1,5 +1,6 @@
 import NextImage from "next/image";
 
+import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import { Spacer } from "@nextui-org/spacer";
 
@@ -44,7 +45,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
     function ItemImage() {
       return (
         <picture>
-          <Image src={book.cover} alt={book.title} width={370} />
+          <Image src={book.cover} alt={book.title} width={370} shadow="md" />
         </picture>
       );
     }
@@ -58,20 +59,32 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
         )}
 
         <p
-          className={`flex-0 flex w-full flex-col justify-center gap-5 ${
+          className={`flex-0 flex w-full flex-col justify-center ${
             imagePlacement === "right" ? "items-end text-right" : "text-left"
           }`}
         >
+          <span
+            className={`text-xl font-bold uppercase text-white ${cinzel.className}`}
+          >
+            {book.type}
+          </span>
+          <Spacer y={1} />
           <span
             className={`text-3xl font-bold text-white ${reggaeOne.className}`}
           >
             {book.title}
           </span>
-          <Spacer y={1} />
+          <Spacer y={3} />
           <span
             className={`max-w-[75%] text-xl font-bold text-white ${bellefair.className}`}
           >
             {book.description}
+          </span>
+          <Spacer y={7} />
+          <span>
+            <Button variant="flat" color="primary" className="uppercase">
+              Ver más
+            </Button>
           </span>
         </p>
 
@@ -85,18 +98,18 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
   };
 
   return (
-    <section className="grid grid-cols-1 xl:grid-cols-2 xl:grid-rows-2">
-      <GridItemContainer className={"bg-darker"}>
+    <section className="grid grid-cols-1 bg-opacity-50 xl:grid-cols-2 xl:grid-rows-2">
+      <GridItemContainer className={"bg-[#384347]"}>
         <GridItem book={books[0]} imagePlacement="right" />
       </GridItemContainer>
-      <GridItemContainer className={"bg-yellow-500"}>
-        <GridItem book={books[0]} />
+      <GridItemContainer className={"bg-[#6B3E34]"}>
+        <GridItem book={books[1]} />
       </GridItemContainer>
-      <GridItemContainer className={"bg-yellow-300"}>
-        <GridItem book={books[0]} imagePlacement="right" />
+      <GridItemContainer className={"bg-[#6B242A]"}>
+        <GridItem book={books[2]} imagePlacement="right" />
       </GridItemContainer>
-      <GridItemContainer className={"bg-dark"}>
-        <GridItem book={books[0]} />
+      <GridItemContainer className={"bg-[#2F3940]"}>
+        <GridItem book={books[3]} />
       </GridItemContainer>
     </section>
   );
