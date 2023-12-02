@@ -2,6 +2,7 @@ import NextImage from "next/image";
 
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
+import { Link } from "@nextui-org/link";
 import { Spacer } from "@nextui-org/spacer";
 
 import { EnhancedBookModel } from "../_service/books.service";
@@ -53,7 +54,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
     }
 
     return (
-      <div className="relative flex h-full flex-col items-center justify-center gap-5 px-20 py-16 sm:flex-row">
+      <div className="relative flex h-full flex-col items-center justify-center gap-5 px-20 py-10 sm:flex-row">
         {imagePlacement === "left" && (
           <figure>
             <ItemImage />
@@ -84,7 +85,13 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
           </span>
           <Spacer y={7} />
           <span>
-            <Button variant="flat" color="primary" className="uppercase">
+            <Button
+              as={Link}
+              href={`/libros/${book.slug}`}
+              variant="flat"
+              color="primary"
+              className="uppercase"
+            >
               Ver más
             </Button>
           </span>
@@ -100,7 +107,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
   };
 
   return (
-    <section className="grid grid-cols-1 bg-opacity-50 xl:grid-cols-2 xl:grid-rows-2">
+    <div className="grid min-h-screen grid-cols-1 bg-opacity-50 xl:grid-cols-2 xl:grid-rows-2">
       <GridItemContainer
         className={"bg-[#384347]"}
         style={{
@@ -137,6 +144,6 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
       >
         <GridItem book={books[3]} />
       </GridItemContainer>
-    </section>
+    </div>
   );
 };
