@@ -20,14 +20,16 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
   interface GridItemContainerProps {
     children: React.ReactNode;
     className?: string;
+    style?: React.CSSProperties;
   }
 
   const GridItemContainer: React.FC<GridItemContainerProps> = ({
     children,
     className,
+    style,
   }) => {
     return (
-      <section className={`[&>*]:min-h-[430px] ${className}`}>
+      <section className={`[&>*]:min-h-[430px] ${className}`} style={style}>
         {children}
       </section>
     );
@@ -99,16 +101,40 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
 
   return (
     <section className="grid grid-cols-1 bg-opacity-50 xl:grid-cols-2 xl:grid-rows-2">
-      <GridItemContainer className={"bg-[#384347]"}>
+      <GridItemContainer
+        className={"bg-[#384347]"}
+        style={{
+          backgroundImage:
+            "url('https://www.transparenttextures.com/patterns/snow.png')",
+        }}
+      >
         <GridItem book={books[0]} imagePlacement="right" />
       </GridItemContainer>
-      <GridItemContainer className={"bg-[#6B3E34]"}>
+      <GridItemContainer
+        className={"bg-[#6B3E34]"}
+        style={{
+          backgroundImage:
+            "url('https://www.transparenttextures.com/patterns/asfalt-light.png')",
+        }}
+      >
         <GridItem book={books[1]} />
       </GridItemContainer>
-      <GridItemContainer className={"bg-[#6B242A]"}>
+      <GridItemContainer
+        className={"bg-[#6B242A]"}
+        style={{
+          backgroundImage:
+            "url('https://www.transparenttextures.com/patterns/white-wall-3-2.png')",
+        }}
+      >
         <GridItem book={books[2]} imagePlacement="right" />
       </GridItemContainer>
-      <GridItemContainer className={"bg-[#2F3940]"}>
+      <GridItemContainer
+        className={"bg-[#2F3940]"}
+        style={{
+          backgroundImage:
+            "url('https://www.transparenttextures.com/patterns/subtle-white-feathers.png')",
+        }}
+      >
         <GridItem book={books[3]} />
       </GridItemContainer>
     </section>
