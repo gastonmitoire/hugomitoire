@@ -51,7 +51,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
     }
 
     return (
-      <div className="relative flex h-full flex-col items-center justify-center gap-5 px-20 py-12 sm:flex-row">
+      <div className="relative flex h-full flex-col items-center justify-center gap-5 p-20 sm:flex-row">
         {imagePlacement === "left" && (
           <figure>
             <ItemImage />
