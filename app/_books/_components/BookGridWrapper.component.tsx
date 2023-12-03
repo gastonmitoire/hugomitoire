@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Skeleton } from "@nextui-org/skeleton";
+
 import { BookGrid } from "./BookGrid.component";
 
 import { EnhancedBookModel } from "../_service/books.service";
@@ -25,7 +27,7 @@ export const BookGridWrapper: React.FC = async () => {
     return books;
   };
 
-  const isLoaded = (await selectedBooks()) ? true : false;
+  const isLoaded = typeof selectedBooks() !== "object";
 
   return isLoaded ? <BookGrid books={await selectedBooks()} /> : null;
 };

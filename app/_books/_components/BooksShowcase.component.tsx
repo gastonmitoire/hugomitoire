@@ -7,13 +7,11 @@ import { EnhancedBookModel } from "../_service/books.service";
 import { CustomParticles } from "@/app/_shared/_components";
 
 interface BooksShowcaseProps {
-  books: EnhancedBookModel[];
+  books: (EnhancedBookModel | undefined)[];
 }
 
 export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
   const rotations = [3, -5, -4, 4, 3, -5, -4, 4];
-
-  const isLoaded = books.length > 0;
 
   const bookItemVariants = (index: number) => {
     const rotation = rotations[index % rotations.length];
@@ -55,10 +53,10 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
   const FeaturedItem = () => {
     return (
       <div className="flex h-full w-full cursor-pointer items-center">
-        {isLoaded ? (
-          <Link href={`/libros/${books[8].slug}`}>
+        {books !== undefined ? (
+          <Link href={`/libros/${books[8]?.slug}`}>
             <Image
-              src={books[8].cover}
+              src={books[8]?.cover}
               width="100%"
               height="100%"
               alt="Book Cover"
@@ -81,13 +79,13 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         whileHover="whileHover"
         className="flex h-full w-full max-w-sm cursor-pointer items-center justify-center"
       >
-        {isLoaded ? (
-          <Link href={`/libros/${books[index].slug}`}>
+        {books !== undefined ? (
+          <Link href={`/libros/${books[index]?.slug}`}>
             <Image
               as={motion.img}
               variants={bookItemImageVariants}
               whileHover="whileHover"
-              src={books[index].cover}
+              src={books[index]?.cover}
               width="100%"
               height="100%"
               alt="Book Cover"
