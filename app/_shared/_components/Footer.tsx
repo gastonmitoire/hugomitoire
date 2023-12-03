@@ -21,7 +21,7 @@ const footerRoutes = [
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="container flex flex-col items-center gap-5">
+    <footer className="container flex flex-col items-center gap-5 pb-16">
       <h3 className={`text-3xl font-bold text-inherit ${cinzel.className}`}>
         Hugo Mitoire
       </h3>
