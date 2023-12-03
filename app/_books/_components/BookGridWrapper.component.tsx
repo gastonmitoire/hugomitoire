@@ -11,7 +11,7 @@ import { booksService } from "../_service/books.service";
 export const BookGridWrapper: React.FC = async () => {
   const selectedSlugs = [
     "criaturas-celestes",
-    "crispn-soto",
+    "crispin-soto-y-el-diablo",
     "historia-de-un-nio-lobo",
     "mensajes-del-mas-all",
   ];
@@ -27,7 +27,5 @@ export const BookGridWrapper: React.FC = async () => {
     return books;
   };
 
-  const isLoaded = typeof selectedBooks() !== "object";
-
-  return isLoaded ? <BookGrid books={await selectedBooks()} /> : null;
+  return <BookGrid books={await selectedBooks()} />;
 };
