@@ -34,6 +34,10 @@ const colorTokens = {
     DEFAULT: "#087f8c",
     foreground: "#333533",
   },
+  default: {
+    DEFAULT: "#333533",
+    foreground: "#CFDBD5", // light
+  },
   background: {
     DEFAULT: "#242423", // darker
     foreground: "#E8EDDF", // lighter
@@ -64,6 +68,16 @@ const config: Config = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    container: {
+      center: true,
+      screens: {
+        sm: "100%",
+        md: "100%",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1600px",
+      },
+    },
     extend: {
       gridTemplateColumns: {
         "auto-fill-300": "repeat(auto-fill, minmax(300px, 1fr))",
@@ -79,7 +93,7 @@ const config: Config = {
   plugins: [
     nextui({
       themes: {
-        dark: {
+        light: {
           colors: colorTokens,
         },
       },

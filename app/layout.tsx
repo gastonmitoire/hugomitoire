@@ -12,6 +12,7 @@ import { Toaster } from "sonner";
 import { Image } from "@nextui-org/image";
 import { Textarea } from "@nextui-org/input";
 
+import { Footer } from "./_shared/_components/Footer";
 import { Topbar } from "./_shared/_components/Topbar";
 
 interface RootLayoutProps {
@@ -30,7 +31,7 @@ export default function RootLayout(props: RootLayoutProps) {
   return (
     <html lang="en">
       <body
-        className={`min-h-screen bg-background text-foreground dark ${montserrat.className}`}
+        className={`h-full min-h-screen text-foreground ${montserrat.className}`}
       >
         <Providers>
           <span className="fixed top-0 z-30 w-full">
@@ -39,6 +40,7 @@ export default function RootLayout(props: RootLayoutProps) {
 
           {props.children}
 
+          <Footer />
           <Toaster richColors />
         </Providers>
       </body>
