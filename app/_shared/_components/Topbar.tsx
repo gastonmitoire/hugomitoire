@@ -6,13 +6,15 @@ import { Cinzel, Reggae_One } from "next/font/google";
 const reggaeOne = Reggae_One({ weight: "400", subsets: ["latin"] });
 const cinzel = Cinzel({ subsets: ["latin-ext"] });
 
-import { Link } from "@nextui-org/link";
 import {
+  Divider,
+  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-} from "@nextui-org/navbar";
+} from "@nextui-org/react";
+import { SocialLinks } from "./SocialLinks";
 
 const adminRoutes = [
   {
@@ -49,12 +51,14 @@ export const Topbar: React.FC = () => {
         </Link>
       </NavbarBrand>
 
-      <NavbarContent className="hidden gap-10 sm:flex" justify="end">
+      <NavbarContent className="hidden gap-5 sm:flex" justify="end">
         {adminRoutes.map((route) => (
           <NavbarItem key={route.name}>
             <LinkItem href={route.href}>{route.name}</LinkItem>
           </NavbarItem>
         ))}
+        <Divider orientation="vertical" className="h-1/2 dark" />
+        <SocialLinks />
       </NavbarContent>
     </Navbar>
   );
