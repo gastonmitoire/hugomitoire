@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button, Image, Link } from "@nextui-org/react";
 import { toast } from "sonner";
 
-import { TrashIcon } from "@heroicons/react/20/solid";
+import { Trash } from "iconsax-react";
 
 import {
   booksService,
@@ -59,7 +59,7 @@ export const AdminBooks: React.FC<AdminBooksProps> = ({ books }) => {
             size="sm"
             color="danger"
           >
-            <TrashIcon className="h-6 w-6 text-light" />
+            <Trash className="h-6 w-6 text-light" />
           </Button>
         </Link>
       ))}

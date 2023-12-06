@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/react";
 import { toast } from "sonner";
 
-import { TrashIcon } from "@heroicons/react/20/solid";
+import { Trash } from "iconsax-react";
 
 import { Genre as GenreModel } from "@prisma/client";
 
@@ -49,7 +49,7 @@ export const GenreList: React.FC<GenreListProps> = ({ genres }) => {
             isIconOnly
             onClick={() => handleDelete(genre.slug)}
           >
-            <TrashIcon className="h-5 w-5" />
+            <Trash className="h-5 w-5" />
           </Button>
         </li>
       ))}

@@ -15,7 +15,6 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
-import { XMarkIcon } from "@heroicons/react/20/solid";
 
 import { booksService } from "../_service/books.service";
 

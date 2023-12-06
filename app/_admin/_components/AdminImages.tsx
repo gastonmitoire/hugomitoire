@@ -6,7 +6,7 @@ import { Button, Image, Spacer } from "@nextui-org/react";
 
 import { DropdownZone } from "../../_images/_components/DropdownZone";
 
-import { ArchiveBoxXMarkIcon, TrashIcon } from "@heroicons/react/20/solid";
+import { GallerySlash, Trash } from "iconsax-react";
 
 import { Image as ImageModel } from "@prisma/client";
 import { imagesService } from "../../_images/_service/images.service";
@@ -100,14 +100,14 @@ export function AdminImages({ images }: AdminImagesProps) {
                 size="sm"
                 color="danger"
               >
-                <TrashIcon className="h-6 w-6 text-light" />
+                <Trash className="h-6 w-6 text-light" />
               </Button>
             </picture>
           ))
         ) : (
           <div className="col-span-full py-20 text-center text-white text-opacity-50">
             <span className="flex items-center justify-center gap-3">
-              <ArchiveBoxXMarkIcon className="h-6 w-6" />
+              <GallerySlash className="h-6 w-6" />
               Not images found
             </span>
 

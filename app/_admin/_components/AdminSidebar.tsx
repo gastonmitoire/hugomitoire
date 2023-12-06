@@ -4,32 +4,25 @@ import { Link } from "@nextui-org/link";
 
 import { UserMenuWrapper } from "../../_users/_components/UserMenuWrapper";
 
-import {
-  UserIcon,
-  BookOpenIcon,
-  PhotoIcon,
-  CubeIcon,
-  Squares2X2Icon,
-  ChevronRightIcon,
-} from "@heroicons/react/20/solid";
+import { Category, People, Book, Image, I3DSquare } from "iconsax-react";
 
 export const AdminSidebar: React.FC = () => {
   const adminLinks = [
-    { name: "Dashboard", href: "/admin", current: true, icon: Squares2X2Icon },
+    { name: "Dashboard", href: "/admin", current: true, icon: Category },
     {
       name: "Users",
       href: "/admin/users",
       current: false,
-      icon: UserIcon,
+      icon: People,
     },
     {
       name: "Books",
       href: "/admin/books",
       current: false,
-      icon: BookOpenIcon,
+      icon: Book,
     },
-    { name: "Images", href: "/admin/images", current: false, icon: PhotoIcon },
-    { name: "Genres", href: "/admin/genres", current: false, icon: CubeIcon },
+    { name: "Images", href: "/admin/images", current: false, icon: Image },
+    { name: "Genres", href: "/admin/genres", current: false, icon: I3DSquare },
   ];
 
   return (
@@ -52,9 +45,7 @@ export const AdminSidebar: React.FC = () => {
             <link.icon className="h-5 w-5" />
             <span>{link.name}</span>
 
-            <span className="flex flex-auto items-center justify-end place-self-end text-right">
-              <ChevronRightIcon className="h-5 w-5" />
-            </span>
+            <span className="flex flex-auto items-center justify-end place-self-end text-right"></span>
           </Link>
         ))}
       </nav>
