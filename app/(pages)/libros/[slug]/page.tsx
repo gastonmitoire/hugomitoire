@@ -25,7 +25,7 @@ export default async function LibroPage({ params }: LibroPageProps) {
       }}
     >
       <div className="bg-black bg-opacity-50">
-        <div className="container mx-auto flex h-screen items-end gap-5 xl:gap-0">
+        <div className="container flex h-screen items-end gap-5 xl:gap-0">
           <section className="grid h-[90%] w-[45%] items-center xl:place-items-center">
             <Image
               src={cover}
@@ -37,7 +37,7 @@ export default async function LibroPage({ params }: LibroPageProps) {
             />
           </section>
 
-          <section className="rount flex h-[90%] w-[55%] flex-col overflow-y-hidden rounded-t-3xl">
+          <section className="h-[90%] w-[55%]">
             <BookDetail
               book={{
                 title,
