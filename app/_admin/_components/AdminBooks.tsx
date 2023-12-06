@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import { Button, Image } from "@nextui-org/react";
+import { Button, Image, Link } from "@nextui-org/react";
 import { toast } from "sonner";
 
 import { TrashIcon } from "@heroicons/react/20/solid";
@@ -40,7 +40,11 @@ export const AdminBooks: React.FC<AdminBooksProps> = ({ books }) => {
   return (
     <div className="grid grid-cols-5 gap-3">
       {books.map((book) => (
-        <picture key={book.id} className="relative p-3">
+        <Link
+          href={`books/${book.slug}`}
+          key={book.id}
+          className="relative p-3"
+        >
           <Image
             src={book.cover}
             alt={book.title}
@@ -57,7 +61,7 @@ export const AdminBooks: React.FC<AdminBooksProps> = ({ books }) => {
           >
             <TrashIcon className="h-6 w-6 text-light" />
           </Button>
-        </picture>
+        </Link>
       ))}
     </div>
   );
