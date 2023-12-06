@@ -32,7 +32,7 @@ const colorTokens = {
   },
   secondary: {
     DEFAULT: "#087f8c",
-    foreground: "#333533",
+    foreground: "#E8EDDF",
   },
   default: {
     DEFAULT: "#333533",
