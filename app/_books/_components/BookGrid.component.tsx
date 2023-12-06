@@ -107,7 +107,7 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
   };
 
   return (
-    <div className="grid min-h-screen grid-cols-1 bg-opacity-50 xl:grid-cols-2 xl:grid-rows-2">
+    <div className="grid h-full grid-cols-1 bg-opacity-50 xl:grid-cols-2 xl:grid-rows-2">
       <GridItemContainer
         className={"bg-[#384347]"}
         style={{

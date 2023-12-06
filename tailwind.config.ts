@@ -32,7 +32,7 @@ const colorTokens = {
   },
   secondary: {
     DEFAULT: "#087f8c",
-    foreground: "#333533",
+    foreground: "#E8EDDF",
   },
   default: {
     DEFAULT: "#333533",
@@ -68,6 +68,9 @@ const config: Config = {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    divideColor: {
+      default: "#fff",
+    },
     container: {
       center: true,
       screens: {

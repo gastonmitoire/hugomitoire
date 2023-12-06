@@ -52,7 +52,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
 
   const FeaturedItem = () => {
     return (
-      <div className="flex h-full w-full cursor-pointer items-center">
+      <figure className="flex h-full w-full cursor-pointer items-center">
         {books !== undefined ? (
           <Link href={`/libros/${books[8]?.slug}`}>
             <Image
@@ -66,7 +66,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         ) : (
           <Skeleton className="h-full w-full"></Skeleton>
         )}
-      </div>
+      </figure>
     );
   };
 
@@ -88,6 +88,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
               src={books[index]?.cover}
               width="100%"
               height="100%"
+              className="max-h-[355px]"
               alt="Book Cover"
             />
           </Link>
@@ -103,9 +104,9 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative grid min-h-screen w-full grid-flow-row items-center justify-center gap-10 px-3 py-20 sm:px-20 md:grid-cols-3 xl:grid-rows-2 xl:gap-10 xl:py-20"
+      className="relative grid h-full w-full grid-flow-row items-center justify-center gap-10 px-3 py-20 sm:px-20 md:grid-cols-3 xl:grid-rows-2 xl:gap-10 xl:py-20"
     >
-      <div className="col-span-1 grid h-full w-full justify-center md:col-start-2 xl:col-start-auto xl:row-span-2 xl:flex">
+      <div className="col-span-1 grid h-full w-full justify-center px-7 md:col-start-2 xl:col-start-auto xl:row-span-2 xl:flex">
         <FeaturedItem />
       </div>
       <div className="grid h-full w-full grid-cols-2 place-items-center gap-10 sm:grid-cols-4 md:col-span-3 xl:col-span-2 xl:grid-cols-4">

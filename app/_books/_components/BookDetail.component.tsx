@@ -22,29 +22,6 @@ interface BookDetailProps {
 }
 
 // reusable component for book detail heading
-interface BookDetailHeadingProps {
-  children: React.ReactNode;
-  section: string;
-  onClick: (section: string) => void;
-  className?: string;
-}
-const BookDetailHeading: React.FC<BookDetailHeadingProps> = ({
-  children,
-  section,
-  onClick,
-  className,
-}) => {
-  return (
-    <h5
-      className={`sticky top-0 z-10 cursor-pointer select-none bg-darker px-5 py-3 text-xl text-lighter text-opacity-70 ${
-        reggaeOne.className
-      } ${className ? className : null}`}
-      onClick={() => onClick(section)}
-    >
-      {children}
-    </h5>
-  );
-};
 
 export const BookDetail: React.FC<BookDetailProps> = ({
   book: { title, genre, description, type, chapters },
@@ -97,29 +74,36 @@ export const BookDetail: React.FC<BookDetailProps> = ({
       animate="visible"
       variants={bookDetailVariants}
       id="book-detail"
-      className="overflow-y-auto scrollbar-hide"
+      className="h-full overflow-y-auto bg-dark bg-opacity-50 backdrop-blur-md scrollbar-hide"
     >
-      <BookDetailHeading section="details" onClick={handleSectionClick}>
+      <h3
+        className={`px-5 pt-10 text-right text-5xl text-light text-opacity-20 ${reggaeOne.className}`}
+      >
         Detalles
-      </BookDetailHeading>
-      <div className="flex flex-col bg-dark bg-opacity-50 p-7 backdrop-blur-md">
-        <h3 className={`text-3xl ${cinzel.className}`}>{title}</h3>
+      </h3>
+      <div className="flex flex-col border-b-large border-light border-opacity-20 p-7">
+        <h3 className={`text-3xl text-light ${reggaeOne.className}`}>
+          {title}
+        </h3>
         <Spacer y={3} />
-        <h5 className={`text-xl opacity-70 ${cinzel.className}`}>
+        <h5
+          className={`text-xl text-light text-opacity-70 ${cinzel.className}`}
+        >
           {type} | {genre.name} | {genre.ageRange}
         </h5>
         <Spacer y={5} />
         <p className={`text-xl ${bellefair.className}`}>{description}</p>
       </div>
 
-      <BookDetailHeading
-        section="chapters"
-        onClick={handleSectionClick}
-        className="top-12"
+      <h3
+        className={`px-5 pt-10 text-right text-5xl text-light text-opacity-20 ${reggaeOne.className}`}
       >
         Capítulos
-      </BookDetailHeading>
-      <div id="chapters" className="bg-dark bg-opacity-50 p-7 backdrop-blur-md">
+      </h3>
+      <div
+        id="chapters"
+        className="border-b-large border-light border-opacity-20 p-7"
+      >
         <ChapterList chapters={chapters} />
       </div>
     </motion.div>

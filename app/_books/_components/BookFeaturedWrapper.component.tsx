@@ -34,11 +34,5 @@ export const BookFeaturedWrapper: React.FC = async () => {
       </cite>
     </p>
   );
-  return (
-    <div className="book-featured-wrapper">
-      {isLoaded ? (
-        <BookFeatured book={bookFeatured} featuredText={featuredText} />
-      ) : null}
-    </div>
-  );
+  return <BookFeatured book={bookFeatured} featuredText={featuredText} />;
 };

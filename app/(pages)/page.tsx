@@ -30,21 +30,19 @@ export default async function Home() {
   };
 
   return (
-    <main className="flex h-screen items-center justify-center">
+    <main>
       <Suspense fallback={<Loading />}>
-        <div className="xl:no-scrollbar xl:h-screen xl:snap-y xl:snap-mandatory xl:overflow-y-scroll">
-          <section className="snap-start">
-            <BooksShowcaseWrapper />
-          </section>
+        <section className="h-screen">
+          <BooksShowcaseWrapper />
+        </section>
 
-          <section className="snap-start">
-            <BookFeaturedWrapper />
-          </section>
+        <section className="h-screen">
+          <BookFeaturedWrapper />
+        </section>
 
-          <section className="snap-start pt-16">
-            <BookGridWrapper />
-          </section>
-        </div>
+        <section className="h-screen">
+          <BookGridWrapper />
+        </section>
       </Suspense>
     </main>
   );
