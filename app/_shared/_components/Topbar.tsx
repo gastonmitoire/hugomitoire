@@ -14,10 +14,6 @@ import {
   NavbarItem,
 } from "@nextui-org/navbar";
 
-interface TopbarProps {
-  pathname: string | null;
-}
-
 const adminRoutes = [
   {
     name: "Inicio",
@@ -29,29 +25,20 @@ const adminRoutes = [
   },
 ];
 
-function isActiveRoute(pathname: string, href: string) {
-  return pathname === href;
-}
-
-function LinkItem({ href, pathname, children }: any) {
-  const isActive = isActiveRoute(pathname, href);
-
-  const activeClass = isActive ? "opacity-30" : "opacity-100";
-
+function LinkItem({ href, children }: any) {
   return (
     <Link
       href={href}
       color="foreground"
-      aria-current={isActive ? "page" : undefined}
-      className={`select-none font-bold text-inherit ${reggaeOne.className} ${activeClass}`}
-      isDisabled={isActive}
+      aria-current={"page"}
+      className={`select-none font-bold text-inherit ${reggaeOne.className}`}
     >
       {children}
     </Link>
   );
 }
 
-export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
+export const Topbar: React.FC = () => {
   return (
     <Navbar maxWidth="full" className="px-5" shouldHideOnScroll>
       <NavbarBrand>
@@ -64,10 +51,8 @@ export const Topbar: React.FC<TopbarProps> = ({ pathname }) => {
 
       <NavbarContent className="hidden gap-10 sm:flex" justify="end">
         {adminRoutes.map((route) => (
-          <NavbarItem key={route.name} isActive={pathname === route.href}>
-            <LinkItem href={route.href} pathname={pathname}>
-              {route.name}
-            </LinkItem>
+          <NavbarItem key={route.name}>
+            <LinkItem href={route.href}>{route.name}</LinkItem>
           </NavbarItem>
         ))}
       </NavbarContent>
