@@ -5,6 +5,7 @@ import { Image } from "@nextui-org/image";
 import { Spacer } from "@nextui-org/spacer";
 
 import { EnhancedBookModel } from "@/app/_books/_service/books.service";
+import { ChapterList } from "@/app/_chapters/_components/ChaptersList";
 
 interface AdminBookProps {
   book: EnhancedBookModel;
@@ -32,15 +33,6 @@ export const AdminBook: React.FC<AdminBookProps> = ({ book }) => {
         <span>Editorial</span>
         <p className="text-xl">{book.publisher.username}</p>
         <Spacer y={5} />
-      </section>
-
-      <section className="col-span-2 flex items-center">
-        <figure>
-          <Image src={book.cover} alt={`tapa-${book.title}`} width={350} />
-
-          <figcaption>Tapa</figcaption>
-        </figure>
-        <Spacer x={5} />
         <figure>
           <Image
             src={book.secondaryImage}
@@ -50,6 +42,18 @@ export const AdminBook: React.FC<AdminBookProps> = ({ book }) => {
 
           <figcaption>Imagen Secundaria</figcaption>
         </figure>
+      </section>
+
+      <section>
+        <figure>
+          <Image src={book.cover} alt={`tapa-${book.title}`} width={350} />
+
+          <figcaption>Tapa</figcaption>
+        </figure>
+      </section>
+
+      <section>
+        <ChapterList chapters={book.chapters} />
       </section>
 
       <span className="col-span-3 w-full py-10">
