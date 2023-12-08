@@ -5,7 +5,7 @@ import { EnhancedBookModel } from "../_service/books.service";
 
 import { motion } from "framer-motion";
 
-import { Spacer } from "@nextui-org/spacer";
+import { ScrollShadow, Spacer } from "@nextui-org/react";
 
 import { ChapterList } from "../../_chapters/_components/ChaptersList.component";
 
@@ -100,10 +100,7 @@ export const BookDetail: React.FC<BookDetailProps> = ({
       >
         Capítulos
       </h3>
-      <div
-        id="chapters"
-        className="border-b-large border-light border-opacity-20 p-7"
-      >
+      <div className="p-7">
         <ChapterList chapters={chapters} />
       </div>
     </motion.div>
