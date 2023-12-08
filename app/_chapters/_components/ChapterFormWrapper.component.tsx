@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ChapterForm } from "./ChapterForm";
+import { ChapterForm } from "./ChapterForm.component";
 
 interface ChapterFormWrapperProps {
   bookId: string;

@@ -9,7 +9,7 @@ import { Providers } from "./providers";
 
 import { Toaster } from "sonner";
 
-import { Topbar } from "./_shared/_components/Topbar";
+import { Topbar } from "./_shared/_components/Topbar.component";
 
 interface RootLayoutProps {
   children: React.ReactNode;

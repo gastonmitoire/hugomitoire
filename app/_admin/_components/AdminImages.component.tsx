@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { Button, Image, Spacer } from "@nextui-org/react";
 
-import { DropdownZone } from "../../_images/_components/DropdownZone";
+import { DropdownZone } from "../../_images/_components/DropdownZone.component";
 
 import { GallerySlash, Trash } from "iconsax-react";
 

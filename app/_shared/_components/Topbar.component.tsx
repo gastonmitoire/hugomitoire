@@ -14,7 +14,7 @@ import {
   NavbarContent,
   NavbarItem,
 } from "@nextui-org/react";
-import { SocialLinks } from "./SocialLinks";
+import { SocialLinks } from "./SocialLinks.component";
 
 const adminRoutes = [
   {

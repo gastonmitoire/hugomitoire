@@ -1,4 +1,4 @@
-import { AdminBooks } from "./AdminBooks";
+import { AdminBooks } from "./AdminBooks.component";
 
 import { booksService } from "../../_books/_service/books.service";
 
