@@ -7,7 +7,7 @@ export type EnhancedChapterModel = ChapterModel & {
 
 export const chapterService = {
   getAll,
-  getBySlug,
+  getById,
   create,
   update,
   delete: _delete,
@@ -22,7 +22,7 @@ async function getAll() {
   return chapters as EnhancedChapterModel[];
 }
 
-async function getBySlug(id: string) {
+async function getById(id: string) {
   const chapter = await fetchClient(`/chapters/${id}`, {
     method: "GET",
     headers: {},
