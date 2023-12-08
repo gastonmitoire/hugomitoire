@@ -16,6 +16,8 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 
+import { Add as AddIcon } from "iconsax-react";
+
 import { chapterService } from "../_service/chapter.service";
 
 import { Chapter as ChapterModel } from "@prisma/client";
@@ -82,7 +84,7 @@ export const ChapterForm: React.FC<ChapterFormProps> = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex items-center gap-1 dark"
+      className="flex items-center gap-1.5 dark"
     >
       <Controller
         name="order"
@@ -93,8 +95,8 @@ export const ChapterForm: React.FC<ChapterFormProps> = ({
             label="Order"
             placeholder="Order"
             type="number"
-            fullWidth
-            size="lg"
+            className="flex-1"
+            size="sm"
             variant="bordered"
             validationState={errors.order?.message ? "invalid" : "valid"}
             errorMessage={errors.order?.message}
@@ -110,7 +112,8 @@ export const ChapterForm: React.FC<ChapterFormProps> = ({
             label="Title"
             placeholder="Title"
             fullWidth
-            size="lg"
+            className="flex-0"
+            size="sm"
             variant="bordered"
             validationState={errors.title?.message ? "invalid" : "valid"}
             errorMessage={errors.title?.message}
@@ -123,8 +126,14 @@ export const ChapterForm: React.FC<ChapterFormProps> = ({
         render={() => <input type="hidden" />}
       />
 
-      <Button type="submit" size="sm">
-        Crear
+      <Button
+        type="submit"
+        size="sm"
+        isIconOnly
+        color="secondary"
+        variant="shadow"
+      >
+        <AddIcon />
       </Button>
     </form>
   );
