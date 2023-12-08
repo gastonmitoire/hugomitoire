@@ -2,7 +2,7 @@ import React from "react";
 
 import { imagesService } from "../../_images/_service/images.service";
 
-import { AdminImages } from "./AdminImages";
+import { AdminImages } from "./AdminImages.component";
 
 export const AdminImagesWrapper: React.FC = async () => {
   const images = await imagesService.getAll();

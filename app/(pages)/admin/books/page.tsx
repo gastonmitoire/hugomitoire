@@ -2,7 +2,7 @@ import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { Spacer } from "@nextui-org/spacer";
 
-import { AdminBooksWrapper } from "@/app/_admin/_components/AdminBooksWrapper";
+import { AdminBooksWrapper } from "@/app/_admin/_components/AdminBooksWrapper.component";
 
 export default function AdminBooksPage() {
   return (

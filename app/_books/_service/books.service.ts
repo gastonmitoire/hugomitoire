@@ -1,18 +1,14 @@
 import { fetchClient } from "@/app/_utils";
 import { Book as BookModel } from "@prisma/client";
-import { Chapter as ChapterModel } from "@prisma/client";
+import { EnhancedChapterModel } from "@/app/_chapters/_service/chapter.service";
 import { Genre as GenreModel } from "@prisma/client";
 import { User as UserModel } from "@prisma/client";
-
-export type EnhancedChapter = ChapterModel & {
-  text: string[];
-};
 
 export interface EnhancedBookModel extends BookModel {
   genre: Pick<GenreModel, "name" | "ageRange">;
   illustrator: Pick<UserModel, "username">;
   publisher: Pick<UserModel, "username">;
-  chapters: EnhancedChapter[];
+  chapters: EnhancedChapterModel[];
 }
 
 export const booksService = {

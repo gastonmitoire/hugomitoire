@@ -31,7 +31,11 @@ async function getBook(
         genre: true,
         illustrator: true,
         publisher: true,
-        chapters: true,
+        chapters: {
+          include: {
+            text: true,
+          },
+        },
       },
     });
 

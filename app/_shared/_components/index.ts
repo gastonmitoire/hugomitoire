@@ -1,1 +1,1 @@
-export * from "./CustomParticles";
+export * from "./CustomParticles.component";
