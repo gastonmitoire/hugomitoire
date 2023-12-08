@@ -10,6 +10,10 @@ async function getChapters(request: NextRequest): Promise<NextResponse> {
     // allowed params
     const bookSlug = searchParams.get("bookSlug") || undefined;
 
+    const book = await prisma.book.findUnique({
+      where: { slug: bookSlug },
+    });
+
     const chapters = await prisma.chapter.findMany({
       where: {
         book: {
@@ -20,10 +24,16 @@ async function getChapters(request: NextRequest): Promise<NextResponse> {
       },
     });
 
-    return NextResponse.json(chapters, {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return NextResponse.json(
+      {
+        chapters,
+        bookId: book?.id,
+      },
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
     console.error("Error:", error);
     const errorResponse: ErrorProps = {

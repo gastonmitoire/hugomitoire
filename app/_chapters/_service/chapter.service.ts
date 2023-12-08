@@ -24,16 +24,15 @@ async function getAll() {
 }
 
 async function getByQueryParam({ key, value }: { key: string; value: string }) {
-  const searchParams = new URLSearchParams({ key, value });
+  const { chapters, bookId } = await fetchClient(`/chapters?${key}=${value}`, {
+    method: "GET",
+    headers: {},
+  });
 
-  console.log(searchParams);
-
-  // const chapters = await fetchClient(`/chapters?bookSlug=${slug}`, {
-  //   method: "GET",
-  //   headers: {},
-  // });
-
-  // return chapters as EnhancedChapterModel[];
+  return {
+    chapters: chapters as EnhancedChapterModel[],
+    bookId,
+  };
 }
 
 async function getById(id: string) {
