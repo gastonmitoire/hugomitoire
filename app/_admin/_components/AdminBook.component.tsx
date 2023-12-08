@@ -15,7 +15,7 @@ interface AdminBookProps {
 
 export const AdminBook: React.FC<AdminBookProps> = ({ book }) => {
   return (
-    <div className="grid grid-cols-3 [&>section>span]:italic [&>section>span]:text-light [&>section>span]:text-opacity-50">
+    <div className="grid grid-cols-2 [&>section>span]:italic [&>section>span]:text-light [&>section>span]:text-opacity-50">
       <section>
         <span>Titulo</span>
         <h3 className="text-3xl">{book.title}</h3>
@@ -54,7 +54,7 @@ export const AdminBook: React.FC<AdminBookProps> = ({ book }) => {
         </figure>
       </section>
 
-      <section>
+      {/* <section>
         <ChapterFormWrapper
           bookId={book.id}
           currentChapterOrder={book.chapters.length}
@@ -73,7 +73,7 @@ export const AdminBook: React.FC<AdminBookProps> = ({ book }) => {
             </li>
           ))}
         </ul>
-      </section>
+      </section> */}
 
       <span className="col-span-3 w-full py-10">
         <Button color="secondary" size="lg" variant="bordered" fullWidth>
