@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Button } from "@nextui-org/button";
+import { Divider } from "@nextui-org/divider";
 import { Image } from "@nextui-org/image";
 import { Spacer } from "@nextui-org/spacer";
 
@@ -58,7 +59,20 @@ export const AdminBook: React.FC<AdminBookProps> = ({ book }) => {
           bookId={book.id}
           currentChapterOrder={book.chapters.length}
         />
-        <ChapterList chapters={book.chapters} />
+        <h5 className="pb-1.5 pt-3 font-bold uppercase text-light text-opacity-50">
+          Capítulos ({book.chapters.length})
+        </h5>
+        <ul className="space-y-3">
+          {book.chapters.map((chapter, index) => (
+            <li
+              key={index}
+              className="flex select-none items-center gap-3 bg-light bg-opacity-10 p-3 transition-opacity hover:cursor-pointer hover:bg-opacity-20"
+            >
+              <p>{chapter.order}</p>
+              <p>{chapter.title}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <span className="col-span-3 w-full py-10">
