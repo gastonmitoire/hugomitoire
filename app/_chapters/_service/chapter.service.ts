@@ -7,6 +7,7 @@ export type EnhancedChapterModel = ChapterModel & {
 
 export const chapterService = {
   getAll,
+  getByQueryParam,
   getById,
   create,
   update,
@@ -20,6 +21,19 @@ async function getAll() {
   });
 
   return chapters as EnhancedChapterModel[];
+}
+
+async function getByQueryParam({ key, value }: { key: string; value: string }) {
+  const searchParams = new URLSearchParams({ key, value });
+
+  console.log(searchParams);
+
+  // const chapters = await fetchClient(`/chapters?bookSlug=${slug}`, {
+  //   method: "GET",
+  //   headers: {},
+  // });
+
+  // return chapters as EnhancedChapterModel[];
 }
 
 async function getById(id: string) {
