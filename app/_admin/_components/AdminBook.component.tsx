@@ -6,6 +6,7 @@ import { Spacer } from "@nextui-org/spacer";
 
 import { EnhancedBookModel } from "@/app/_books/_service/books.service";
 import { ChapterList } from "@/app/_chapters/_components/ChaptersList";
+import { ChapterFormWrapper } from "@/app/_chapters/_components/ChapterFormWrapper";
 
 interface AdminBookProps {
   book: EnhancedBookModel;
@@ -13,7 +14,7 @@ interface AdminBookProps {
 
 export const AdminBook: React.FC<AdminBookProps> = ({ book }) => {
   return (
-    <div className="grid grid-cols-3 place-items-center [&>section>span]:italic [&>section>span]:text-light [&>section>span]:text-opacity-50">
+    <div className="grid grid-cols-3 [&>section>span]:italic [&>section>span]:text-light [&>section>span]:text-opacity-50">
       <section>
         <span>Titulo</span>
         <h3 className="text-3xl">{book.title}</h3>
@@ -53,6 +54,10 @@ export const AdminBook: React.FC<AdminBookProps> = ({ book }) => {
       </section>
 
       <section>
+        <ChapterFormWrapper
+          bookId={book.id}
+          currentChapterOrder={book.chapters.length}
+        />
         <ChapterList chapters={book.chapters} />
       </section>
 
