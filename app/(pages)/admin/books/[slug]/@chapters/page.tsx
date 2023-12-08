@@ -1,3 +1,7 @@
+import React from "react";
+
+import { ScrollShadow } from "@nextui-org/scroll-shadow";
+
 import { ChapterFormWrapper } from "@/app/_chapters/_components/ChapterFormWrapper.component";
 
 import { chapterService } from "@/app/_chapters/_service/chapter.service";
@@ -25,7 +29,7 @@ export default async function AdminBookChapterSectionPage({
       <h5 className="pb-1.5 pt-3 font-bold uppercase text-light text-opacity-50">
         Capítulos ({chapters.length})
       </h5>
-      <ul className="space-y-3">
+      <ScrollShadow as="ul" className="h-[600px] space-y-3 scrollbar-hide">
         {chapters
           .sort((a, b) => b.order - a.order)
           .map((chapter, index) => (
@@ -37,7 +41,7 @@ export default async function AdminBookChapterSectionPage({
               <p>{chapter.title}</p>
             </li>
           ))}
-      </ul>
+      </ScrollShadow>
     </div>
   );
 }
