@@ -16,6 +16,8 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 
+import { chapterService } from "../_service/chapter.service";
+
 import { Chapter as ChapterModel } from "@prisma/client";
 
 interface ChapterFormProps {
@@ -27,7 +29,7 @@ interface ChapterFormProps {
 const schema = yup.object().shape({
   title: yup.string().required(),
   order: yup.string().required(),
-  type: yup.string(),
+  type: yup.string().optional(),
   bookId: yup.string().required(),
 });
 
@@ -46,22 +48,34 @@ export const ChapterForm: React.FC<ChapterFormProps> = ({
     control,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<ChapterFormValues>({
     resolver,
     defaultValues: {
       title: "",
       order: (currentOrder + 1).toString(),
-      type: "",
+      type: undefined,
       bookId: bookId,
     },
   });
 
   const onSubmit: SubmitHandler<ChapterFormValues> = async (data) => {
     try {
-      console.log("SUBMIT DATA: ", data);
-    } catch (error) {
-      console.log("SUBMIT ERROR: ", error);
+      const createdChapter = await chapterService.create({
+        ...data,
+        order: Number(data.order),
+        type: data.type ?? null,
+      });
+
+      if (createdChapter) {
+        reset();
+        toast.success("Capítulo creado con éxito");
+      }
+
+      router.refresh();
+    } catch (error: any | unknown) {
+      toast.error(error.title, { duration: 3000 });
     }
   };
 
