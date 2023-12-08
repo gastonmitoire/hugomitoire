@@ -2,9 +2,23 @@ import { NextResponse, NextRequest } from "next/server";
 import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
 
-async function getChapters(): Promise<NextResponse> {
+async function getChapters(request: NextRequest): Promise<NextResponse> {
   try {
-    const chapters = await prisma.chapter.findMany();
+    const queryString = request.url.split("?")[1];
+    const searchParams = new URLSearchParams(queryString);
+
+    // allowed params
+    const bookSlug = searchParams.get("bookSlug") || undefined;
+
+    const chapters = await prisma.chapter.findMany({
+      where: {
+        book: {
+          slug: {
+            equals: bookSlug,
+          },
+        },
+      },
+    });
 
     return NextResponse.json(chapters, {
       status: 200,
