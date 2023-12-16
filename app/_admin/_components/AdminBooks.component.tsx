@@ -2,7 +2,15 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-import { Button, Image, Link } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Image,
+  Link,
+} from "@nextui-org/react";
 import { toast } from "sonner";
 
 import { Trash } from "iconsax-react";
@@ -38,30 +46,40 @@ export const AdminBooks: React.FC<AdminBooksProps> = ({ books }) => {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-3">
+    <div className="grid grid-cols-4 gap-3">
       {books.map((book) => (
-        <Link
-          href={`books/${book.slug}`}
+        <Card
           key={book.id}
-          className="relative p-3"
+          isFooterBlurred
+          className="col-span-12 sm:col-span-1"
         >
+          <CardHeader className="absolute top-1 z-10 flex-col items-start bg-secondary bg-opacity-90">
+            <p className="text-tiny font-bold uppercase text-white/60">
+              {book.type + " | " + book.genre?.name}
+            </p>
+            <h4 className="text-2xl font-medium text-black">Acme camera</h4>
+          </CardHeader>
           <Image
+            removeWrapper
+            alt="Card example background"
+            className="z-0 h-full w-full -translate-y-6 object-cover"
             src={book.cover}
-            alt={book.title}
-            width={"100%"}
-            height={"100%"}
           />
-
-          <Button
-            isIconOnly
-            className="absolute right-0 top-0 z-10"
-            onClick={() => handleDelete(book.slug)}
-            size="sm"
-            color="danger"
-          >
-            <Trash className="h-6 w-6 text-light" />
-          </Button>
-        </Link>
+          <CardFooter className="absolute bottom-0 z-10 justify-between border-t-1 border-zinc-100/50 bg-white/30">
+            <div>
+              <p className="text-tiny text-black">Available soon.</p>
+              <p className="text-tiny text-black">Get notified.</p>
+            </div>
+            <Button
+              className="text-tiny"
+              color="primary"
+              radius="full"
+              size="sm"
+            >
+              Notify Me
+            </Button>
+          </CardFooter>
+        </Card>
       ))}
     </div>
   );
