@@ -2,7 +2,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-import { Image } from "@nextui-org/image";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Image,
+} from "@nextui-org/react";
 
 import { EnhancedBookModel } from "../_service/books.service";
 
