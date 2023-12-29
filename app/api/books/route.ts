@@ -4,7 +4,14 @@ import prisma from "@/app/_lib/prisma";
 
 async function getBooks(): Promise<NextResponse> {
   try {
-    const books = await prisma.book.findMany();
+    const books = await prisma.book.findMany({
+      include: {
+        genre: true,
+        illustrator: true,
+        publisher: true,
+        chapters: true,
+      },
+    });
 
     return NextResponse.json(books, {
       status: 200,

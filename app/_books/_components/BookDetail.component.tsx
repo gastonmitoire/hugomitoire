@@ -5,7 +5,7 @@ import { EnhancedBookModel } from "../_service/books.service";
 
 import { motion } from "framer-motion";
 
-import { Spacer } from "@nextui-org/spacer";
+import { ScrollShadow, Spacer } from "@nextui-org/react";
 
 import { ChapterList } from "../../_chapters/_components/ChaptersList.component";
 
@@ -82,7 +82,7 @@ export const BookDetail: React.FC<BookDetailProps> = ({
         Detalles
       </h3>
       <div className="flex flex-col border-b-large border-light border-opacity-20 p-7">
-        <h3 className={`text-3xl text-light ${reggaeOne.className}`}>
+        <h3 className={`text-5xl text-light ${reggaeOne.className}`}>
           {title}
         </h3>
         <Spacer y={3} />
@@ -92,7 +92,7 @@ export const BookDetail: React.FC<BookDetailProps> = ({
           {type} | {genre.name} | {genre.ageRange}
         </h5>
         <Spacer y={5} />
-        <p className={`text-xl ${bellefair.className}`}>{description}</p>
+        <p className={`text-2xl ${bellefair.className}`}>{description}</p>
       </div>
 
       <h3
@@ -100,10 +100,7 @@ export const BookDetail: React.FC<BookDetailProps> = ({
       >
         Capítulos
       </h3>
-      <div
-        id="chapters"
-        className="border-b-large border-light border-opacity-20 p-7"
-      >
+      <div className="p-7">
         <ChapterList chapters={chapters} />
       </div>
     </motion.div>

@@ -12,8 +12,8 @@ export const BookGridWrapper: React.FC = async () => {
   const selectedSlugs = [
     "criaturas-celestes",
     "crispin-soto-y-el-diablo",
-    "historia-de-un-nio-lobo",
-    "mensajes-del-mas-all",
+    "historia-de-un-nino-lobo",
+    "mensajes-del-mas-alla",
   ];
 
   const selectedBooks = async () => {

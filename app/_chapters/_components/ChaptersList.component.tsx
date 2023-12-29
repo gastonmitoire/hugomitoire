@@ -78,6 +78,7 @@ export function ChapterList({ chapters }: ChapterListProps) {
           </AnimatePresence>
         </motion.div>
       ))}
+      <div className="col-span-2 mx-auto h-1 w-1/2 bg-light bg-opacity-20" />
     </section>
   );
 }

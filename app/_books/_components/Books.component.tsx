@@ -2,7 +2,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-import { Image } from "@nextui-org/image";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Image,
+  Link,
+} from "@nextui-org/react";
 
 import { EnhancedBookModel } from "../_service/books.service";
 
@@ -21,19 +28,20 @@ export const Books: React.FC<BooksProps> = ({ books }) => {
     <section className="container mx-auto min-h-screen py-20">
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-5">
         {books.map((book) => (
-          <Image
-            as={motion.img}
-            key={book.id}
-            src={book.cover}
-            alt={book.title}
-            width={"100%"}
-            className="cursor-pointer"
-            variants={imageVariants}
-            initial="hidden"
-            animate="visible"
-            whileHover="whileHover"
-            whileTap="whileTap"
-          />
+          <Link key={book.id} href={`/libros/${book.slug}`}>
+            <Image
+              as={motion.img}
+              src={book.cover}
+              alt={book.title}
+              width={"100%"}
+              className="cursor-pointer"
+              variants={imageVariants}
+              initial="hidden"
+              animate="visible"
+              whileHover="whileHover"
+              whileTap="whileTap"
+            />
+          </Link>
         ))}
       </div>
     </section>
