@@ -4,8 +4,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Image, Skeleton } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/books.service";
-import { CustomParticles } from "@/app/_shared/_components";
 
+import { CustomParticles } from "@/app/_shared/_components";
 interface BooksShowcaseProps {
   books: (EnhancedBookModel | undefined)[];
 }
@@ -77,7 +77,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         initial="hidden"
         animate="visible"
         whileHover="whileHover"
-        className="flex h-full w-full max-w-sm cursor-pointer items-center justify-center"
+        className="z-20 flex h-full w-full max-w-sm cursor-pointer items-center justify-center"
       >
         {books !== undefined ? (
           <Link href={`/libros/${books[index]?.slug}`}>
@@ -122,6 +122,10 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
             <BookItem key={index} index={index} />
           ))}
         </AnimatePresence>
+      </div>
+
+      <div className="relative">
+        <CustomParticles />
       </div>
     </motion.div>
   );

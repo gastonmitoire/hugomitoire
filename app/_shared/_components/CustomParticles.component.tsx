@@ -25,12 +25,12 @@ export const CustomParticles = () => {
       options={{
         background: {
           color: {
-            value: "#ffffff",
+            value: "transparent",
           },
         },
         fpsLimit: 120,
         interactivity: {
-          detect_on: "parent",
+          detect_on: "canvas",
           events: {
             onClick: {
               enable: true,
