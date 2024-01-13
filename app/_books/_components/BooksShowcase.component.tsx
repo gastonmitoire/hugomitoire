@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Image, Skeleton } from "@nextui-org/react";
+import { Image, Skeleton, Spacer } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/books.service";
 
 import { CustomParticles } from "@/app/_shared/_components";
@@ -36,16 +36,14 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
         opacity: 1,
         scale: 1.1,
         rotate: 0,
-        borderRadius: 0,
       },
     };
   };
 
   const bookItemImageVariants = {
     whileHover: {
-      borderRadius: 0,
       transition: {
-        duration: 0.3,
+        duration: 0.5,
         ease: "easeInOut",
       },
     },
@@ -105,7 +103,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative grid h-full w-full select-none grid-flow-row items-center justify-center gap-10 px-3 py-20 sm:px-20 md:grid-cols-3 xl:grid-rows-2 xl:gap-10 xl:py-20"
+      className="relative grid h-full w-full select-none grid-flow-row items-center justify-center gap-10 px-3 py-20 sm:px-20 md:grid-cols-3 xl:grid-rows-2 xl:gap-10 xl:pb-0 xl:pt-28"
     >
       <div className="col-span-1 grid h-full w-full justify-center px-7 md:col-start-2 xl:col-start-auto xl:row-span-2 xl:flex">
         <FeaturedItem />
