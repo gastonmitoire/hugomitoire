@@ -1,7 +1,7 @@
 export const fetchClient = (url: string, options: {}): Promise<any> => {
   const defaultOptions = {
     next: {
-      revalidate: 0,
+      revalidate: 320,
     },
   };
 

@@ -30,7 +30,10 @@ export const BookGrid: React.FC<BookGridProps> = ({ books }) => {
     style,
   }) => {
     return (
-      <section className={`[&>*]:min-h-[430px] ${className}`} style={style}>
+      <section
+        className={`z-10 [&>*]:min-h-[430px] ${className}`}
+        style={style}
+      >
         {children}
       </section>
     );

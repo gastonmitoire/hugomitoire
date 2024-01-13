@@ -6,6 +6,7 @@ import { Image, Skeleton } from "@nextui-org/react";
 import { EnhancedBookModel } from "../_service/books.service";
 
 import { CustomParticles } from "@/app/_shared/_components";
+
 interface BooksShowcaseProps {
   books: (EnhancedBookModel | undefined)[];
 }
@@ -104,7 +105,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="relative grid h-full w-full grid-flow-row items-center justify-center gap-10 px-3 py-20 sm:px-20 md:grid-cols-3 xl:grid-rows-2 xl:gap-10 xl:py-20"
+      className="relative grid h-full w-full select-none grid-flow-row items-center justify-center gap-10 px-3 py-20 sm:px-20 md:grid-cols-3 xl:grid-rows-2 xl:gap-10 xl:py-20"
     >
       <div className="col-span-1 grid h-full w-full justify-center px-7 md:col-start-2 xl:col-start-auto xl:row-span-2 xl:flex">
         <FeaturedItem />
@@ -123,10 +124,7 @@ export const BooksShowcase: React.FC<BooksShowcaseProps> = ({ books }) => {
           ))}
         </AnimatePresence>
       </div>
-
-      <div className="relative">
-        <CustomParticles />
-      </div>
+      <CustomParticles />
     </motion.div>
   );
 };
