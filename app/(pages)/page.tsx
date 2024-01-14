@@ -1,12 +1,10 @@
-import { Suspense } from "react";
-
 import { Spacer } from "@nextui-org/spacer";
-
-import Loading from "./loading";
 
 import { BookFeaturedWrapper } from "../_books/_components/BookFeaturedWrapper.component";
 import { BookGridWrapper } from "../_books/_components/BookGridWrapper.component";
 import { BooksShowcaseWrapper } from "../_books/_components/BooksShowcaseWrapper.component";
+
+import { CustomParticles } from "../_shared/_components";
 
 export default async function Home() {
   const generateLandingPageStyles = () => {
@@ -31,19 +29,17 @@ export default async function Home() {
 
   return (
     <main>
-      <Suspense fallback={<Loading />}>
-        <section className="h-screen">
-          <BooksShowcaseWrapper />
-        </section>
+      <section className="h-screen">
+        <BooksShowcaseWrapper />
+      </section>
 
-        <section className="h-screen">
-          <BookFeaturedWrapper />
-        </section>
+      <section className="h-screen">
+        <BookFeaturedWrapper />
+      </section>
 
-        <section className="h-screen">
-          <BookGridWrapper />
-        </section>
-      </Suspense>
+      <section className="h-screen">
+        <BookGridWrapper />
+      </section>
     </main>
   );
 }
