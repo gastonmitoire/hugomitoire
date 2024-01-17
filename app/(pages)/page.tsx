@@ -29,17 +29,9 @@ export default async function Home() {
 
   return (
     <main>
-      <section className="h-screen">
-        <BooksShowcaseWrapper />
-      </section>
-
-      <section className="h-screen">
-        <BookFeaturedWrapper />
-      </section>
-
-      <section className="h-screen">
-        <BookGridWrapper />
-      </section>
+      <BooksShowcaseWrapper />
+      <BookFeaturedWrapper />
+      <BookGridWrapper />
     </main>
   );
 }
