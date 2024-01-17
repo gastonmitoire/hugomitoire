@@ -29,15 +29,15 @@ export default async function Home() {
 
   return (
     <main>
-      <section className="h-screen">
+      <section className="min-h-screen">
         <BooksShowcaseWrapper />
       </section>
 
-      <section className="h-screen">
+      <section className="min-h-screen">
         <BookFeaturedWrapper />
       </section>
 
-      <section className="h-screen">
+      <section className="min-h-screen">
         <BookGridWrapper />
       </section>
     </main>
