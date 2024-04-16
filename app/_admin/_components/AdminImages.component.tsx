@@ -10,7 +10,6 @@ import { GallerySlash, Trash } from "iconsax-react";
 
 import { Image as ImageModel } from "@prisma/client";
 import { imagesService } from "../../_images/_service/images.service";
-import { uploadS3File, deleteS3File } from "@/app/_utils";
 
 import { toast } from "sonner";
 
@@ -27,7 +26,6 @@ export function AdminImages({ images }: AdminImagesProps) {
 
       if (!confirm) return;
 
-      deleteS3File(url);
 
       const deleted = await imagesService.delete(id);
 
@@ -48,7 +46,7 @@ export function AdminImages({ images }: AdminImagesProps) {
         for (let i = 0; i < files.length; i++) {
           const image = files[i];
 
-          const uploadedUrl = (await uploadS3File(image)) as string;
+          const uploadedUrl = image.name as string;
 
           if (!uploadedUrl) {
             toast.error("Error al subir la imagen");
