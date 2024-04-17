@@ -17,24 +17,13 @@ import {
 async function createUser(
   email: string,
   username: string,
-  passwordHash: string
+  passwordHash: string,
+  role: string
 ): Promise<User> {
   return await prisma.user.upsert({
     where: { email, username },
     update: {},
-    create: { email, username, passwordHash },
-  });
-}
-
-async function createGenre(newGenre: Omit<Genre, "id">): Promise<Genre> {
-  return await prisma.genre.create({
-    data: newGenre,
-  });
-}
-
-async function createBook(newBook: Omit<Book, "id">): Promise<Book> {
-  return await prisma.book.create({
-    data: newBook,
+    create: { email, username, passwordHash, role },
   });
 }
 
@@ -45,7 +34,7 @@ async function createUserWithProfile(
   role: string,
   profileData: Omit<Profile, "id" | "userId">
 ): Promise<{ user: User; profile: Profile }> {
-  const user = await createUser(email, username, passwordHash);
+  const user = await createUser(email, username, passwordHash, role);
   console.log("Usuario creado:", user.username);
 
   const userProfile = await prisma.profile.create({
