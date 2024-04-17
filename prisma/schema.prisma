@@ -55,7 +55,7 @@ model UserSettings {
 model Book {
     id              String    @id @default(uuid())
     serie           Serie?    @relation(fields: [serieId], references: [id])
-    serieId         String
+    serieId         String?
     genre           Genre     @relation(fields: [genreId], references: [id])
     genreId         String
     chapters        Chapter[]
