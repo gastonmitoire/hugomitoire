@@ -54,6 +54,8 @@ model UserSettings {
 
 model Book {
     id              String    @id @default(uuid())
+    serie           Serie?    @relation(fields: [serieId], references: [id])
+    serieId         String
     genre           Genre     @relation(fields: [genreId], references: [id])
     genreId         String
     chapters        Chapter[]
@@ -69,6 +71,14 @@ model Book {
     publicationDate DateTime
     cover           String
     secondaryImage  String
+}
+
+model Serie {
+    id          String @id @default(uuid())
+    books       Book[]
+    title       String
+    slug        String @unique
+    description String
 }
 
 model Image {
