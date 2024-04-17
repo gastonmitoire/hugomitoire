@@ -14,55 +14,47 @@ import {
   userSamples,
 } from "./data-samples/dataSamples";
 
-async function createUser(
-  email: string,
-  username: string,
-  passwordHash: string,
-  role: string
-): Promise<User> {
-  return await prisma.user.upsert({
-    where: { email, username },
-    update: {},
-    create: { email, username, passwordHash, role },
-  });
-}
-
-async function createUserWithProfile(
-  email: string,
-  username: string,
-  passwordHash: string,
-  role: string,
-  profileData: Omit<Profile, "id" | "userId">
-): Promise<{ user: User; profile: Profile }> {
-  const user = await createUser(email, username, passwordHash, role);
-  console.log("Usuario creado:", user.username);
-
-  const userProfile = await prisma.profile.create({
-    data: { ...profileData, userId: user.id },
-  });
-  console.log("Perfil creado para el usuario:", user.username);
-
-  return { user, profile: userProfile };
-}
-
-async function createUsersWithProfiles() {
+async function createUsersAndProfiles(userSamples: any[]) {
   let createdUsers = [];
   for (const userData of userSamples) {
-    const { user, profile } = await createUserWithProfile(
-      userData.email,
-      userData.username,
-      userData.passwordHash,
-      userData.role || "USER",
-      userData.profile
-    );
+    const { email, username, passwordHash, role = "USER", profile } = userData;
 
+    // Crear usuario
+    const user = await prisma.user.upsert({
+      where: { email, username },
+      update: {},
+      create: { email, username, passwordHash, role },
+    });
+    console.log("Usuario creado:", user.username);
+
+    // Crear perfil para el usuario
+    const userProfile = await prisma.profile.create({
+      data: { ...(profile || {}), userId: user.id },
+    });
     console.log("Perfil creado para el usuario:", user.username);
-    createdUsers.push({ ...user, profile });
+
+    createdUsers.push({ ...user, profile: userProfile });
   }
   return createdUsers;
 }
 
-async function createBooksAndGenres(
+function determineGenre(bookTitle: string): string {
+  // Lógica para determinar el género basado en el título del libro
+  if (
+    bookTitle.includes("Ojos de Mariel") ||
+    bookTitle.includes("La cacería")
+  ) {
+    return "Negro";
+  } else if (bookTitle.includes("La bestia")) {
+    return "Terror y misterio";
+  } else {
+    // En caso de que no haya un género específico asignado
+    return "Otro";
+  }
+}
+
+async function createBooksGenresAndChapters(
+  bookSamples: any[],
   illustratorId: string,
   publisherId: string
 ) {
@@ -88,8 +80,12 @@ async function createBooksAndGenres(
     return acc;
   }, {});
 
-  // Crear los libros asignándoles los géneros correspondientes
+  let createdBooks = [];
+  // Crear los libros, asignándoles géneros y capítulos correspondientes
   for (const bookData of bookSamples) {
+    const { chapters, ...bookInfo } = bookData;
+
+    // Determinar el género del libro
     const genreName = determineGenre(bookData.title);
     const genre = genresByName[genreName];
     if (!genre) {
@@ -97,50 +93,55 @@ async function createBooksAndGenres(
         `No se encontró el género para el libro "${bookData.title}"`
       );
     }
-    await createBookWithGenre(bookData, genre.id, illustratorId, publisherId);
-  }
-}
+    // Crear el libro y conectarlo al género
+    const book = await prisma.book.create({
+      data: {
+        ...bookInfo,
+        genre: { connect: { id: genre.id } },
+        illustrator: { connect: { id: illustratorId } },
+        publisher: { connect: { id: publisherId } },
+      },
+      include: {
+        chapters: true,
+        genre: true,
+      },
+    });
 
-async function createBookWithGenre(
-  bookData: any,
-  genreId: string,
-  illustratorId: string,
-  publisherId: string
-) {
-  const book = await prisma.book.create({
-    data: {
-      ...bookData,
-      genre: { connect: { id: genreId } },
-      illustrator: { connect: { id: illustratorId } },
-      publisher: { connect: { id: publisherId } },
-    },
-  });
-  console.log(
-    `Libro "${bookData.title}" creado con éxito y asignado al género con ID "${genreId}"`
-  );
-}
+    console.log(
+      `Libro "${bookInfo.title}" creado con éxito y asignado al género con ID "${genre.id}"`
+    );
 
-function determineGenre(bookTitle: string): string {
-  // Lógica para determinar el género basado en el título del libro
-  if (
-    bookTitle.includes("Ojos de Mariel") ||
-    bookTitle.includes("La cacería")
-  ) {
-    return "Negro";
-  } else if (bookTitle.includes("La bestia")) {
-    return "Terror y misterio";
-  } else {
-    // En caso de que no haya un género específico asignado
-    return "Otro";
+    // Si el libro tiene capítulos, crearlos
+    if (chapters && chapters.length > 0) {
+      console.log("CREANDO CHAPTERS");
+      try {
+        for (const chapterData of chapters) {
+          await prisma.chapter.create({
+            data: {
+              ...chapterData,
+              book: { connect: { id: book.id } },
+            },
+          });
+          console.log(
+            `Capítulo "${chapterData.title}" creado con éxito para el libro "${bookInfo.title}"`
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    createdBooks.push(book);
   }
+
+  return createdBooks;
 }
 
 async function main() {
   try {
     // Crear usuarios y perfiles
-    const userData = await createUsersWithProfiles();
+    const createdUsers = await createUsersAndProfiles(userSamples);
     console.log("Usuarios y perfiles creados con éxito");
-    console.log(userData);
+    console.log(createdUsers);
 
     // Obtener los IDs de los usuarios editor e ilustrador
     const illustrator = await prisma.user.findFirst({
@@ -150,16 +151,17 @@ async function main() {
       where: { username: "delapaz" },
     });
 
-    // Crear libros y géneros
-    const genresByName = await createBooksAndGenres(
+    // Crear libros, géneros y capítulos
+    const createdBooks = await createBooksGenresAndChapters(
+      bookSamples,
       illustrator?.id ?? "valor_predeterminado_illustrator",
       publisher?.id ?? "valor_predeterminado_publisher"
     );
-    console.log("Libros y géneros creados con éxito");
-    console.log(genresByName);
+    console.log("Libros, géneros y capítulos creados con éxito");
+    console.log(createdBooks);
   } catch (error) {
     console.error(
-      "Error al crear usuarios, perfiles, libros y géneros:",
+      "Error al crear usuarios, perfiles, libros, géneros y capítulos:",
       error
     );
   } finally {

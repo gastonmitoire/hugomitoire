@@ -52,6 +52,12 @@ const bookSamples = [
     secondaryImage: "/imagenes/los-ojos-de-mariel_BG.jpg",
     type: "novela",
     publicationDate: new Date(),
+    chapters: [
+      {
+        title: "Las copas de champagne",
+        order: 1,
+      },
+    ],
   },
   {
     title: "La cacería",
