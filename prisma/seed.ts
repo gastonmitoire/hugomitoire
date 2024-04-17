@@ -102,7 +102,6 @@ async function createBooksGenresAndChapters(
         publisher: { connect: { id: publisherId } },
       },
       include: {
-        chapters: true,
         genre: true,
       },
     });
