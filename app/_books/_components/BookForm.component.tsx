@@ -42,6 +42,7 @@ const schema = yup.object().shape({
   genreId: yup.string().required(),
   illustratorId: yup.string().required(),
   publisherId: yup.string().required(),
+  serieId: yup.string().required(),
 });
 
 type BookFormValues = yup.InferType<typeof schema>;
@@ -73,6 +74,7 @@ export const BookForm: React.FC<BookFormProps> = ({
       genreId: "",
       illustratorId: "",
       publisherId: "",
+      serieId: "",
     },
   });
 

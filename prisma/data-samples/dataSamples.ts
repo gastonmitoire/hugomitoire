@@ -1,3 +1,5 @@
+import { Book, Chapter, Genre, Serie } from "@prisma/client";
+
 const userSamples = [
   {
     email: "gastonmm@gmail.com",
@@ -43,13 +45,16 @@ const userSamples = [
   },
 ];
 
-const bookSamples = [
+export interface BookSamplesProps
+  extends Pick<Book, "title" | "description" | "type" | "publicationDate"> {
+  chapters?: Pick<Chapter, "title" | "order">[];
+  serieTitle?: string;
+}
+
+const bookSamples: BookSamplesProps[] = [
   {
     title: "Los Ojos de Mariel",
-    slug: "los-ojos-de-mariel",
     description: "Historia sobre un aborto clandestino",
-    cover: "/portadas/los-ojos-de-mariel.jpg",
-    secondaryImage: "/imagenes/los-ojos-de-mariel_BG.jpg",
     type: "novela",
     publicationDate: new Date(),
     chapters: [
@@ -61,34 +66,111 @@ const bookSamples = [
   },
   {
     title: "La cacería",
-    slug: "la-caceria",
     description: "Relato de una venganza",
-    cover: "/portadas/la-caceria.jpg",
-    secondaryImage: "/imagenes/la-caceria_BG.jpg",
     type: "novela",
     publicationDate: new Date(),
   },
   {
     title: "La bestia",
-    slug: "la-bestia",
     description: "El anticristo ha nacido",
-    cover: "/portadas/la-bestia.jpg",
-    secondaryImage: "/imagenes/la-bestia_BG.jpg",
     type: "novela",
     publicationDate: new Date(),
   },
+  {
+    title: "Cuentos de terror para Franco I",
+    description: "Cuentos de terror, aventura y misterio",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuentos de terror para Franco",
+  },
+  {
+    title: "Cuentos de terror para Franco II",
+    description: "Cuentos de terror, aventura y misterio",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuentos de terror para Franco",
+  },
+  {
+    title: "Cuentos de terror para Franco III",
+    description: "Cuentos de terror, aventura y misterio",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuentos de terror para Franco",
+  },
+  {
+    title: "Cuentos de terror para Franco IV",
+    description: "Cuentos de terror, aventura y misterio",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuentos de terror para Franco",
+  },
+  {
+    title: "Cuentos de terror para Franco V",
+    description: "Cuentos de terror, aventura y misterio",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuentos de terror para Franco",
+  },
+  {
+    title: "Cuentos de terror para Franco VI",
+    description: "Cuentos de terror, aventura y misterio",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuentos de terror para Franco",
+  },
+  {
+    title: "Cuentos de terror para Franco VII",
+    description: "Cuentos de terror, aventura y misterio",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuentos de terror para Franco",
+  },
+  {
+    title: "Cuentos de terror para Franco VIII",
+    description: "Cuentos de terror, aventura y misterio",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuentos de terror para Franco",
+  },
+  {
+    title: "Cuentos de terror para Franco IX",
+    description: "Cuentos de terror, aventura y misterio",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuentos de terror para Franco",
+  },
+  {
+    title: "Cuando era chico I",
+    description: "Relatos e historias de la infancia",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuando era chico",
+  },
+  {
+    title: "Cuando era chico II",
+    description: "Relatos e historias de la infancia",
+    type: "cuento",
+    publicationDate: new Date(),
+    serieTitle: "Cuando era chico",
+  },
 ];
 
-const genreSamples = [
+const genreSamples: Pick<Genre, "name" | "ageRange">[] = [
   {
     name: "Negro",
-    slug: "negro",
     ageRange: "16",
   },
   {
-    name: "Terror y misterio",
-    slug: "terror-y-misterio",
+    name: "Terror",
     ageRange: "10",
+  },
+  {
+    name: "Novelas Fantásticas y Ciencia Ficción",
+    ageRange: "10",
+  },
+  {
+    name: "Cuando era chico",
+    ageRange: "8",
   },
 ];
 
