@@ -1,20 +1,14 @@
-import {
-  PrismaClient,
-  User,
-  Book,
-  Genre,
-  Chapter,
-  Profile,
-  UserSettings,
-  Serie,
-} from "@prisma/client";
+import { PrismaClient, Book, Genre, Serie } from "@prisma/client";
 const prisma = new PrismaClient();
+
 import {
-  BookSamplesProps,
   bookSamples,
+  BookSamplesProps,
   genreSamples,
+  GenreSamplesProps,
   userSamples,
-} from "./data-samples/dataSamples";
+  UserSamplesProps,
+} from "./data-samples";
 
 const generateSlug = (title: string) => {
   const withoutAccent = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -25,7 +19,7 @@ const generateSlug = (title: string) => {
     .replace(/--+/g, "-");
 };
 
-async function createUsersAndProfiles(userSamples: any[]) {
+async function createUsersAndProfiles(userSamples: UserSamplesProps[]) {
   let createdUsers = [];
   for (const userData of userSamples) {
     const { email, username, passwordHash, role = "USER", profile } = userData;
@@ -49,7 +43,7 @@ async function createUsersAndProfiles(userSamples: any[]) {
   return createdUsers;
 }
 
-function determineGenre(bookTitle: string): string {
+function determineGenre(bookTitle: Book["title"]): string {
   // Lógica para determinar el género basado en el título del libro
   if (
     bookTitle.includes("Ojos de Mariel") ||
@@ -71,7 +65,7 @@ function determineGenre(bookTitle: string): string {
 async function createBooksGenresAndChapters(bookSamples: BookSamplesProps[]) {
   // Crear los géneros si no existen
   await Promise.all(
-    genreSamples.map(async (genreData) => {
+    genreSamples.map(async (genreData: GenreSamplesProps) => {
       const existingGenre = await prisma.genre.findFirst({
         where: { name: genreData.name },
       });
