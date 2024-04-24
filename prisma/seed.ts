@@ -98,10 +98,12 @@ async function createBooksGenresAndChapters(bookSamples: BookSamplesProps[]) {
     where: { username: "delapaz" },
   });
 
-  let createdBooks = [];
   // Crear los libros, asignándoles géneros y capítulos correspondientes
+  let createdBooks = [];
   for (const bookData of bookSamples) {
     const { chapters, serieTitle, ...bookInfo } = bookData;
+    const generatedSlug = generateSlug(bookInfo.title);
+    const imagesFolderPath = "/assets/images";
 
     // Determinar el género del libro
     const genreName = determineGenre(bookData.title);
@@ -112,8 +114,15 @@ async function createBooksGenresAndChapters(bookSamples: BookSamplesProps[]) {
       );
     }
 
-    const generatedSlug = generateSlug(bookInfo.title);
-    const imagesFolderPath = "/assets/images";
+    let newBookData = {
+      ...bookInfo,
+      slug: generatedSlug,
+      cover: imagesFolderPath + "/covers/" + generatedSlug + "_COVER.jpg",
+      secondaryImage: imagesFolderPath + "/bg/" + generatedSlug + "_BG.jpg",
+      genre: { connect: { id: genre.id } },
+      illustrator: { connect: { id: illustrator?.id } },
+      publisher: { connect: { id: publisher?.id } },
+    };
 
     if (serieTitle) {
       let serie: Serie | null = await prisma.serie.findFirst({
@@ -129,50 +138,42 @@ async function createBooksGenresAndChapters(bookSamples: BookSamplesProps[]) {
           },
         });
         console.log(`Serie "${serieTitle}" creada con éxito`);
-      }
 
-      // Crear el libro y conectarlo al género
-      const book = await prisma.book.create({
-        data: {
-          ...bookInfo,
-          slug: generatedSlug,
-          cover: imagesFolderPath + "/covers/" + generatedSlug + "_COVER.jpg",
-          secondaryImage: imagesFolderPath + "/bg/" + generatedSlug + "_BG.jpg",
-          genre: { connect: { id: genre.id } },
-          illustrator: { connect: { id: illustrator?.id } },
-          publisher: { connect: { id: publisher?.id } },
+        Object.assign(newBookData, {
           serie: { connect: { id: serie.id } },
-        },
-        include: {
-          genre: true,
-        },
-      });
-
-      console.log(
-        `Libro "${bookInfo.title}" creado con éxito y asignado al género con ID "${genre.id}"`
-      );
-
-      // Si el libro tiene capítulos, crearlos
-      if (chapters && chapters.length > 0) {
-        console.log("CREANDO CHAPTERS");
-        try {
-          for (const chapterData of chapters) {
-            await prisma.chapter.create({
-              data: {
-                ...chapterData,
-                book: { connect: { id: book.id } },
-              },
-            });
-            console.log(
-              `Capítulo "${chapterData.title}" creado con éxito para el libro "${bookInfo.title}"`
-            );
-          }
-        } catch (error) {
-          console.log(error);
-        }
+        });
       }
-      createdBooks.push(book);
     }
+
+    // Crear el libro y conectarlo al género
+    const book = await prisma.book.create({
+      data: newBookData,
+    });
+
+    console.log(
+      `Libro "${bookInfo.title}" creado con éxito y asignado al género con ID "${genre.id}"`
+    );
+
+    // Si el libro tiene capítulos, crearlos
+    if (chapters && chapters.length > 0) {
+      console.log("CREANDO CHAPTERS");
+      try {
+        for (const chapterData of chapters) {
+          await prisma.chapter.create({
+            data: {
+              ...chapterData,
+              book: { connect: { id: book.id } },
+            },
+          });
+          console.log(
+            `Capítulo "${chapterData.title}" creado con éxito para el libro "${bookInfo.title}"`
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    createdBooks.push(book);
   }
 
   return createdBooks;
