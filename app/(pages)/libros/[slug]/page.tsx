@@ -1,8 +1,8 @@
 import { Image } from "@nextui-org/image";
 
-import { BookDetail } from "@/app/_books/_components/BookDetail.component";
+import { BookDetail } from "@/app/_book/_components/BookDetail.component";
 
-import { booksService } from "@/app/_books/_service/books.service";
+import { booksService } from "@/app/_book/_service/books.service";
 
 interface LibroPageProps {
   params: {

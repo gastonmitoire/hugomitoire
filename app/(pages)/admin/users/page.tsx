@@ -1,4 +1,4 @@
-import { usersService } from "@/app/_users/_service/users.service";
+import { usersService } from "@/app/_user/_service/users.service";
 
 export default async function AdminUsersPage() {
   const users = await usersService.getAll();

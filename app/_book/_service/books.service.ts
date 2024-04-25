@@ -1,6 +1,6 @@
 import { fetchClient } from "@/app/_utils";
 import { Book as BookModel } from "@prisma/client";
-import { EnhancedChapterModel } from "@/app/_chapters/_service/chapter.service";
+import { EnhancedChapterModel } from "@/app/_chapter/_service/chapter.service";
 import { Genre as GenreModel } from "@prisma/client";
 import { User as UserModel } from "@prisma/client";
 

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "@nextui-org/link";
 
-import { UserMenuWrapper } from "../../_users/_components/UserMenuWrapper";
+import { UserMenuWrapper } from "../../_user/_components/UserMenuWrapper";
 
 import { Category, People, Book, Image, I3DSquare } from "iconsax-react";
 

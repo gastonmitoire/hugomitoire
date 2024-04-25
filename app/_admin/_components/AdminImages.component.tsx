@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 
 import { Button, Image, Spacer } from "@nextui-org/react";
 
-import { DropdownZone } from "../../_images/_components/DropdownZone.component";
+import { DropdownZone } from "../../_image/_components/DropdownZone.component";
 
 import { GallerySlash, Trash } from "iconsax-react";
 
 import { Image as ImageModel } from "@prisma/client";
-import { imagesService } from "../../_images/_service/images.service";
+import { imagesService } from "../../_image/_service/images.service";
 
 import { toast } from "sonner";
 
@@ -25,7 +25,6 @@ export function AdminImages({ images }: AdminImagesProps) {
       const confirm = window.confirm(`Seguro que desea eliminar la imagen?`);
 
       if (!confirm) return;
-
 
       const deleted = await imagesService.delete(id);
 
