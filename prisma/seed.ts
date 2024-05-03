@@ -63,7 +63,7 @@ function determineGenre(bookTitle: Book["title"]): string {
     bookTitle.includes("Historia de un niño lobo") ||
     bookTitle.includes("Recuerdos de mi muerte")
   ) {
-    return "Novelas Fantásticas y Ciencia Ficción";
+    return "Fantástico y Ciencia Ficción";
   } else if (bookTitle.includes("Cuentos de terror")) {
     return "Terror";
   } else if (bookTitle.includes("Cuando era")) {
@@ -130,7 +130,7 @@ async function createBooksGenresAndChapters(bookSamples: BookSamplesProps[]) {
       ...bookInfo,
       slug: generatedSlug,
       cover: imagesFolderPath + "/covers/" + generatedSlug + "_COVER.png",
-      secondaryImage: imagesFolderPath + "/bg/" + generatedSlug + "_BG.jpg",
+      secondaryImage: imagesFolderPath + "/bg/" + generatedSlug + "_BG.png",
       genre: { connect: { id: genre.id } },
       illustrator: { connect: { id: illustrator?.id } },
       publisher: { connect: { id: publisher?.id } },

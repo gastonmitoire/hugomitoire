@@ -16,7 +16,7 @@ export const genreSamples: GenreSamplesProps[] = [
     ageRange: "10",
   },
   {
-    name: "Novelas Fantásticas y Ciencia Ficción",
+    name: "Fantástico y Ciencia Ficción",
     ageRange: "10",
   },
   {
