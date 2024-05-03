@@ -11,7 +11,10 @@ import {
 } from "./data-samples";
 
 const generateSlug = (title: string) => {
-  const withoutAccent = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const withoutNWithAccent = title.replace(/Ñ/gi, "n");
+  const withoutAccent = withoutNWithAccent
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
   return withoutAccent
     .toLowerCase()
     .replace(/[^a-z0-9-]+/g, "-")
@@ -50,7 +53,16 @@ function determineGenre(bookTitle: Book["title"]): string {
     bookTitle.includes("La cacería")
   ) {
     return "Negro";
-  } else if (bookTitle.includes("La bestia")) {
+  } else if (bookTitle.includes("La Chancha con ruleros")) {
+    return "Curiosa Vida Animal";
+  } else if (
+    bookTitle.includes("Criaturas celestes") ||
+    bookTitle.includes("Crispín Soto y El Diablo") ||
+    bookTitle.includes("La bestia") ||
+    bookTitle.includes("Mensajes del mas allá") ||
+    bookTitle.includes("Historia de un niño lobo") ||
+    bookTitle.includes("Recuerdos de mi muerte")
+  ) {
     return "Novelas Fantásticas y Ciencia Ficción";
   } else if (bookTitle.includes("Cuentos de terror")) {
     return "Terror";
@@ -117,7 +129,7 @@ async function createBooksGenresAndChapters(bookSamples: BookSamplesProps[]) {
     let newBookData = {
       ...bookInfo,
       slug: generatedSlug,
-      cover: imagesFolderPath + "/covers/" + generatedSlug + "_COVER.jpg",
+      cover: imagesFolderPath + "/covers/" + generatedSlug + "_COVER.png",
       secondaryImage: imagesFolderPath + "/bg/" + generatedSlug + "_BG.jpg",
       genre: { connect: { id: genre.id } },
       illustrator: { connect: { id: illustrator?.id } },

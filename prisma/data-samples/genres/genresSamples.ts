@@ -4,6 +4,10 @@ export type GenreSamplesProps = Pick<Genre, "name" | "ageRange">;
 
 export const genreSamples: GenreSamplesProps[] = [
   {
+    name: "Curiosa Vida Animal",
+    ageRange: "5",
+  },
+  {
     name: "Negro",
     ageRange: "16",
   },

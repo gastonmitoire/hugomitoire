@@ -8,6 +8,42 @@ export interface BookSamplesProps
 
 export const bookSamples: BookSamplesProps[] = [
   {
+    title: "Recuerdos de mi muerte",
+    description: "Las letanías de un alma en pena",
+    type: "novela",
+    publicationDate: new Date(),
+  },
+  {
+    title: "Mensajes del mas allá",
+    description: "Llamados y señales provenientes del otro plano",
+    type: "novela",
+    publicationDate: new Date(),
+  },
+  {
+    title: "La Chancha con ruleros",
+    description: "Una chancha que queria ser coqueta",
+    type: "cuento",
+    publicationDate: new Date(),
+  },
+  {
+    title: "Historia de un niño lobo",
+    description: "La historia de Eduardo, el lobisón",
+    type: "novela",
+    publicationDate: new Date(),
+  },
+  {
+    title: "Crispín Soto y El Diablo",
+    description: "Un pacto con el demonio",
+    type: "novela",
+    publicationDate: new Date(),
+  },
+  {
+    title: "Criaturas celestes",
+    description: "Encuentro con seres de otro planeta",
+    type: "novela",
+    publicationDate: new Date(),
+  },
+  {
     title: "Los Ojos de Mariel",
     description: "Historia sobre un aborto clandestino",
     type: "novela",
