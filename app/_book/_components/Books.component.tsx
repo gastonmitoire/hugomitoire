@@ -72,6 +72,41 @@ const BookCard: React.FC<EnhancedBookModel> = (book) => {
 const BookBanner: React.FC<EnhancedBookModel> = (book) => {
   const configs = (value: string) => {
     switch (value) {
+      case "cuando-era-chico-i":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 35%",
+        };
+      case "cuando-era-chico-ii":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 50%",
+        };
+      case "la-bestia":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 45%",
+        };
+      case "la-caceria":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 55%",
+        };
+      case "los-ojos-de-mariel":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 65%",
+        };
+      case "mensajes-del-mas-alla":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 40%",
+        };
+      case "historia-de-un-nino-lobo":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 75%",
+        };
       case "la-chancha-con-ruleros":
         return {
           backgroundSize: "100%",
@@ -87,10 +122,35 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
           backgroundSize: "100%",
           backgroundPosition: "center",
         };
+      case "cuentos-de-terror-para-franco-i":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "center",
+        };
+      case "cuentos-de-terror-para-franco-ii":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 45%",
+        };
+      case "cuentos-de-terror-para-franco-iii":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 50%",
+        };
+      case "cuentos-de-terror-para-franco-iv":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 30%",
+        };
+      case "cuentos-de-terror-para-franco-v":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 65%",
+        };
       case "cuentos-de-terror-para-franco-vi":
         return {
           backgroundSize: "100%",
-          backgroundPosition: "top",
+          backgroundPosition: "0 65%",
         };
       case "cuentos-de-terror-para-franco-vii":
         return {
@@ -105,6 +165,7 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
         };
     }
   };
+
   return (
     <div className="relative flex items-center">
       <div
