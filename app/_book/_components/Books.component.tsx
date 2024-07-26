@@ -12,6 +12,8 @@ import {
   Chip,
   Image,
   Link,
+  Spacer,
+  User,
 } from "@nextui-org/react";
 import {
   Element3 as Element3Icon,
@@ -72,6 +74,46 @@ const BookCard: React.FC<EnhancedBookModel> = (book) => {
 const BookBanner: React.FC<EnhancedBookModel> = (book) => {
   const configs = (value: string) => {
     switch (value) {
+      case "cuando-era-chico-i":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 35%",
+        };
+      case "cuando-era-chico-ii":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 50%",
+        };
+      case "recuerdos-de-mi-muerte":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 75%",
+        };
+      case "la-bestia":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 45%",
+        };
+      case "la-caceria":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 55%",
+        };
+      case "los-ojos-de-mariel":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 65%",
+        };
+      case "mensajes-del-mas-alla":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 40%",
+        };
+      case "historia-de-un-nino-lobo":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 75%",
+        };
       case "la-chancha-con-ruleros":
         return {
           backgroundSize: "100%",
@@ -87,15 +129,45 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
           backgroundSize: "100%",
           backgroundPosition: "center",
         };
+      case "cuentos-de-terror-para-franco-i":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "center",
+        };
+      case "cuentos-de-terror-para-franco-ii":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 45%",
+        };
+      case "cuentos-de-terror-para-franco-iii":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 50%",
+        };
+      case "cuentos-de-terror-para-franco-iv":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 30%",
+        };
+      case "cuentos-de-terror-para-franco-v":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 65%",
+        };
       case "cuentos-de-terror-para-franco-vi":
         return {
           backgroundSize: "100%",
-          backgroundPosition: "top",
+          backgroundPosition: "0 65%",
         };
       case "cuentos-de-terror-para-franco-vii":
         return {
           backgroundSize: "100%",
           backgroundPosition: "center",
+        };
+      case "cuentos-de-terror-para-franco-ix":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 45%",
         };
 
       default:
@@ -105,6 +177,7 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
         };
     }
   };
+
   return (
     <div className="relative flex items-center">
       <div
@@ -127,28 +200,59 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
         <Image
           src={book.cover}
           alt={book.title}
-          style={{ height: "370px" }}
+          style={{ width: "270px" }}
           className=" cursor-pointer"
         />
       </div>
 
-      <div className="z-10 max-h-[330px] min-h-[330px] w-full flex-1 px-14 py-3">
-        <h1
-          className={`flex items-center gap-3 text-3xl ${reggaeOne.className}`}
-        >
-          {book.title}
-          <Chip
-            className={`bg-secondary/70 text-tiny text-white ${cinzel.className}`}
-            variant="flat"
-            color="default"
-            radius="lg"
+      <div className="z-10 flex max-h-[330px] min-h-[330px] w-full flex-1 flex-col justify-between gap-3 px-14 py-3">
+        <div>
+          <h1
+            className={`flex items-center gap-3 text-3xl ${reggaeOne.className}`}
           >
-            {book.type}
-          </Chip>
-        </h1>
-        <h5 className={`text-lg font-semibold opacity-50 ${cinzel.className}`}>
-          {book.genre.name}
-        </h5>
+            {book.title}
+            <Chip
+              className={`bg-secondary/70 text-tiny text-white ${cinzel.className}`}
+              variant="flat"
+              color="default"
+              radius="lg"
+            >
+              {book.type}
+            </Chip>
+          </h1>
+          <h5
+            className={`text-lg font-semibold opacity-70 ${cinzel.className}`}
+          >
+            {book.genre.name}
+          </h5>
+        </div>
+
+        <p
+          className={`w-min min-w-[350px] flex-1 rounded-sm bg-black bg-opacity-30 p-3 text-xl font-light italic ${bellefair.className}`}
+        >
+          {book.description}
+        </p>
+
+        <div className="flex gap-5">
+          <User
+            name={
+              book.illustrator.profile?.firstName +
+              " " +
+              book.illustrator.profile?.lastName
+            }
+            description="Ilustrador"
+            avatarProps={{
+              src: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjqQHdzCHkTan_Dl8-P-RPhEI4rtzADs8JSVdg8sVSuEnWPEJQudUlpBGbUjm2TwiP4KgzEMksTks-OSHA3oFvqYygKRtdpglWx19ejDMlPV716cVX9Kc0G13e11NKbBuvtFhc84g11nIQ/s320/FB_IMG_15126431820236753.jpg",
+            }}
+          />
+          <User
+            name={book.publisher.profile?.displayName}
+            description="Editorial"
+            avatarProps={{
+              src: "https://th.bing.com/th/id/R.1c8004fe38fe202ff6ae1208e63637b4?rik=L4EAtU5wX5zMjw&riu=http%3a%2f%2fcamaradgchaco.com.ar%2fwp-content%2fuploads%2f2020%2f05%2flibreria-la-paz.jpg&ehk=xmuHAd%2bGPikd8vo7zhNXg7F1H1W7bJ4Vm3lMYUA3tHo%3d&risl=&pid=ImgRaw&r=0",
+            }}
+          />
+        </div>
       </div>
     </div>
   );
