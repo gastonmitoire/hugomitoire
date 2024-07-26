@@ -82,6 +82,11 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
           backgroundSize: "100%",
           backgroundPosition: "0 50%",
         };
+      case "recuerdos-de-mi-muerte":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 75%",
+        };
       case "la-bestia":
         return {
           backgroundSize: "100%",
@@ -156,6 +161,11 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
         return {
           backgroundSize: "100%",
           backgroundPosition: "center",
+        };
+      case "cuentos-de-terror-para-franco-ix":
+        return {
+          backgroundSize: "100%",
+          backgroundPosition: "0 45%",
         };
 
       default:
