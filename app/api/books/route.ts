@@ -8,8 +8,22 @@ async function getBooks(): Promise<NextResponse> {
     const books = await prisma.book.findMany({
       include: {
         genre: true,
-        illustrator: true,
-        publisher: true,
+        illustrator: {
+          select: {
+            email: true,
+            profile: true,
+            username: true,
+            id: true,
+          },
+        },
+        publisher: {
+          select: {
+            email: true,
+            profile: true,
+            username: true,
+            id: true,
+          },
+        },
         chapters: true,
       },
     });
