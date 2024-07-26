@@ -2,9 +2,9 @@ import React from "react";
 
 import { ScrollShadow } from "@nextui-org/scroll-shadow";
 
-import { ChapterFormWrapper } from "@/app/_chapters/_components/ChapterFormWrapper.component";
+import { ChapterFormWrapper } from "@/app/_chapter/_components/ChapterFormWrapper.component";
 
-import { chapterService } from "@/app/_chapters/_service/chapter.service";
+import { chapterService } from "@/app/_chapter/_service/chapter.service";
 
 interface AdminBookChapterSectionPageProps {
   params: {

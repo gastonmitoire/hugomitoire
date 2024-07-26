@@ -18,7 +18,7 @@ import { Trash } from "iconsax-react";
 import {
   booksService,
   EnhancedBookModel,
-} from "../../_books/_service/books.service";
+} from "../../_book/_service/books.service";
 
 interface AdminBooksProps {
   books: EnhancedBookModel[];

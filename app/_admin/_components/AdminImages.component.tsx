@@ -4,13 +4,12 @@ import { useRouter } from "next/navigation";
 
 import { Button, Image, Spacer } from "@nextui-org/react";
 
-import { DropdownZone } from "../../_images/_components/DropdownZone.component";
+import { DropdownZone } from "../../_image/_components/DropdownZone.component";
 
 import { GallerySlash, Trash } from "iconsax-react";
 
 import { Image as ImageModel } from "@prisma/client";
-import { imagesService } from "../../_images/_service/images.service";
-import { uploadS3File, deleteS3File } from "@/app/_utils";
+import { imagesService } from "../../_image/_service/images.service";
 
 import { toast } from "sonner";
 
@@ -26,8 +25,6 @@ export function AdminImages({ images }: AdminImagesProps) {
       const confirm = window.confirm(`Seguro que desea eliminar la imagen?`);
 
       if (!confirm) return;
-
-      deleteS3File(url);
 
       const deleted = await imagesService.delete(id);
 
@@ -48,7 +45,7 @@ export function AdminImages({ images }: AdminImagesProps) {
         for (let i = 0; i < files.length; i++) {
           const image = files[i];
 
-          const uploadedUrl = (await uploadS3File(image)) as string;
+          const uploadedUrl = image.name as string;
 
           if (!uploadedUrl) {
             toast.error("Error al subir la imagen");

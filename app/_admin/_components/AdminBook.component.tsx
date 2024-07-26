@@ -5,9 +5,9 @@ import { Divider } from "@nextui-org/divider";
 import { Image } from "@nextui-org/image";
 import { Spacer } from "@nextui-org/spacer";
 
-import { EnhancedBookModel } from "@/app/_books/_service/books.service";
-import { ChapterList } from "@/app/_chapters/_components/ChaptersList.component";
-import { ChapterFormWrapper } from "@/app/_chapters/_components/ChapterFormWrapper.component";
+import { EnhancedBookModel } from "@/app/_book/_service/books.service";
+import { ChapterList } from "@/app/_chapter/_components/ChaptersList.component";
+import { ChapterFormWrapper } from "@/app/_chapter/_components/ChapterFormWrapper.component";
 
 interface AdminBookProps {
   book: EnhancedBookModel;

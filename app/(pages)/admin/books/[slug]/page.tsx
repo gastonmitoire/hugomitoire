@@ -2,7 +2,7 @@ import React from "react";
 
 import { AdminBook } from "@/app/_admin/_components/AdminBook.component";
 
-import { booksService } from "@/app/_books/_service/books.service";
+import { booksService } from "@/app/_book/_service/books.service";
 interface AdminBookPageProps {
   params: {
     slug: string;

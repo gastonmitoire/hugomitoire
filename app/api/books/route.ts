@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { ErrorProps } from "next/error";
 import prisma from "@/app/_lib/prisma";
+import { Book } from "@prisma/client";
 
 async function getBooks(): Promise<NextResponse> {
   try {
@@ -32,18 +33,19 @@ async function getBooks(): Promise<NextResponse> {
 }
 
 async function createBook(request: NextRequest): Promise<NextResponse> {
+  type BookRequestProps = Omit<Book, "id" | "slug">;
   try {
-    const data = await request.json();
+    const data = (await request.json()) as BookRequestProps;
 
     const generateSlug = (title: string) => {
-      return title
+      const withoutAccent = title
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      return withoutAccent
         .toLowerCase()
-        .replace(/ /g, "-")
-        .replace(/[^\w-]+/g, "");
-    };
-
-    const checkDateISO = (date: string) => {
-      return new Date(date).toISOString();
+        .replace(/[^a-z0-9-]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .replace(/--+/g, "-");
     };
 
     const generatedSlug = generateSlug(data.title);
@@ -57,7 +59,7 @@ async function createBook(request: NextRequest): Promise<NextResponse> {
     if (slugExists) {
       const errorResponse: ErrorProps = {
         statusCode: 400,
-        title: "A book with this title already exists",
+        title: "Can't duplicate. A book with this title (slug) already exists.",
       };
 
       return NextResponse.json(errorResponse, {
@@ -66,11 +68,13 @@ async function createBook(request: NextRequest): Promise<NextResponse> {
       });
     }
 
-    data.slug = generateSlug(data.title);
-    data.publicationDate = checkDateISO(data.publicationDate);
+    data.publicationDate = new Date(data.publicationDate);
 
     const newBook = await prisma.book.create({
-      data: data,
+      data: {
+        ...data,
+        slug: generatedSlug,
+      },
     });
 
     return NextResponse.json(newBook, {

@@ -1,4 +1,4 @@
-import { BooksWrapper } from "@/app/_books/_components/BooksWrapper.component";
+import { BooksWrapper } from "@/app/_book/_components/BooksWrapper.component";
 
 export default function LibrosPage() {
   return <BooksWrapper />;

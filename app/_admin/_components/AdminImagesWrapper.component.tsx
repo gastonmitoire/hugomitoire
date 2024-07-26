@@ -1,6 +1,6 @@
 import React from "react";
 
-import { imagesService } from "../../_images/_service/images.service";
+import { imagesService } from "../../_image/_service/images.service";
 
 import { AdminImages } from "./AdminImages.component";
 
