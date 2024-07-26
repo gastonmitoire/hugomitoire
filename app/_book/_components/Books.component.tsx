@@ -200,7 +200,7 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
         <Image
           src={book.cover}
           alt={book.title}
-          style={{ height: "370px" }}
+          style={{ width: "270px" }}
           className=" cursor-pointer"
         />
       </div>
