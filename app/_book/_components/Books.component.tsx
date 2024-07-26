@@ -236,9 +236,9 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
         <div className="flex gap-5">
           <User
             name={
-              book.illustrator.profile.firstName +
+              book.illustrator.profile?.firstName +
               " " +
-              book.illustrator.profile.lastName
+              book.illustrator.profile?.lastName
             }
             description="Ilustrador"
             avatarProps={{
@@ -246,7 +246,7 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
             }}
           />
           <User
-            name={book.publisher.profile.displayName}
+            name={book.publisher.profile?.displayName}
             description="Editorial"
             avatarProps={{
               src: "https://th.bing.com/th/id/R.1c8004fe38fe202ff6ae1208e63637b4?rik=L4EAtU5wX5zMjw&riu=http%3a%2f%2fcamaradgchaco.com.ar%2fwp-content%2fuploads%2f2020%2f05%2flibreria-la-paz.jpg&ehk=xmuHAd%2bGPikd8vo7zhNXg7F1H1W7bJ4Vm3lMYUA3tHo%3d&risl=&pid=ImgRaw&r=0",
