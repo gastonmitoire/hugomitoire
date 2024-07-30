@@ -27,7 +27,7 @@ export const BookFeatured: React.FC<BookFeaturedProps> = ({
       <div
         className="absolute left-0 top-0 h-full w-full bg-black opacity-20"
         style={{
-          backgroundImage: `url(${secondaryImage})`,
+          backgroundImage: `url(${secondaryImage.replaceAll("png", "jpg")})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
