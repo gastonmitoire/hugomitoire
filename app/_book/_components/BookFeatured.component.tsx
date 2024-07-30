@@ -54,11 +54,7 @@ export const BookFeatured: React.FC<BookFeaturedProps> = ({
           <Image src={cover} alt={title} width={500} radius="none" />
         </div>
 
-        <div
-          className={
-            "order-first col-span-2 sm:p-10 xl:order-none xl:col-span-1"
-          }
-        >
+        <div className={"col-span-2 sm:p-10 xl:order-none xl:col-span-1"}>
           {featuredText}
         </div>
       </div>

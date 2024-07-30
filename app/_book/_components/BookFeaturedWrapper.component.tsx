@@ -17,7 +17,9 @@ export const BookFeaturedWrapper: React.FC = async () => {
   const isLoaded = !!bookFeatured;
 
   const featuredText = (
-    <p className={`${bellefair.className} text-justify text-2xl`}>
+    <p
+      className={`${bellefair.className} h-full text-justify text-lg sm:text-2xl`}
+    >
       “Los ricos defienden el aborto ilegal para mantenerlo en secreto y no
       pasar vergüenza. Estoy harto de que se nos mueran chicas pobres para que
       las ricas aborten en secreto. Se nos mueren nenas en las villas y en los

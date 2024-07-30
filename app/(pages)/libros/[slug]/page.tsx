@@ -17,7 +17,7 @@ export default async function LibroPage({ params }: LibroPageProps) {
   return (
     <main
       style={{
-        backgroundImage: `url(${book.secondaryImage})`,
+        backgroundImage: `url(${book.secondaryImage.replaceAll("png", "jpg")})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
