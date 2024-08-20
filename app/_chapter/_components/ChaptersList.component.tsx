@@ -11,6 +11,7 @@ import {
   ScrollShadow,
   useDisclosure,
 } from "@nextui-org/react";
+import { DocumentText as DocumentTextIcon } from "iconsax-react";
 
 const cinzel = Cinzel({ subsets: ["latin"] });
 const bellefair = Bellefair({ weight: "400", subsets: ["latin"] });
@@ -101,9 +102,11 @@ export function ChapterList({ chapters, bookTitle }: ChapterListProps) {
                     className={`flex cursor-pointer bg-darker bg-opacity-50 p-5 text-lg`}
                     onClick={() => handleChapterModal(text)}
                   >
-                    <span className="truncate">
+                    <span className="flex-1 truncate">
                       {order}. {title}
                     </span>
+
+                    <DocumentTextIcon className="text-primary" />
                   </div>
                 ) : (
                   <span className={`flex bg-darker bg-opacity-50 p-5 text-lg`}>
