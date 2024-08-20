@@ -171,15 +171,34 @@ async function createBooksGenresAndChapters(bookSamples: BookSamplesProps[]) {
       console.log("CREANDO CHAPTERS");
       try {
         for (const chapterData of chapters) {
-          await prisma.chapter.create({
+          // Crear el capítulo
+          const createdChapter = await prisma.chapter.create({
             data: {
-              ...chapterData,
+              title: chapterData.title,
+              order: chapterData.order,
               book: { connect: { id: book.id } },
             },
           });
+
           console.log(
             `Capítulo "${chapterData.title}" creado con éxito para el libro "${bookInfo.title}"`
           );
+
+          // Si el capítulo tiene texto, crearlo y vincularlo al capítulo
+          if (chapterData.text && chapterData.text.length > 0) {
+            for (const textData of chapterData.text) {
+              await prisma.text.create({
+                data: {
+                  title: textData.title,
+                  content: textData.content,
+                  chapter: { connect: { id: createdChapter.id } },
+                },
+              });
+              console.log(
+                `Texto "${textData.title}" creado y vinculado al capítulo "${chapterData.title}"`
+              );
+            }
+          }
         }
       } catch (error) {
         console.log(error);

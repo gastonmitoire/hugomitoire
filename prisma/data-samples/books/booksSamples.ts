@@ -1,8 +1,11 @@
-import { Book, Chapter, Genre, Serie } from "@prisma/client";
-
+import { Book, Chapter, Genre, Serie, Text } from "@prisma/client";
 export interface BookSamplesProps
   extends Pick<Book, "title" | "description" | "type" | "publicationDate"> {
-  chapters?: Pick<Chapter, "title" | "order">[];
+  chapters?: Array<
+    Pick<Chapter, "title" | "order"> & {
+      text?: Pick<Text, "title" | "content">[];
+    }
+  >;
   serieTitle?: string;
 }
 
@@ -52,6 +55,12 @@ export const bookSamples: BookSamplesProps[] = [
       {
         title: "Las copas de champagne",
         order: 1,
+        text: [
+          {
+            title: "texto",
+            content: "probando chapteres con texto",
+          },
+        ],
       },
     ],
   },
