@@ -1,20 +1,29 @@
-"use client";
-
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-import { Chapter } from "@prisma/client";
-
-import Link from "next/link";
-
-import { Cinzel } from "next/font/google";
+import { Book, Text } from "@prisma/client";
+import { Cinzel, Bellefair, Reggae_One } from "next/font/google";
+import { EnhancedChapterModel } from "../_service/chapter.service";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ScrollShadow,
+  useDisclosure,
+} from "@nextui-org/react";
+import { DocumentText as DocumentTextIcon } from "iconsax-react";
 
 const cinzel = Cinzel({ subsets: ["latin"] });
-
-import { EnhancedChapterModel } from "../_service/chapter.service";
+const bellefair = Bellefair({ weight: "400", subsets: ["latin"] });
+const reggaeOne = Reggae_One({ weight: "400", subsets: ["latin"] });
 
 interface ChapterListProps {
   chapters: EnhancedChapterModel[];
+  bookTitle: Book["title"];
+}
+
+interface ContentTextProps {
+  selectedText: Text[] | null;
 }
 
 const container = {
@@ -31,7 +40,36 @@ const item = {
   hidden: { opacity: 0, y: -50 },
 };
 
-export function ChapterList({ chapters }: ChapterListProps) {
+export function ChapterList({ chapters, bookTitle }: ChapterListProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [darkMode, setDarkMode] = useState(false);
+  const [selectedText, setSelectedText] = useState<
+    EnhancedChapterModel["text"] | null
+  >(null);
+
+  const handleChapterModal = (text: EnhancedChapterModel["text"]) => {
+    setSelectedText(text);
+    onOpen();
+  };
+
+  const ContentText = ({ selectedText }: ContentTextProps) => {
+    const combinedHtmlString = selectedText
+      ? selectedText.map((textItem) => textItem.content).join("")
+      : "";
+
+    const replacedHtmlString = combinedHtmlString.replace(
+      /font-family:'[^']*'/g,
+      "font-family:''"
+    );
+
+    return (
+      <div
+        className={cinzel.className}
+        dangerouslySetInnerHTML={{ __html: replacedHtmlString }}
+      />
+    );
+  };
+
   return (
     <section className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-2">
       {chapters.length > 0 ? (
@@ -60,14 +98,16 @@ export function ChapterList({ chapters }: ChapterListProps) {
                 variants={item}
               >
                 {text.length > 0 ? (
-                  <Link
-                    href={`/libros/${title.replace(/ /g, "_")}/${order}`}
-                    className={`flex bg-darker bg-opacity-50 p-5 text-lg`}
+                  <div
+                    className={`flex cursor-pointer bg-darker bg-opacity-50 p-5 text-lg`}
+                    onClick={() => handleChapterModal(text)}
                   >
-                    <span className="truncate">
+                    <span className="flex-1 truncate">
                       {order}. {title}
                     </span>
-                  </Link>
+
+                    <DocumentTextIcon className="text-primary" />
+                  </div>
                 ) : (
                   <span className={`flex bg-darker bg-opacity-50 p-5 text-lg`}>
                     <span className="truncate">
@@ -85,6 +125,32 @@ export function ChapterList({ chapters }: ChapterListProps) {
         </div>
       )}
       <div className="col-span-2 mx-auto h-1 w-1/2 bg-light bg-opacity-20" />
+
+      <Modal
+        size="3xl"
+        className="bg-[#F4ECD8]"
+        classNames={{
+          closeButton: "hover:bg-[#F4ECD8] hover:text-dark",
+        }}
+        backdrop="blur"
+        isOpen={isOpen}
+        onClose={onClose}
+        style={{
+          backgroundColor: "#f4ecd8",
+          backgroundImage: `url("https://www.transparenttextures.com/patterns/cream-paper.png")`,
+        }}
+      >
+        <ModalContent>
+          <ModalHeader>
+            <p className="text-dark dark:text-light">{bookTitle}</p>
+          </ModalHeader>
+          <ModalBody>
+            <ScrollShadow className="max-h-[75vh] scrollbar-hide dark:text-light">
+              <ContentText selectedText={selectedText} />
+            </ScrollShadow>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </section>
   );
 }

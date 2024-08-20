@@ -1,8 +1,16 @@
-import { Book, Chapter, Genre, Serie } from "@prisma/client";
-
+import { Book, Chapter, Genre, Serie, Text } from "@prisma/client";
+import { textLosOjosDeMariel } from "../texts/textSamples";
+import {
+  chaptersCuandoEraChico,
+  chaptersSerieTerror,
+} from "../chapters/chaptersSamples";
 export interface BookSamplesProps
   extends Pick<Book, "title" | "description" | "type" | "publicationDate"> {
-  chapters?: Pick<Chapter, "title" | "order">[];
+  chapters?: Array<
+    Pick<Chapter, "title" | "order"> & {
+      text?: Pick<Text, "title" | "content">[];
+    }
+  >;
   serieTitle?: string;
 }
 
@@ -52,6 +60,12 @@ export const bookSamples: BookSamplesProps[] = [
       {
         title: "Las copas de champagne",
         order: 1,
+        text: [
+          {
+            title: "texto",
+            content: textLosOjosDeMariel,
+          },
+        ],
       },
     ],
   },
@@ -73,6 +87,7 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuentos de terror para Franco",
+    chapters: chaptersSerieTerror["I"],
   },
   {
     title: "Cuentos de terror para Franco II",
@@ -80,6 +95,7 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuentos de terror para Franco",
+    chapters: chaptersSerieTerror["II"],
   },
   {
     title: "Cuentos de terror para Franco III",
@@ -87,6 +103,7 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuentos de terror para Franco",
+    chapters: chaptersSerieTerror["III"],
   },
   {
     title: "Cuentos de terror para Franco IV",
@@ -94,6 +111,7 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuentos de terror para Franco",
+    chapters: chaptersSerieTerror["IV"],
   },
   {
     title: "Cuentos de terror para Franco V",
@@ -101,6 +119,7 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuentos de terror para Franco",
+    chapters: chaptersSerieTerror["V"],
   },
   {
     title: "Cuentos de terror para Franco VI",
@@ -108,6 +127,7 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuentos de terror para Franco",
+    chapters: chaptersSerieTerror["VI"],
   },
   {
     title: "Cuentos de terror para Franco VII",
@@ -115,6 +135,7 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuentos de terror para Franco",
+    chapters: chaptersSerieTerror["VII"],
   },
   {
     title: "Cuentos de terror para Franco VIII",
@@ -122,6 +143,7 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuentos de terror para Franco",
+    chapters: chaptersSerieTerror["VIII"],
   },
   {
     title: "Cuentos de terror para Franco IX",
@@ -136,6 +158,7 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuando era chico",
+    chapters: chaptersCuandoEraChico["Volumen1"],
   },
   {
     title: "Cuando era chico II",
@@ -143,5 +166,6 @@ export const bookSamples: BookSamplesProps[] = [
     type: "cuento",
     publicationDate: new Date(),
     serieTitle: "Cuando era chico",
+    chapters: chaptersCuandoEraChico["Volumen2"],
   },
 ];

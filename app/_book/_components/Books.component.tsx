@@ -12,14 +12,11 @@ import {
   Chip,
   Image,
   Link,
-  Spacer,
   User,
 } from "@nextui-org/react";
 import {
-  DocumentText as DocumentTextIcon,
   Element3 as Element3Icon,
   RowVertical as RowVerticalIcon,
-  Image as ImageIcon,
 } from "iconsax-react";
 
 const cinzel = Cinzel({ subsets: ["latin"] });
@@ -200,7 +197,7 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
       </div>
 
       <div className="ml-20 flex-grow-0">
-        <Link href={`/libros/${book.slug}`}>
+        <Link href={"/libros/" + book.slug}>
           <Image
             src={book.cover}
             alt={book.title}
@@ -259,45 +256,6 @@ const BookBanner: React.FC<EnhancedBookModel> = (book) => {
               src: "https://th.bing.com/th/id/R.1c8004fe38fe202ff6ae1208e63637b4?rik=L4EAtU5wX5zMjw&riu=http%3a%2f%2fcamaradgchaco.com.ar%2fwp-content%2fuploads%2f2020%2f05%2flibreria-la-paz.jpg&ehk=xmuHAd%2bGPikd8vo7zhNXg7F1H1W7bJ4Vm3lMYUA3tHo%3d&risl=&pid=ImgRaw&r=0",
             }}
           />
-        </div>
-      </div>
-
-      <div className="absolute right-0 z-10 flex h-full max-h-[330px] w-[35%] flex-col pr-5 pt-3">
-        <div className="flex justify-end">
-          <Button
-            isIconOnly
-            radius="full"
-            color="primary"
-            variant={textFragmentOpen ? "solid" : "light"}
-            onClick={() => setTextFragmentOpen(!textFragmentOpen)}
-          >
-            <DocumentTextIcon size={32} />
-          </Button>
-        </div>
-
-        <div className="z-10 flex h-full flex-col items-end justify-center gap-10">
-          <div
-            className={`group flex max-w-[90%] cursor-pointer select-none flex-col gap-1 rounded-b-lg rounded-t-sm bg-white bg-opacity-70 p-3 transition-all hover:bg-opacity-80 ${
-              textFragmentOpen ? "visible" : "invisible"
-            }`}
-          >
-            <p className={`text-lg text-black ${bellefair.className}`}>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta
-              alias, aperiam nobis iste totam tempore molestiae ducimus ratione!
-              Aut molestias quos cupiditate vel officiis? Rem velit voluptatum
-              obcaecati provident! Ipsum.
-            </p>
-            <small className="self-end group-hover:text-secondary">
-              Leer fragmento
-            </small>
-          </div>
-
-          <div className="space-x-3">
-            <Button variant="light" endContent={<ImageIcon />}>
-              Ampliar imágen
-            </Button>
-            <Button color="primary">Ver libro</Button>
-          </div>
         </div>
       </div>
     </div>
