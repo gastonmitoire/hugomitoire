@@ -1,3 +1,4 @@
+import React, { ReactNode } from "react";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
@@ -10,9 +11,11 @@ import { Providers } from "./providers";
 import { Toaster } from "sonner";
 
 import { Topbar } from "./_shared/_components/Topbar.component";
+import { Footer } from "./_shared/_components";
+import { cookies, headers } from "next/headers";
 
 interface RootLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const metadata: Metadata = {
@@ -20,8 +23,9 @@ export const metadata: Metadata = {
   description: "Hugo Mitoire",
 };
 
-export default function RootLayout(props: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   register(); // Register Swiper elements
+
   return (
     <html lang="en">
       <body
@@ -32,7 +36,7 @@ export default function RootLayout(props: RootLayoutProps) {
             <Topbar />
           </span>
 
-          {props.children}
+          {children}
 
           <Toaster richColors />
         </Providers>

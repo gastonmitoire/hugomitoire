@@ -20,25 +20,34 @@ const footerRoutes = [
 ];
 
 export const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="container flex flex-col items-center gap-5 pb-16">
-      <h3 className={`text-3xl font-bold text-inherit ${cinzel.className}`}>
-        Hugo Mitoire
-      </h3>
+    <footer className="container">
+      <div className="flex items-center justify-between gap-5 py-3">
+        <Link href="/">
+          <h3 className={`text-3xl font-bold text-inherit ${cinzel.className}`}>
+            Hugo Mitoire
+          </h3>
+        </Link>
 
-      <nav>
-        {footerRoutes.map((route, index) => (
-          <Button key={index} variant="light" color="default">
-            {route.name}
-          </Button>
-        ))}
-      </nav>
+        <nav className="flex flex-1 items-center">
+          {footerRoutes.map((route, index) => (
+            <Button
+              key={index}
+              variant="light"
+              color="default"
+              radius="none"
+              size="sm"
+            >
+              {route.name}
+            </Button>
+          ))}
+        </nav>
 
-      <div className="grid w-full grid-cols-3">
-        <span className="col-start-2">1</span>
-        <span className="col-start-3">
+        <span>
           <p className="text-light text-opacity-70">
-            © 2023 Hugo Mitoire. Todos los derechos reservados.
+            © {currentYear} Hugo Mitoire. Todos los derechos reservados.
           </p>
         </span>
       </div>
