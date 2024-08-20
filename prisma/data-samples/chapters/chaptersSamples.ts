@@ -1,3 +1,5 @@
+import { textsSerieTerror } from "../texts/textSamples";
+
 export const chaptersCuandoEraChico = {
   Volumen1: [
     { title: "Yo nací en el Chaco", order: 1, text: [] },
@@ -5,7 +7,7 @@ export const chaptersCuandoEraChico = {
     {
       title: "La pandorga gigante",
       order: 3,
-      text: [{ title: "texto", content: "" }],
+      text: [],
     },
     { title: "Papando moscas", order: 4, text: [] },
     { title: "La guerra", order: 5, text: [] },
@@ -22,7 +24,7 @@ export const chaptersCuandoEraChico = {
     {
       title: "Pánico en el barrio",
       order: 6,
-      text: [{ title: "texto", content: "" }],
+      text: [],
     },
     {
       title: "Nery el domador y el potrillo Patas Blancas",
@@ -60,8 +62,8 @@ export const chaptersSerieTerror = {
       order: 5,
       text: [
         {
-          title: "texto",
-          content: "",
+          title: "Llamados en la madrugada",
+          content: textsSerieTerror["I"],
         },
       ],
     },
@@ -87,8 +89,8 @@ export const chaptersSerieTerror = {
       order: 1,
       text: [
         {
-          title: "texto",
-          content: "",
+          title: "El sonámbulo y La Muerte",
+          content: textsSerieTerror["II"],
         },
       ],
     },
@@ -129,8 +131,8 @@ export const chaptersSerieTerror = {
       order: 2,
       text: [
         {
-          title: "texto",
-          content: "",
+          title: "Memorias de un niño cruel",
+          content: textsSerieTerror["III"],
         },
       ],
     },
@@ -176,8 +178,8 @@ export const chaptersSerieTerror = {
       order: 3,
       text: [
         {
-          title: "texto",
-          content: "",
+          title: "Estero cuatro diablos",
+          content: textsSerieTerror["IV"],
         },
       ],
     },
@@ -223,8 +225,8 @@ export const chaptersSerieTerror = {
       order: 2,
       text: [
         {
-          title: "texto",
-          content: "",
+          title: "El juego de la copa",
+          content: textsSerieTerror["V"],
         },
       ],
     },
@@ -280,8 +282,8 @@ export const chaptersSerieTerror = {
       order: 4,
       text: [
         {
-          title: "texto",
-          content: "",
+          title: "El nido de la ñacanina",
+          content: textsSerieTerror["VI"],
         },
       ],
     },
@@ -317,8 +319,8 @@ export const chaptersSerieTerror = {
       order: 1,
       text: [
         {
-          title: "texto",
-          content: "",
+          title: "El ataúd",
+          content: textsSerieTerror["VII"],
         },
       ],
     },
@@ -384,8 +386,8 @@ export const chaptersSerieTerror = {
       order: 4,
       text: [
         {
-          title: "texto",
-          content: "",
+          title: "Palometas",
+          content: textsSerieTerror["VIII"],
         },
       ],
     },
