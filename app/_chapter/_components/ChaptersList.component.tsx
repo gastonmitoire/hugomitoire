@@ -12,6 +12,13 @@ import { Cinzel } from "next/font/google";
 const cinzel = Cinzel({ subsets: ["latin"] });
 
 import { EnhancedChapterModel } from "../_service/chapter.service";
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 
 interface ChapterListProps {
   chapters: EnhancedChapterModel[];
@@ -32,6 +39,12 @@ const item = {
 };
 
 export function ChapterList({ chapters }: ChapterListProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleChapterModal = () => {
+    onOpen();
+  };
+
   return (
     <section className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-2">
       {chapters.length > 0 ? (
@@ -60,14 +73,14 @@ export function ChapterList({ chapters }: ChapterListProps) {
                 variants={item}
               >
                 {text.length > 0 ? (
-                  <Link
-                    href={`/libros/${title.replace(/ /g, "_")}/${order}`}
-                    className={`flex bg-darker bg-opacity-50 p-5 text-lg`}
+                  <div
+                    className={`flex cursor-pointer bg-darker bg-opacity-50 p-5 text-lg`}
+                    onClick={() => onOpen()}
                   >
                     <span className="truncate">
                       {order}. {title}
                     </span>
-                  </Link>
+                  </div>
                 ) : (
                   <span className={`flex bg-darker bg-opacity-50 p-5 text-lg`}>
                     <span className="truncate">
@@ -85,6 +98,12 @@ export function ChapterList({ chapters }: ChapterListProps) {
         </div>
       )}
       <div className="col-span-2 mx-auto h-1 w-1/2 bg-light bg-opacity-20" />
+
+      <Modal isOpen={isOpen} onClose={onClose} className="dark">
+        <ModalContent>
+          <ModalHeader>olas si</ModalHeader>
+        </ModalContent>
+      </Modal>
     </section>
   );
 }
