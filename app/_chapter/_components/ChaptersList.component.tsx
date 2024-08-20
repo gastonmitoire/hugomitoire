@@ -8,6 +8,7 @@ import {
   ModalBody,
   ModalContent,
   ModalHeader,
+  ScrollShadow,
   useDisclosure,
 } from "@nextui-org/react";
 
@@ -40,6 +41,7 @@ const item = {
 
 export function ChapterList({ chapters, bookTitle }: ChapterListProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [darkMode, setDarkMode] = useState(false);
   const [selectedText, setSelectedText] = useState<
     EnhancedChapterModel["text"] | null
   >(null);
@@ -121,13 +123,28 @@ export function ChapterList({ chapters, bookTitle }: ChapterListProps) {
       )}
       <div className="col-span-2 mx-auto h-1 w-1/2 bg-light bg-opacity-20" />
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal
+        size="3xl"
+        className="bg-[#F4ECD8]"
+        classNames={{
+          closeButton: "hover:bg-[#F4ECD8] hover:text-dark",
+        }}
+        backdrop="blur"
+        isOpen={isOpen}
+        onClose={onClose}
+        style={{
+          backgroundColor: "#f4ecd8",
+          backgroundImage: `url("https://www.transparenttextures.com/patterns/cream-paper.png")`,
+        }}
+      >
         <ModalContent>
           <ModalHeader>
-            <p className="text-dark">{bookTitle}</p>
+            <p className="text-dark dark:text-light">{bookTitle}</p>
           </ModalHeader>
           <ModalBody>
-            <ContentText selectedText={selectedText} />
+            <ScrollShadow className="max-h-[75vh] scrollbar-hide dark:text-light">
+              <ContentText selectedText={selectedText} />
+            </ScrollShadow>
           </ModalBody>
         </ModalContent>
       </Modal>
