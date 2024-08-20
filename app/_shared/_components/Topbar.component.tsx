@@ -44,7 +44,7 @@ export const Topbar: React.FC = () => {
   return (
     <Navbar maxWidth="full" className="px-5" shouldHideOnScroll>
       <NavbarBrand>
-        <Link href="/admin" color="foreground">
+        <Link href="/" color="foreground">
           <p className={`text-3xl font-bold text-inherit ${cinzel.className}`}>
             Hugo Mitoire
           </p>
