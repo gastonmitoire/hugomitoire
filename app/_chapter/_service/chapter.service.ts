@@ -1,8 +1,8 @@
 import { fetchClient } from "@/app/_utils";
-import { Chapter as ChapterModel } from "@prisma/client";
+import { Chapter as ChapterModel, Text as TextModel } from "@prisma/client";
 
 export type EnhancedChapterModel = ChapterModel & {
-  text: string[];
+  text: TextModel[];
 };
 
 export const chapterService = {

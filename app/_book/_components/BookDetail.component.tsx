@@ -101,7 +101,7 @@ export const BookDetail: React.FC<BookDetailProps> = ({
         Capítulos
       </h3>
       <div className="p-7">
-        <ChapterList chapters={chapters} />
+        <ChapterList bookTitle={title} chapters={chapters} />
       </div>
     </motion.div>
   );

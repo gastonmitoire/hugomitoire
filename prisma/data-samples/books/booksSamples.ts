@@ -1,4 +1,5 @@
 import { Book, Chapter, Genre, Serie, Text } from "@prisma/client";
+import { textLosOjosDeMariel } from "../texts/textSamples";
 export interface BookSamplesProps
   extends Pick<Book, "title" | "description" | "type" | "publicationDate"> {
   chapters?: Array<
@@ -58,7 +59,7 @@ export const bookSamples: BookSamplesProps[] = [
         text: [
           {
             title: "texto",
-            content: "probando chapteres con texto",
+            content: textLosOjosDeMariel,
           },
         ],
       },
