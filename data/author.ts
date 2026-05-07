@@ -2,9 +2,9 @@ import { AuthorData } from "./types";
 
 export const author: AuthorData = {
   name: "Hugo Mitoire",
-  origin: "Resistencia, Chaco, Argentina",
+  origin: "Margarita Belén, Chaco, Argentina",
   bio: [
-    "Hugo Mitoire es un escritor argentino nacido en Resistencia, Chaco. Su obra recorre géneros tan diversos como el terror, el fantástico, la ciencia ficción y el policial negro, pero siempre con un hilo conductor: las historias del interior profundo de Argentina.",
+    "Hugo Mitoire es un escritor argentino nacido en Margarita Belén, Chaco. Su obra recorre géneros tan diversos como el terror, el fantástico, la ciencia ficción y el policial negro, pero siempre con un hilo conductor: las historias del interior profundo de Argentina.",
     "Desde sus primeros relatos construyó un universo propio donde conviven leyendas del monte chaqueño, criaturas del folclore popular y personajes tan reales como cualquier vecino de barrio. Su prosa directa y su oído para el habla coloquial lo convierten en un narrador visceral e inmediato.",
     "La serie 'Cuentos de Terror para Franco', su obra más extensa y querida por el público infantil y juvenil, alcanzó nueve tomos y se convirtió en referencia del género en la región. Pero su veta más oscura se despliega en novelas como 'Los Ojos de Mariel' o 'La Cacería', donde el noir argentino encuentra una voz propia.",
   ],
