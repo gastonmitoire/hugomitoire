@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import * as Dialog from "@radix-ui/react-dialog";
+import { X } from "lucide-react";
 
 const photos = [
   {
@@ -47,7 +49,11 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
+type Photo = typeof photos[number];
+
 export function AuthorGallery() {
+  const [selected, setSelected] = useState<Photo | null>(null);
+
   return (
     <section id="autor-historia" className="py-24 lg:py-32">
       <div className="mx-auto max-w-screen-2xl px-5 sm:px-8 lg:px-12">
@@ -76,7 +82,8 @@ export function AuthorGallery() {
             <motion.figure
               key={photo.src}
               variants={item}
-              className="break-inside-avoid mb-3 lg:mb-4 group"
+              className="break-inside-avoid mb-3 lg:mb-4 group cursor-zoom-in"
+              onClick={() => setSelected(photo)}
             >
               <div className="relative overflow-hidden rounded-sm bg-elevated">
                 <Image
@@ -95,6 +102,61 @@ export function AuthorGallery() {
           ))}
         </motion.div>
       </div>
+
+      {/* Lightbox */}
+      <Dialog.Root open={!!selected} onOpenChange={(v) => !v && setSelected(null)}>
+        <AnimatePresence>
+          {selected && (
+            <Dialog.Portal forceMount>
+              <Dialog.Overlay asChild>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm"
+                />
+              </Dialog.Overlay>
+
+              <Dialog.Content asChild>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] as const }}
+                  className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-10"
+                  onClick={(e) => { if (e.target === e.currentTarget) setSelected(null); }}
+                >
+                  <Dialog.Title className="sr-only">{selected.caption}</Dialog.Title>
+
+                  <div className="relative max-w-4xl w-full max-h-[90dvh] flex flex-col items-center gap-3">
+                    <Dialog.Close asChild>
+                      <button
+                        aria-label="Cerrar"
+                        className="absolute -top-10 right-0 p-1.5 text-white/50 hover:text-white transition-colors"
+                      >
+                        <X size={20} />
+                      </button>
+                    </Dialog.Close>
+
+                    <div className="relative w-full max-h-[80dvh] flex items-center justify-center">
+                      <Image
+                        src={selected.src}
+                        alt={selected.caption}
+                        width={1200}
+                        height={1600}
+                        className="max-h-[80dvh] w-auto h-auto object-contain rounded-sm shadow-2xl"
+                      />
+                    </div>
+
+                    <p className="text-[11px] text-white/55 tracking-wide">{selected.caption}</p>
+                  </div>
+                </motion.div>
+              </Dialog.Content>
+            </Dialog.Portal>
+          )}
+        </AnimatePresence>
+      </Dialog.Root>
     </section>
   );
 }
