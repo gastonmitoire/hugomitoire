@@ -236,27 +236,23 @@ function PhotoLightbox({
   );
 }
 
-// ─── Thumbnail with fade-on-load ─────────────────────────────────────────────
+// ─── Thumbnail ───────────────────────────────────────────────────────────────
+// aspect-ratio + fill = espacio siempre reservado antes de que cargue la imagen
 
-function GalleryThumb({ photo }: { photo: Photo }) {
-  const [loaded, setLoaded] = useState(false);
-  const ref = useRef<HTMLImageElement>(null);
-  useEffect(() => { if (ref.current?.complete) setLoaded(true); }, []);
-
+function GalleryThumb({ photo, onLoad }: { photo: Photo; onLoad: () => void }) {
+  const aspectRatio = photo.aspect === "portrait" ? "3/4" : "4/3";
   return (
-    <div className="relative overflow-hidden rounded-sm bg-elevated">
+    <div
+      className="relative overflow-hidden rounded-sm bg-elevated"
+      style={{ aspectRatio }}
+    >
       <Image
-        ref={ref}
+        fill
         src={photo.src}
         alt={photo.caption}
-        width={400}
-        height={photo.aspect === "portrait" ? 540 : 300}
-        className={`w-full h-auto object-cover grayscale transition-all ${
-          loaded
-            ? "opacity-75 duration-700 group-hover:grayscale-0 group-hover:opacity-100"
-            : "opacity-0 duration-0"
-        }`}
-        onLoad={() => setLoaded(true)}
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        className="object-cover grayscale opacity-75 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+        onLoad={onLoad}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <figcaption className="absolute bottom-0 inset-x-0 px-3 py-2.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
@@ -268,19 +264,25 @@ function GalleryThumb({ photo }: { photo: Photo }) {
 
 // ─── Grid ────────────────────────────────────────────────────────────────────
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.07 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
-};
-
 export function AuthorGallery() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [loadedCount, setLoadedCount] = useState(0);
+  const [revealed, setRevealed] = useState(false);
   const isOpen = selectedIndex !== null;
+
+  const handleImageLoad = useCallback(() => {
+    setLoadedCount((n) => {
+      const next = n + 1;
+      if (next >= photos.length) setRevealed(true);
+      return next;
+    });
+  }, []);
+
+  // Seguro: revela después de 2.5 s aunque alguna imagen falle
+  useEffect(() => {
+    const t = setTimeout(() => setRevealed(true), 2500);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <section id="autor-historia" className="py-24 lg:py-32">
@@ -299,22 +301,20 @@ export function AuthorGallery() {
           <div className="mt-3 h-px w-14 bg-white/20" />
         </motion.div>
 
+        {/* El grid ocupa siempre su espacio (no hay CLS); se revela cuando todas las imágenes cargaron */}
         <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
+          animate={{ opacity: revealed ? 1 : 0 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
           className="columns-2 sm:columns-3 lg:columns-4 gap-3 lg:gap-4"
         >
           {photos.map((photo, i) => (
-            <motion.figure
+            <figure
               key={photo.src}
-              variants={item}
               className="break-inside-avoid mb-3 lg:mb-4 group cursor-zoom-in"
               onClick={() => setSelectedIndex(i)}
             >
-              <GalleryThumb photo={photo} />
-            </motion.figure>
+              <GalleryThumb photo={photo} onLoad={handleImageLoad} />
+            </figure>
           ))}
         </motion.div>
       </div>
