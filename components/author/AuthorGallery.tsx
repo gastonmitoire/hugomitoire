@@ -1,43 +1,242 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, animate } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const photos = [
-  {
-    src: "/assets/images/author/abuelos.jpg",
-    caption: "Con el abuelo Félix y la abuela María",
-    aspect: "portrait",
-  },
-  {
-    src: "/assets/images/author/nino.jpg",
-    caption: "Niño bueno",
-    aspect: "portrait",
-  },
-  {
-    src: "/assets/images/author/con-papa.jpg",
-    caption: "Con papá",
-    aspect: "portrait",
-  },
-  {
-    src: "/assets/images/author/secundaria.jpg",
-    caption: "Empezando la secundaria",
-    aspect: "portrait",
-  },
-  {
-    src: "/assets/images/author/soldado-1983.jpg",
-    caption: "Soldado argentino, 1983",
-    aspect: "portrait",
-  },
-  {
-    src: "/assets/images/author/con-victor-heredia.jpg",
-    caption: "Con Víctor Heredia",
-    aspect: "landscape",
-  },
+  { src: "/assets/images/author/abuelos.jpg", caption: "Con el abuelo Félix y la abuela María", aspect: "portrait" },
+  { src: "/assets/images/author/nino.jpg", caption: "Niño bueno", aspect: "portrait" },
+  { src: "/assets/images/author/con-papa.jpg", caption: "Con papá", aspect: "portrait" },
+  { src: "/assets/images/author/secundaria.jpg", caption: "Empezando la secundaria", aspect: "portrait" },
+  { src: "/assets/images/author/soldado-1983.jpg", caption: "Soldado argentino, 1983", aspect: "portrait" },
+  { src: "/assets/images/author/con-victor-heredia.jpg", caption: "Con Víctor Heredia", aspect: "landscape" },
 ];
+
+type Photo = typeof photos[number];
+
+const MIN_SCALE = 1;
+const MAX_SCALE = 5;
+
+function PhotoLightbox({
+  startIndex,
+  onClose,
+}: {
+  startIndex: number;
+  onClose: () => void;
+}) {
+  const [index, setIndex] = useState(startIndex);
+  const [scale, setScale] = useState(MIN_SCALE);
+  const [isDragging, setIsDragging] = useState(false);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const photo = photos[index];
+  const isZoomed = scale > 1;
+
+  const resetTransform = useCallback(() => {
+    animate(x, 0, { duration: 0.3, ease: [0.16, 1, 0.3, 1] as const });
+    animate(y, 0, { duration: 0.3, ease: [0.16, 1, 0.3, 1] as const });
+    setScale(MIN_SCALE);
+  }, [x, y]);
+
+  const goTo = useCallback((newIdx: number) => {
+    x.set(0);
+    y.set(0);
+    setScale(MIN_SCALE);
+    setIndex(newIdx);
+  }, [x, y]);
+
+  const prev = useCallback(() => goTo((index - 1 + photos.length) % photos.length), [index, goTo]);
+  const next = useCallback(() => goTo((index + 1) % photos.length), [index, goTo]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [prev, next]);
+
+  // Wheel zoom — non-passive to allow preventDefault
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const handler = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.35 : -0.35;
+      setScale((prev) => {
+        const next = Math.max(MIN_SCALE, Math.min(MAX_SCALE, prev + delta));
+        if (next === MIN_SCALE) {
+          animate(x, 0, { duration: 0.25 });
+          animate(y, 0, { duration: 0.25 });
+        }
+        return next;
+      });
+    };
+    el.addEventListener("wheel", handler, { passive: false });
+    return () => el.removeEventListener("wheel", handler);
+  }, [x, y]);
+
+  // Drag constraints: keep zoomed image within bounds
+  const dragConstraints = useCallback(() => {
+    const el = imageRef.current;
+    if (!el || scale <= MIN_SCALE) return { top: 0, bottom: 0, left: 0, right: 0 };
+    const ox = (el.offsetWidth * (scale - 1)) / 2;
+    const oy = (el.offsetHeight * (scale - 1)) / 2;
+    return { top: -oy, bottom: oy, left: -ox, right: ox };
+  }, [scale]);
+
+  const handleDoubleClick = () => {
+    if (isZoomed) resetTransform();
+    else setScale(2.5);
+  };
+
+  const cursor = isZoomed ? (isDragging ? "grabbing" : "grab") : "zoom-in";
+
+  return (
+    <div
+      ref={containerRef}
+      className="fixed inset-0 z-50 flex flex-col bg-black/95"
+      style={{ cursor }}
+    >
+      {/* Top bar */}
+      <div className="relative flex items-center justify-between px-5 py-4 shrink-0 z-10">
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] text-white/30 tracking-[0.2em] uppercase tabular-nums">
+            {index + 1} / {photos.length}
+          </span>
+          <AnimatePresence>
+            {isZoomed && (
+              <motion.span
+                initial={{ opacity: 0, x: -4 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -4 }}
+                transition={{ duration: 0.2 }}
+                className="text-[10px] text-white/30 tracking-widest ml-2"
+              >
+                {scale.toFixed(1)}×
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <Dialog.Close asChild>
+          <button
+            aria-label="Cerrar"
+            className="p-2 text-white/40 hover:text-white transition-colors"
+          >
+            <X size={20} />
+          </button>
+        </Dialog.Close>
+      </div>
+
+      {/* Image area */}
+      <div
+        className="flex-1 relative flex items-center justify-center min-h-0 overflow-hidden"
+        onClick={(e) => { if (e.target === e.currentTarget && !isZoomed) onClose(); }}
+      >
+        {/* Prev / Next */}
+        {photos.length > 1 && (
+          <>
+            <button
+              onClick={(e) => { e.stopPropagation(); prev(); }}
+              className="absolute left-3 sm:left-5 z-10 p-2 sm:p-3 text-white/30 hover:text-white transition-colors"
+              aria-label="Anterior"
+            >
+              <ChevronLeft size={26} />
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); next(); }}
+              className="absolute right-3 sm:right-5 z-10 p-2 sm:p-3 text-white/30 hover:text-white transition-colors"
+              aria-label="Siguiente"
+            >
+              <ChevronRight size={26} />
+            </button>
+          </>
+        )}
+
+        {/* Zoomed/draggable image */}
+        <motion.div
+          ref={imageRef}
+          key={photo.src}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          style={{ x, y, scale }}
+          drag={isZoomed}
+          dragConstraints={dragConstraints()}
+          dragElastic={0}
+          dragMomentum={false}
+          onDragStart={() => setIsDragging(true)}
+          onDragEnd={() => setIsDragging(false)}
+          onDoubleClick={handleDoubleClick}
+          className="select-none"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Image
+            src={photo.src}
+            alt={photo.caption}
+            width={1200}
+            height={1600}
+            className="max-h-[calc(100dvh-10rem)] max-w-[calc(100vw-8rem)] w-auto h-auto object-contain shadow-2xl"
+            priority
+            draggable={false}
+          />
+        </motion.div>
+      </div>
+
+      {/* Caption + hint */}
+      <div className="shrink-0 py-4 px-6 flex flex-col items-center gap-1.5 z-10">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={photo.caption}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2 }}
+            className="text-[11px] text-white/50 tracking-wide text-center"
+          >
+            {photo.caption}
+          </motion.p>
+        </AnimatePresence>
+        {!isZoomed && (
+          <p className="text-[9px] text-white/18 tracking-[0.18em] uppercase">
+            Rueda para zoom · doble click · ← →
+          </p>
+        )}
+      </div>
+
+      {/* Dot indicators */}
+      {photos.length > 1 && (
+        <div className="shrink-0 pb-5 flex justify-center gap-1.5">
+          {photos.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Foto ${i + 1}`}
+              className="transition-all duration-200"
+            >
+              <div
+                className={`h-[3px] rounded-full bg-white transition-all duration-200 ${
+                  i === index ? "w-5 opacity-60" : "w-1.5 opacity-20"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Grid ────────────────────────────────────────────────────────────────────
 
 const container = {
   hidden: {},
@@ -49,10 +248,9 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
-type Photo = typeof photos[number];
-
 export function AuthorGallery() {
-  const [selected, setSelected] = useState<Photo | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const isOpen = selectedIndex !== null;
 
   return (
     <section id="autor-historia" className="py-24 lg:py-32">
@@ -78,12 +276,12 @@ export function AuthorGallery() {
           viewport={{ once: true, margin: "-60px" }}
           className="columns-2 sm:columns-3 lg:columns-4 gap-3 lg:gap-4"
         >
-          {photos.map((photo) => (
+          {photos.map((photo, i) => (
             <motion.figure
               key={photo.src}
               variants={item}
               className="break-inside-avoid mb-3 lg:mb-4 group cursor-zoom-in"
-              onClick={() => setSelected(photo)}
+              onClick={() => setSelectedIndex(i)}
             >
               <div className="relative overflow-hidden rounded-sm bg-elevated">
                 <Image
@@ -104,53 +302,34 @@ export function AuthorGallery() {
       </div>
 
       {/* Lightbox */}
-      <Dialog.Root open={!!selected} onOpenChange={(v) => !v && setSelected(null)}>
+      <Dialog.Root open={isOpen} onOpenChange={(v) => !v && setSelectedIndex(null)}>
         <AnimatePresence>
-          {selected && (
+          {isOpen && selectedIndex !== null && (
             <Dialog.Portal forceMount>
               <Dialog.Overlay asChild>
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm"
+                  transition={{ duration: 0.18 }}
+                  className="fixed inset-0 z-50"
                 />
               </Dialog.Overlay>
-
-              <Dialog.Content asChild>
+              <Dialog.Content asChild aria-describedby={undefined}>
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.97 }}
-                  transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] as const }}
-                  className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-10"
-                  onClick={(e) => { if (e.target === e.currentTarget) setSelected(null); }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.18 }}
+                  className="fixed inset-0 z-50"
                 >
-                  <Dialog.Title className="sr-only">{selected.caption}</Dialog.Title>
-
-                  <div className="relative max-w-4xl w-full max-h-[90dvh] flex flex-col items-center gap-3">
-                    <Dialog.Close asChild>
-                      <button
-                        aria-label="Cerrar"
-                        className="absolute -top-10 right-0 p-1.5 text-white/50 hover:text-white transition-colors"
-                      >
-                        <X size={20} />
-                      </button>
-                    </Dialog.Close>
-
-                    <div className="relative w-full max-h-[80dvh] flex items-center justify-center">
-                      <Image
-                        src={selected.src}
-                        alt={selected.caption}
-                        width={1200}
-                        height={1600}
-                        className="max-h-[80dvh] w-auto h-auto object-contain rounded-sm shadow-2xl"
-                      />
-                    </div>
-
-                    <p className="text-[11px] text-white/55 tracking-wide">{selected.caption}</p>
-                  </div>
+                  <Dialog.Title className="sr-only">
+                    {photos[selectedIndex].caption}
+                  </Dialog.Title>
+                  <PhotoLightbox
+                    startIndex={selectedIndex}
+                    onClose={() => setSelectedIndex(null)}
+                  />
                 </motion.div>
               </Dialog.Content>
             </Dialog.Portal>
