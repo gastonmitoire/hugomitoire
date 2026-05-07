@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { AuthorData } from "@/data/types";
+import { useIsDesktop } from "@/lib/hooks";
 
 interface AuthorHeroProps {
   author: AuthorData;
@@ -11,6 +12,7 @@ interface AuthorHeroProps {
 
 export function AuthorHero({ author }: AuthorHeroProps) {
   const ref = useRef<HTMLElement>(null);
+  const isDesktop = useIsDesktop();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
@@ -20,7 +22,7 @@ export function AuthorHero({ author }: AuthorHeroProps) {
   return (
     <section ref={ref} className="relative min-h-[100dvh] overflow-hidden flex items-end">
       {/* Parallax BG */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
+      <motion.div style={{ y: isDesktop ? bgY : 0 }} className="absolute inset-0 scale-110">
         <Image
           src="/assets/images/bg/los-ojos-de-mariel_BG.jpg"
           alt=""
@@ -41,7 +43,7 @@ export function AuthorHero({ author }: AuthorHeroProps) {
 
       {/* Content */}
       <motion.div
-        style={{ y: textY }}
+        style={{ y: isDesktop ? textY : 0 }}
         className="relative z-10 w-full mx-auto max-w-screen-2xl px-5 sm:px-8 lg:px-12 pb-16 lg:pb-24 pt-36"
       >
         <div className="flex flex-col gap-4">

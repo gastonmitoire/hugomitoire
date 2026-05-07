@@ -21,7 +21,7 @@ export function BookCard({ book, priority = false, className }: BookCardProps) {
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 320, damping: 22 }}
-      className={cn("group", className)}
+      className={cn("group h-full", className)}
       style={{ "--book-accent": book.accentColor } as React.CSSProperties}
     >
       <Link href={`/libros/${book.slug}`} className="block h-full outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm">

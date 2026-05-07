@@ -8,6 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import { BookData } from "@/data/types";
 import { GenreData } from "@/data/types";
 import { SerieData } from "@/data/types";
+import { useIsDesktop } from "@/lib/hooks";
 
 interface BookDetailHeroProps {
   book: BookData;
@@ -33,6 +34,7 @@ export function BookDetailHero({
   serieTotalBooks,
 }: BookDetailHeroProps) {
   const ref = useRef<HTMLElement>(null);
+  const isDesktop = useIsDesktop();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -49,7 +51,7 @@ export function BookDetailHero({
       style={{ "--book-accent": book.accentColor } as React.CSSProperties}
     >
       {/* Parallax BG */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
+      <motion.div style={{ y: isDesktop ? bgY : 0 }} className="absolute inset-0 scale-110">
         <Image src={book.background} alt="" fill className="object-cover" priority quality={85} />
         <div className="absolute inset-0 bg-gradient-to-r from-base/90 via-base/70 to-base/40" />
         <div className="absolute inset-0 bg-gradient-to-b from-base/50 via-transparent to-base" />
@@ -160,7 +162,7 @@ export function BookDetailHero({
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            style={{ y: coverY }}
+            style={{ y: isDesktop ? coverY : 0 }}
             className="relative"
           >
             {/* Glow behind cover */}

@@ -7,6 +7,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { BookData } from "@/data/types";
 import { getGenreBySlug } from "@/data/genres";
+import { useIsDesktop } from "@/lib/hooks";
 
 interface BookHeroProps {
   book: BookData;
@@ -38,6 +39,7 @@ function AnimatedTitle({ text }: { text: string }) {
 export function BookHero({ book }: BookHeroProps) {
   const ref = useRef<HTMLElement>(null);
   const genre = getGenreBySlug(book.genreSlug);
+  const isDesktop = useIsDesktop();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -53,7 +55,7 @@ export function BookHero({ book }: BookHeroProps) {
       style={{ "--book-accent": book.accentColor } as React.CSSProperties}
     >
       {/* Parallax BG */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 scale-110">
+      <motion.div style={{ y: isDesktop ? bgY : 0 }} className="absolute inset-0 scale-110">
         <Image src={book.background} alt="" fill className="object-cover" priority quality={85} />
         <div className="absolute inset-0 bg-gradient-to-b from-base/65 via-base/55 to-base" />
         <div className="absolute inset-0 bg-base/35" />
@@ -69,7 +71,7 @@ export function BookHero({ book }: BookHeroProps) {
 
       {/* Content */}
       <motion.div
-        style={{ y: contentY }}
+        style={{ y: isDesktop ? contentY : 0 }}
         className="relative z-10 mx-auto max-w-screen-2xl w-full px-5 sm:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center pt-24 pb-20 min-h-[100dvh]"
       >
         {/* Text */}

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { SerieData } from "@/data/types";
 import { getBooksBySerie } from "@/data/books";
+import { useIsDesktop } from "@/lib/hooks";
 
 interface SeriesShowcaseProps {
   serie: SerieData;
@@ -23,6 +24,7 @@ export function SeriesShowcase({ serie }: SeriesShowcaseProps) {
   const ref = useRef<HTMLElement>(null);
   const accent = serieBooks[0]?.accentColor ?? "#C84B2F";
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const isDesktop = useIsDesktop();
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -45,7 +47,7 @@ export function SeriesShowcase({ serie }: SeriesShowcaseProps) {
       style={{ "--book-accent": accent } as React.CSSProperties}
     >
       {/* BG */}
-      <motion.div style={{ x: bgX }} className="absolute inset-0 scale-110">
+      <motion.div style={{ x: isDesktop ? bgX : 0 }} className="absolute inset-0 scale-110">
         <Image
           src={serieBooks[serieBooks.length - 1]?.background ?? ""}
           alt=""
