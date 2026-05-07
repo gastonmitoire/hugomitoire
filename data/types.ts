@@ -41,6 +41,16 @@ export interface BookData {
   chapters: ChapterData[];
 }
 
+export interface VideoData {
+  id: string;
+  slug: string;
+  title: string;
+  series: "terror" | "jovenes" | "aventuras";
+  episode: number;
+  duration: number;
+  tags: string[];
+}
+
 export interface AuthorData {
   name: string;
   origin: string;
