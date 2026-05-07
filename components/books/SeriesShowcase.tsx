@@ -11,11 +11,18 @@ interface SeriesShowcaseProps {
   serie: SerieData;
 }
 
+// Rotaciones por posición en la grilla 3×3
+const ROTATIONS = [
+  [-6,  1,  5],
+  [ 4, -2,  4],
+  [-5,  2, -5],
+];
+
 export function SeriesShowcase({ serie }: SeriesShowcaseProps) {
   const serieBooks = getBooksBySerie(serie.slug);
   const ref = useRef<HTMLElement>(null);
   const accent = serieBooks[0]?.accentColor ?? "#C84B2F";
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -25,8 +32,11 @@ export function SeriesShowcase({ serie }: SeriesShowcaseProps) {
 
   if (!serieBooks.length) return null;
 
-  const displayed = serieBooks.slice(0, 7);
-  const total = displayed.length;
+  const rows = [
+    serieBooks.slice(0, 3),
+    serieBooks.slice(3, 6),
+    serieBooks.slice(6, 9),
+  ];
 
   return (
     <section
@@ -83,47 +93,51 @@ export function SeriesShowcase({ serie }: SeriesShowcaseProps) {
             </Link>
           </motion.div>
 
-          {/* Stacked covers */}
-          <div className="relative flex items-center justify-center h-72 lg:h-[26rem]">
-            {displayed.map((book, i) => {
-              const rotateVal = (i - (total - 1) / 2) * 4.5;
-              const leftPx = (i - (total - 1) / 2) * 24 - 57;
-              const zIndex = hoveredIdx === i ? 30 : i;
+          {/* 3×3 grid */}
+          <div className="flex flex-col items-center gap-3">
+            {rows.map((row, rowIdx) => (
+              <div key={rowIdx} className="flex items-end justify-center gap-2">
+                {row.map((book, colIdx) => {
+                  const rotate = ROTATIONS[rowIdx]?.[colIdx] ?? 0;
+                  const globalIdx = rowIdx * 3 + colIdx;
+                  const isHovered = hoveredId === book.id;
 
-              return (
-                <motion.div
-                  key={book.id}
-                  className="absolute cursor-pointer"
-                  style={{ left: `calc(50% + ${leftPx}px)`, zIndex }}
-                  onHoverStart={() => setHoveredIdx(i)}
-                  onHoverEnd={() => setHoveredIdx(null)}
-                  initial={{ opacity: 0, y: 24, rotate: rotateVal }}
-                  whileInView={{ opacity: 1, y: 0, rotate: rotateVal }}
-                  viewport={{ once: true }}
-                  transition={{
-                    delay: i * 0.06,
-                    duration: 0.55,
-                    ease: [0.16, 1, 0.3, 1] as const,
-                  }}
-                  whileHover={{
-                    y: -14,
-                    scale: 1.06,
-                    rotate: 0,
-                    transition: { type: "spring", stiffness: 260, damping: 32 },
-                  }}
-                >
-                  <Link href={`/libros/${book.slug}`}>
-                    <Image
-                      src={book.cover}
-                      alt={book.title}
-                      width={140}
-                      height={187}
-                      className="drop-shadow-[0_8px_24px_rgba(0,0,0,0.75)] w-[114px] lg:w-[140px] h-auto"
-                    />
-                  </Link>
-                </motion.div>
-              );
-            })}
+                  return (
+                    <motion.div
+                      key={book.id}
+                      onHoverStart={() => setHoveredId(book.id)}
+                      onHoverEnd={() => setHoveredId(null)}
+                      initial={{ opacity: 0, y: 20, rotate }}
+                      whileInView={{ opacity: 1, y: 0, rotate }}
+                      viewport={{ once: true }}
+                      transition={{
+                        delay: globalIdx * 0.055,
+                        duration: 0.5,
+                        ease: [0.16, 1, 0.3, 1] as const,
+                      }}
+                      whileHover={{
+                        y: -12,
+                        scale: 1.06,
+                        rotate: 0,
+                        transition: { type: "spring", stiffness: 260, damping: 32 },
+                      }}
+                      style={{ zIndex: isHovered ? 20 : 1 }}
+                      className="cursor-pointer relative"
+                    >
+                      <Link href={`/libros/${book.slug}`}>
+                        <Image
+                          src={book.cover}
+                          alt={book.title}
+                          width={120}
+                          height={160}
+                          className="drop-shadow-[0_6px_18px_rgba(0,0,0,0.75)] w-[88px] lg:w-[108px] h-auto"
+                        />
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            ))}
           </div>
 
         </div>
