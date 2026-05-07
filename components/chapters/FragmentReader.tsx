@@ -5,17 +5,17 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { X, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cleanFragmentHtml } from "@/lib/utils";
-import { ChapterData } from "@/data/types";
 
 interface FragmentReaderProps {
   bookTitle: string;
-  chapter: ChapterData | null;
+  label: string;
+  fragment: string;
   open: boolean;
   onClose: () => void;
 }
 
-export function FragmentReader({ bookTitle, chapter, open, onClose }: FragmentReaderProps) {
-  const html = chapter?.fragment ? cleanFragmentHtml(chapter.fragment) : "";
+export function FragmentReader({ bookTitle, label, fragment, open, onClose }: FragmentReaderProps) {
+  const html = cleanFragmentHtml(fragment);
 
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && onClose()}>
@@ -58,11 +58,9 @@ export function FragmentReader({ bookTitle, chapter, open, onClose }: FragmentRe
                         <Dialog.Title className="font-cinzel text-[10px] font-bold text-[#1A0F08] uppercase tracking-widest leading-none truncate">
                           {bookTitle}
                         </Dialog.Title>
-                        {chapter && (
-                          <p className="text-[#2C1A10]/55 text-[11px] mt-0.5 truncate">
-                            {chapter.order}. {chapter.title}
-                          </p>
-                        )}
+                        <p className="text-[#2C1A10]/55 text-[11px] mt-0.5 truncate">
+                          {label}
+                        </p>
                       </div>
                     </div>
                     <Dialog.Close asChild>

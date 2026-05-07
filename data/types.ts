@@ -11,10 +11,17 @@ export interface SerieData {
   bookSlugs: string[];
 }
 
+export interface SectionData {
+  subOrder: number;
+  title: string;
+  fragment?: string;
+}
+
 export interface ChapterData {
   title: string;
   order: number;
   fragment?: string;
+  sections?: SectionData[];
 }
 
 export interface BookData {
