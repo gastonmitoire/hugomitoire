@@ -77,7 +77,7 @@ export function FragmentReader({ bookTitle, chapter, open, onClose }: FragmentRe
                   </div>
 
                   {/* Body */}
-                  <ScrollArea.Root className="flex-1 overflow-hidden">
+                  <ScrollArea.Root className="flex-1 min-h-0 overflow-hidden">
                     <ScrollArea.Viewport className="h-full w-full">
                       <div className="px-8 sm:px-14 py-8">
                         <div
