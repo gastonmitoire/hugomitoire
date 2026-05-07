@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { FadeImage } from "@/components/ui/FadeImage";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { SerieData } from "@/data/types";
 import { getBooksBySerie } from "@/data/books";
@@ -48,11 +48,13 @@ export function SeriesShowcase({ serie }: SeriesShowcaseProps) {
     >
       {/* BG */}
       <motion.div style={{ x: isDesktop ? bgX : 0 }} className="absolute inset-0 scale-110">
-        <Image
+        <FadeImage
           src={serieBooks[serieBooks.length - 1]?.background ?? ""}
           alt=""
           fill
-          className="object-cover opacity-12"
+          className="object-cover"
+          finalOpacity={0.12}
+          duration={1000}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-base via-base/92 to-base/60" />
         <div className="absolute inset-0 bg-base/50" />
@@ -127,12 +129,13 @@ export function SeriesShowcase({ serie }: SeriesShowcaseProps) {
                       className="cursor-pointer relative"
                     >
                       <Link href={`/libros/${book.slug}`}>
-                        <Image
+                        <FadeImage
                           src={book.cover}
                           alt={book.title}
                           width={120}
                           height={160}
                           className="drop-shadow-[0_6px_18px_rgba(0,0,0,0.75)] w-[88px] lg:w-[108px] h-auto"
+                          duration={500}
                         />
                       </Link>
                     </motion.div>

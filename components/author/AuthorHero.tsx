@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import Image from "next/image";
+import { FadeImage } from "@/components/ui/FadeImage";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { AuthorData } from "@/data/types";
 import { useIsDesktop } from "@/lib/hooks";
@@ -23,13 +23,14 @@ export function AuthorHero({ author }: AuthorHeroProps) {
     <section ref={ref} className="relative min-h-[100dvh] overflow-hidden flex items-end">
       {/* Parallax BG */}
       <motion.div style={{ y: isDesktop ? bgY : 0 }} className="absolute inset-0 scale-110">
-        <Image
+        <FadeImage
           src="/assets/images/bg/los-ojos-de-mariel_BG.jpg"
           alt=""
           fill
           className="object-cover"
           priority
           quality={85}
+          duration={900}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-base via-base/70 to-base/40" />
         <div className="absolute inset-0 bg-gradient-to-r from-base/80 via-base/40 to-transparent" />

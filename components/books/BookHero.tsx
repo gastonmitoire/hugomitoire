@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import Image from "next/image";
+import { FadeImage } from "@/components/ui/FadeImage";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
@@ -56,7 +56,7 @@ export function BookHero({ book }: BookHeroProps) {
     >
       {/* Parallax BG */}
       <motion.div style={{ y: isDesktop ? bgY : 0 }} className="absolute inset-0 scale-110">
-        <Image src={book.background} alt="" fill className="object-cover" priority quality={85} />
+        <FadeImage src={book.background} alt="" fill className="object-cover" priority quality={85} duration={900} />
         <div className="absolute inset-0 bg-gradient-to-b from-base/65 via-base/55 to-base" />
         <div className="absolute inset-0 bg-base/35" />
       </motion.div>
@@ -162,13 +162,14 @@ export function BookHero({ book }: BookHeroProps) {
               transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
               className="relative z-10"
             >
-              <Image
+              <FadeImage
                 src={book.cover}
                 alt={book.title}
                 width={340}
                 height={454}
                 className="drop-shadow-[0_30px_50px_rgba(0,0,0,0.85)]"
                 style={{ maxHeight: "68dvh", width: "auto" }}
+                duration={700}
                 priority
               />
             </motion.div>

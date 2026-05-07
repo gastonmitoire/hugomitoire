@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { FadeImage } from "@/components/ui/FadeImage";
 import { motion } from "framer-motion";
 import { BookData } from "@/data/types";
 import { getGenreBySlug } from "@/data/genres";
@@ -28,13 +28,14 @@ export function BookCard({ book, priority = false, className }: BookCardProps) {
         <article className="book-card relative flex flex-col bg-surface rounded-sm overflow-hidden h-full">
           {/* Cover */}
           <div className="relative aspect-[3/4] overflow-hidden bg-elevated">
-            <Image
+            <FadeImage
               src={book.cover}
               alt={book.title}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 22vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
               priority={priority}
+              duration={600}
             />
             {/* Subtle overlay on hover */}
             <div className="absolute inset-0 bg-gradient-to-t from-surface/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

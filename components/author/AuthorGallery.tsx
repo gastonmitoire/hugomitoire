@@ -236,6 +236,36 @@ function PhotoLightbox({
   );
 }
 
+// ─── Thumbnail with fade-on-load ─────────────────────────────────────────────
+
+function GalleryThumb({ photo }: { photo: Photo }) {
+  const [loaded, setLoaded] = useState(false);
+  const ref = useRef<HTMLImageElement>(null);
+  useEffect(() => { if (ref.current?.complete) setLoaded(true); }, []);
+
+  return (
+    <div className="relative overflow-hidden rounded-sm bg-elevated">
+      <Image
+        ref={ref}
+        src={photo.src}
+        alt={photo.caption}
+        width={400}
+        height={photo.aspect === "portrait" ? 540 : 300}
+        className={`w-full h-auto object-cover grayscale transition-all ${
+          loaded
+            ? "opacity-75 duration-700 group-hover:grayscale-0 group-hover:opacity-100"
+            : "opacity-0 duration-0"
+        }`}
+        onLoad={() => setLoaded(true)}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <figcaption className="absolute bottom-0 inset-x-0 px-3 py-2.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+        <p className="text-[10px] text-white/80 leading-tight">{photo.caption}</p>
+      </figcaption>
+    </div>
+  );
+}
+
 // ─── Grid ────────────────────────────────────────────────────────────────────
 
 const container = {
@@ -283,19 +313,7 @@ export function AuthorGallery() {
               className="break-inside-avoid mb-3 lg:mb-4 group cursor-zoom-in"
               onClick={() => setSelectedIndex(i)}
             >
-              <div className="relative overflow-hidden rounded-sm bg-elevated">
-                <Image
-                  src={photo.src}
-                  alt={photo.caption}
-                  width={400}
-                  height={photo.aspect === "portrait" ? 540 : 300}
-                  className="w-full h-auto object-cover grayscale opacity-75 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <figcaption className="absolute bottom-0 inset-x-0 px-3 py-2.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
-                  <p className="text-[10px] text-white/80 leading-tight">{photo.caption}</p>
-                </figcaption>
-              </div>
+              <GalleryThumb photo={photo} />
             </motion.figure>
           ))}
         </motion.div>
