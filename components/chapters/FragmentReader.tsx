@@ -2,7 +2,6 @@
 
 import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import * as ScrollArea from "@radix-ui/react-scroll-area";
 import { X, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cleanFragmentHtml } from "@/lib/utils";
@@ -45,7 +44,7 @@ export function FragmentReader({ bookTitle, chapter, open, onClose }: FragmentRe
                 onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
               >
                 <div
-                  className="relative w-full max-w-2xl max-h-[90dvh] flex flex-col rounded-sm overflow-hidden shadow-2xl"
+                  className="relative w-full max-w-2xl h-[90dvh] flex flex-col rounded-sm overflow-hidden shadow-2xl"
                   style={{
                     background: "#F4ECD8",
                     backgroundImage: `url("https://www.transparenttextures.com/patterns/cream-paper.png")`,
@@ -77,22 +76,14 @@ export function FragmentReader({ bookTitle, chapter, open, onClose }: FragmentRe
                   </div>
 
                   {/* Body */}
-                  <ScrollArea.Root className="flex-1 min-h-0 overflow-hidden">
-                    <ScrollArea.Viewport className="h-full w-full">
-                      <div className="px-8 sm:px-14 py-8">
-                        <div
-                          className="fragment-reader"
-                          dangerouslySetInnerHTML={{ __html: html }}
-                        />
-                      </div>
-                    </ScrollArea.Viewport>
-                    <ScrollArea.Scrollbar
-                      orientation="vertical"
-                      className="flex select-none touch-none p-0.5 w-2.5 transition-colors"
-                    >
-                      <ScrollArea.Thumb className="flex-1 bg-[#2C1A10]/25 rounded-full" />
-                    </ScrollArea.Scrollbar>
-                  </ScrollArea.Root>
+                  <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
+                    <div className="px-8 sm:px-14 py-8">
+                      <div
+                        className="fragment-reader"
+                        dangerouslySetInnerHTML={{ __html: html }}
+                      />
+                    </div>
+                  </div>
 
                   {/* Footer */}
                   <div className="px-8 py-3 border-t border-[#2C1A10]/10 flex justify-end shrink-0">
