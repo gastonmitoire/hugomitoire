@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="6" fill="#0a0a0a"/>
+  <!-- H left stem -->
+  <rect x="13" y="12" width="8" height="40" fill="#f0ede6"/>
+  <!-- H right stem -->
+  <rect x="43" y="12" width="8" height="40" fill="#f0ede6"/>
+  <!-- H crossbar in gold -->
+  <rect x="13" y="28" width="38" height="8" fill="#f5cb5c"/>
+</svg>

@@ -1,5 +1,5 @@
 import { BookData } from "./types";
-import { textLosOjosDeMariel, textsSerieTerror } from "./fragments";
+import { textLosOjosDeMariel, textsSerieTerror, textCriaturasCelestes, textLaCaceria } from "./fragments";
 
 export const books: BookData[] = [
   {
@@ -78,7 +78,9 @@ export const books: BookData[] = [
     cover: "/assets/images/covers/criaturas-celestes_COVER.png",
     background: "/assets/images/bg/criaturas-celestes_BG.jpg",
     accentColor: "#0D7B8A",
-    chapters: [],
+    chapters: [
+      { title: "Campo del Cielo", order: 1, fragment: textCriaturasCelestes },
+    ],
   },
   {
     id: "los-ojos-de-mariel",
@@ -111,7 +113,9 @@ export const books: BookData[] = [
     cover: "/assets/images/covers/la-caceria_COVER.png",
     background: "/assets/images/bg/la-caceria_BG.jpg",
     accentColor: "#A0522D",
-    chapters: [],
+    chapters: [
+      { title: "El crimen de Miraflores", order: 1, fragment: textLaCaceria },
+    ],
   },
   {
     id: "la-bestia",

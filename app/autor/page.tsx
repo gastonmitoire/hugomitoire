@@ -6,6 +6,8 @@ import { AuthorQuote } from "@/components/author/AuthorQuote";
 import { AuthorBio } from "@/components/author/AuthorBio";
 import { AuthorStats } from "@/components/author/AuthorStats";
 import { AuthorAwards } from "@/components/author/AuthorAwards";
+import { AuthorGallery } from "@/components/author/AuthorGallery";
+import { AuthorNav } from "@/components/author/AuthorNav";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -17,12 +19,29 @@ export const metadata: Metadata = {
 export default function AutorPage() {
   return (
     <>
+      <AuthorNav />
       <main>
-        <AuthorHero author={author} />
-        <AuthorQuote author={author} />
-        <AuthorBio author={author} />
-        <AuthorStats author={author} />
-        <AuthorAwards author={author} />
+        <div id="autor-hero">
+          <AuthorHero author={author} />
+        </div>
+
+        <div id="autor-pensamiento">
+          <AuthorQuote author={author} />
+        </div>
+
+        <AuthorGallery />
+
+        <div id="autor-bio">
+          <AuthorBio author={author} />
+        </div>
+
+        <div id="autor-numeros">
+          <AuthorStats author={author} />
+        </div>
+
+        <div id="autor-trayectoria">
+          <AuthorAwards author={author} />
+        </div>
 
         {/* CTA */}
         <section className="py-20 lg:py-28 border-t border-white/[0.06]">
