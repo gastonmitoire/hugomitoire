@@ -56,9 +56,9 @@ export function FragmentReader({ bookTitle, chapter, open, onClose }: FragmentRe
                     <div className="flex items-center gap-3 min-w-0">
                       <BookOpen size={15} className="text-[#2C1A10]/45 shrink-0" />
                       <div className="min-w-0">
-                        <p className="font-cinzel text-[10px] font-bold text-[#1A0F08] uppercase tracking-widest leading-none truncate">
+                        <Dialog.Title className="font-cinzel text-[10px] font-bold text-[#1A0F08] uppercase tracking-widest leading-none truncate">
                           {bookTitle}
-                        </p>
+                        </Dialog.Title>
                         {chapter && (
                           <p className="text-[#2C1A10]/55 text-[11px] mt-0.5 truncate">
                             {chapter.order}. {chapter.title}
