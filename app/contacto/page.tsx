@@ -12,13 +12,34 @@ export const metadata: Metadata = {
 export default function ContactoPage() {
   return (
     <>
-      <main className="min-h-screen pt-28 lg:pt-36">
-        <div className="mx-auto max-w-screen-2xl px-5 sm:px-8 lg:px-12 pb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+      <main className="min-h-screen pt-28 lg:pt-36 relative overflow-hidden">
+        {/* Radial glow — warm gold, top right */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 65% 45% at 80% 8%, rgba(245,203,92,0.07), transparent)",
+          }}
+        />
+        {/* Secondary glow — cool, bottom left */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 50% 35% at 10% 90%, rgba(91,127,166,0.05), transparent)",
+          }}
+        />
+
+        <div className="relative mx-auto max-w-screen-2xl px-5 sm:px-8 lg:px-12 pb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1px_1fr] gap-0 items-start">
 
             <ContactInfo author={author} />
 
-            <div>
+            {/* Vertical separator */}
+            <div className="hidden lg:block self-stretch mx-12 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+
+            {/* Form */}
+            <div className="lg:pl-4">
               <p className="text-[10px] uppercase tracking-[0.22em] text-text-muted mb-3">
                 Formulario
               </p>
