@@ -13,7 +13,15 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Autor",
   description:
-    "Hugo Mitoire — escritor argentino de literatura infantil, juvenil y policial negro. Resistencia, Chaco.",
+    "Conocé a Hugo Mitoire, escritor argentino nacido en Margarita Belén, Chaco. Más de 20 obras publicadas de literatura infantil, juvenil y policial negro.",
+  alternates: { canonical: "/autor" },
+  openGraph: {
+    title: "Hugo Mitoire — Autor",
+    description:
+      "Escritor argentino nacido en Margarita Belén, Chaco. Más de 20 obras de literatura infantil, juvenil y policial negro.",
+    type: "profile",
+    url: "/autor",
+  },
 };
 
 export default function AutorPage() {

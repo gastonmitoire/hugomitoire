@@ -7,7 +7,16 @@ import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Libros",
-  description: "Todas las obras de Hugo Mitoire — novelas, cuentos, series.",
+  description:
+    "Todas las obras de Hugo Mitoire — novelas, cuentos y series. Cuentos de Terror para Franco, Los Ojos de Mariel, La Cacería y más.",
+  alternates: { canonical: "/libros" },
+  openGraph: {
+    title: "Libros | Hugo Mitoire",
+    description:
+      "Catálogo completo de obras de Hugo Mitoire — novelas, cuentos y series.",
+    type: "website",
+    url: "/libros",
+  },
 };
 
 export default function LibrosPage() {

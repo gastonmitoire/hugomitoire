@@ -25,7 +25,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!book) return {};
   return {
     title: book.title,
-    description: book.description,
+    description: `${book.description} — Hugo Mitoire`,
+    alternates: { canonical: `/libros/${slug}` },
+    openGraph: {
+      title: `${book.title} | Hugo Mitoire`,
+      description: book.description,
+      type: "book",
+      ...(book.cover && {
+        images: [{ url: book.cover, alt: book.title }],
+      }),
+    },
   };
 }
 

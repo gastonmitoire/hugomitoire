@@ -403,5 +403,7 @@ export function getBooksBySerie(serieSlug: string): BookData[] {
 }
 
 export function getFeaturedBook(): BookData {
+  const envSlug = process.env.NEXT_PUBLIC_FEATURED_BOOK_SLUG;
+  if (envSlug) return books.find((b) => b.slug === envSlug) ?? books[0];
   return books.find((b) => b.featured) ?? books[0];
 }

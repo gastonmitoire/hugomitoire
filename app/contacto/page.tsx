@@ -6,7 +6,9 @@ import { ContactInfo } from "@/components/contact/ContactInfo";
 
 export const metadata: Metadata = {
   title: "Contacto",
-  description: "Ponete en contacto con Hugo Mitoire.",
+  description:
+    "Ponete en contacto con Hugo Mitoire para consultas sobre sus obras, charlas o presentaciones.",
+  alternates: { canonical: "/contacto" },
 };
 
 export default function ContactoPage() {
