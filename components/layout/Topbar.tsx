@@ -21,12 +21,23 @@ export function Topbar() {
   const { enabled: a11y, toggle } = useAccessibility();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [autorHidden, setAutorHidden] = useState(false);
+  const isAutorPage = pathname === "/autor";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setAutorHidden(y > 12 && max > 0 && y / max < 0.82);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isAutorPage) setAutorHidden(false);
+  }, [isAutorPage]);
 
   useEffect(() => { setOpen(false); }, [pathname]);
 
@@ -40,7 +51,8 @@ export function Topbar() {
       <header
         className={cn(
           "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-          scrolled ? "topbar-scrolled" : "bg-transparent"
+          scrolled ? "topbar-scrolled" : "bg-transparent",
+          isAutorPage && autorHidden && "-translate-y-full"
         )}
       >
         <div className="mx-auto max-w-screen-2xl px-5 sm:px-8 lg:px-12 flex items-center justify-between h-16 lg:h-20">

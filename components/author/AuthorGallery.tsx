@@ -7,15 +7,25 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const photos = [
-  { src: "/assets/images/author/abuelos.jpg", caption: "Con el abuelo Félix y la abuela María", aspect: "portrait" },
-  { src: "/assets/images/author/nino.jpg", caption: "Niño bueno", aspect: "portrait" },
-  { src: "/assets/images/author/con-papa.jpg", caption: "Con papá", aspect: "portrait" },
-  { src: "/assets/images/author/secundaria.jpg", caption: "Empezando la secundaria", aspect: "portrait" },
-  { src: "/assets/images/author/soldado-1983.jpg", caption: "Soldado argentino, 1983", aspect: "portrait" },
-  { src: "/assets/images/author/con-victor-heredia.jpg", caption: "Con Víctor Heredia", aspect: "landscape" },
+  { src: "/assets/images/author/abuelos.jpg", caption: "Con el abuelo Félix y la abuela María", ar: "3/4" },
+  { src: "/assets/images/author/duo-bandoneon.jpg", caption: "Dúo de bandoneón con papá", ar: "3/4" },
+  { src: "/assets/images/author/fin-del-mundo.jpg", caption: "En el Fin del Mundo", ar: "3/2" },
+  { src: "/assets/images/author/nino.jpg", caption: "Niño bueno", ar: "2/3" },
+  { src: "/assets/images/author/con-papa.jpg", caption: "Con papá", ar: "3/4" },
+  { src: "/assets/images/author/con-profesores.jpg", caption: "Con ilustres profesores", ar: "4/3" },
+  { src: "/assets/images/author/listo-para-la-facu.jpg", caption: "Listo para la facu", ar: "2/3" },
+  { src: "/assets/images/author/con-los-tres.jpg", caption: "Con los tres", ar: "4/3" },
+  { src: "/assets/images/author/secundaria.jpg", caption: "Empezando la secundaria", ar: "2/3" },
+  { src: "/assets/images/author/con-santiaguito.jpg", caption: "Con Santiaguito", ar: "3/4" },
+  { src: "/assets/images/author/en-ushuaia.jpg", caption: "Navegando en Ushuaia", ar: "3/2" },
+  { src: "/assets/images/author/soldado-1983.jpg", caption: "Soldado argentino, 1983", ar: "3/4" },
+  { src: "/assets/images/author/presentacion-la-caceria.jpg", caption: "Presentación de La Cacería", ar: "3/4" },
+  { src: "/assets/images/author/con-leo-batic.jpg", caption: "Con Leo Batic, en Ushuaia", ar: "4/3" },
+  { src: "/assets/images/author/con-victor-heredia.jpg", caption: "Con Víctor Heredia", ar: "4/3" },
+  { src: "/assets/images/author/con-van-bredam.jpg", caption: "Con el escritor Van Bredam", ar: "4/3" },
 ];
 
-type Photo = typeof photos[number];
+type Photo = (typeof photos)[number];
 
 const MIN_SCALE = 1;
 const MAX_SCALE = 5;
@@ -239,12 +249,11 @@ function PhotoLightbox({
 // ─── Thumbnail ───────────────────────────────────────────────────────────────
 // aspect-ratio + fill = espacio siempre reservado antes de que cargue la imagen
 
-function GalleryThumb({ photo, onLoad }: { photo: Photo; onLoad: () => void }) {
-  const aspectRatio = photo.aspect === "portrait" ? "3/4" : "4/3";
+function GalleryThumb({ photo }: { photo: Photo }) {
   return (
     <div
       className="relative overflow-hidden rounded-sm bg-elevated"
-      style={{ aspectRatio }}
+      style={{ aspectRatio: photo.ar }}
     >
       <Image
         fill
@@ -252,7 +261,6 @@ function GalleryThumb({ photo, onLoad }: { photo: Photo; onLoad: () => void }) {
         alt={photo.caption}
         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         className="object-cover grayscale opacity-75 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
-        onLoad={onLoad}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <figcaption className="absolute bottom-0 inset-x-0 px-3 py-2.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
@@ -264,59 +272,63 @@ function GalleryThumb({ photo, onLoad }: { photo: Photo; onLoad: () => void }) {
 
 // ─── Grid ────────────────────────────────────────────────────────────────────
 
+const VP = { once: true, margin: "-20px" } as const;
+const E = [0.16, 1, 0.3, 1] as const;
+
 export function AuthorGallery() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [loadedCount, setLoadedCount] = useState(0);
-  const [revealed, setRevealed] = useState(false);
   const isOpen = selectedIndex !== null;
-
-  const handleImageLoad = useCallback(() => {
-    setLoadedCount((n) => {
-      const next = n + 1;
-      if (next >= photos.length) setRevealed(true);
-      return next;
-    });
-  }, []);
-
-  // Seguro: revela después de 2.5 s aunque alguna imagen falle
-  useEffect(() => {
-    const t = setTimeout(() => setRevealed(true), 2500);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <section id="autor-historia" className="py-24 lg:py-32">
       <div className="mx-auto max-w-screen-2xl px-5 sm:px-8 lg:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-10 lg:mb-14"
-        >
-          <p className="text-[10px] uppercase tracking-[0.22em] text-text-muted mb-2">Orígenes</p>
-          <h2 className="font-cinzel text-3xl lg:text-4xl font-semibold text-text-primary tracking-wide">
-            Una vida en imágenes
-          </h2>
-          <div className="mt-3 h-px w-14 bg-white/20" />
-        </motion.div>
 
-        {/* El grid ocupa siempre su espacio (no hay CLS); se revela cuando todas las imágenes cargaron */}
-        <motion.div
-          animate={{ opacity: revealed ? 1 : 0 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
-          className="columns-2 sm:columns-3 lg:columns-4 gap-3 lg:gap-4"
-        >
+        {/* Encabezado */}
+        <div className="mb-10 lg:mb-14">
+          <motion.p
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: E }}
+            className="text-[10px] uppercase tracking-[0.22em] text-text-muted mb-2"
+          >
+            Orígenes
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.85, delay: 0.1, ease: E }}
+            className="font-cinzel text-3xl lg:text-4xl font-semibold text-text-primary tracking-wide"
+          >
+            Una vida en imágenes
+          </motion.h2>
+          <motion.div
+            initial={{ scaleX: 0, originX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5, delay: 0.35, ease: E }}
+            className="mt-3 h-px w-14 bg-white/20"
+          />
+        </div>
+
+        {/* Grid — cada foto aparece con stagger */}
+        <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-2 lg:gap-3">
           {photos.map((photo, i) => (
-            <figure
+            <motion.figure
               key={photo.src}
-              className="break-inside-avoid mb-3 lg:mb-4 group cursor-zoom-in"
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VP}
+              transition={{ delay: i * 0.055, duration: 0.65, ease: E }}
+              className="break-inside-avoid mb-2 lg:mb-3 group cursor-zoom-in"
               onClick={() => setSelectedIndex(i)}
             >
-              <GalleryThumb photo={photo} onLoad={handleImageLoad} />
-            </figure>
+              <GalleryThumb photo={photo} />
+            </motion.figure>
           ))}
-        </motion.div>
+        </div>
+
       </div>
 
       {/* Lightbox */}
