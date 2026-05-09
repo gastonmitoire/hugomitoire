@@ -321,10 +321,10 @@ export function AuthorGallery() {
               onClick={() => setSelectedIndex(i)}
             >
               <motion.div
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 1.06 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={VP}
-                transition={{ delay: i * 0.055, duration: 0.65, ease: E }}
+                transition={{ delay: i * 0.05, duration: 1.1, ease: E }}
               >
                 <GalleryThumb photo={photo} />
               </motion.div>

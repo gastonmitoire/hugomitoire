@@ -22,10 +22,20 @@ export function ContactForm() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setSending(true);
-    await new Promise((r) => setTimeout(r, 800));
-    toast.success("Mensaje enviado. Hugo se pondrá en contacto a la brevedad.");
-    setForm({ nombre: "", email: "", mensaje: "" });
-    setSending(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
+      toast.success("Mensaje enviado. Hugo se pondrá en contacto a la brevedad.");
+      setForm({ nombre: "", email: "", mensaje: "" });
+    } catch {
+      toast.error("No se pudo enviar el mensaje. Intentá de nuevo.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (

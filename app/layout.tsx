@@ -107,8 +107,8 @@ export default function RootLayout({
               description:
                 "Escritor argentino de literatura infantil, juvenil y policial negro. Autor de la serie Cuentos de Terror para Franco.",
               sameAs: [
-                "https://instagram.com/hugomitoire",
-                "https://facebook.com/hugomitoire",
+                "https://instagram.com/hugodanielmitoire",
+                "https://facebook.com/hmitoire",
               ],
             }),
           }}

@@ -29,7 +29,8 @@ export const author: AuthorData = {
     },
   ],
   socialLinks: [
-    { platform: "instagram", url: "https://instagram.com/hugomitoire" },
-    { platform: "facebook", url: "https://facebook.com/hugomitoire" },
+    { platform: "instagram", url: "https://instagram.com/hugodanielmitoire" },
+    { platform: "facebook", url: "https://facebook.com/hmitoire" },
+    { platform: "youtube", url: "https://www.youtube.com/@hugomitoire7334" },
   ],
 };
