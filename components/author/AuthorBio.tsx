@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { AuthorData } from "@/data/types";
 
-const VP = { once: true, margin: "-60px" } as const;
+const VP = { once: false, margin: "-60px" } as const;
 const E = [0.16, 1, 0.3, 1] as const;
 
 const PULL_QUOTE =
@@ -28,27 +28,17 @@ export function AuthorBio({ author }: { author: AuthorData }) {
               Sobre el autor
             </motion.p>
 
-            {/* "Voz del" entra desde la izquierda, "interior" desde la derecha */}
-            <h2 className="font-cinzel text-2xl lg:text-3xl font-bold text-white tracking-wide leading-tight overflow-hidden">
-              <motion.span
-                initial={{ x: -80, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                viewport={VP}
-                transition={{ duration: 0.75, delay: 0.1, ease: E }}
-                className="block"
-              >
-                Voz del
-              </motion.span>
-              <motion.span
-                initial={{ x: 80, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                viewport={VP}
-                transition={{ duration: 0.75, delay: 0.22, ease: E }}
-                className="block"
-              >
-                interior
-              </motion.span>
-            </h2>
+            <motion.h2
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VP}
+              transition={{ duration: 0.75, delay: 0.1, ease: E }}
+              className="font-cinzel text-2xl lg:text-3xl font-bold text-white tracking-wide leading-tight"
+            >
+              Voz del
+              <br />
+              interior
+            </motion.h2>
 
             <motion.div
               initial={{ scaleX: 0, originX: 0 }}
@@ -59,16 +49,16 @@ export function AuthorBio({ author }: { author: AuthorData }) {
             />
           </div>
 
-          {/* Right — párrafos entran con mayor stagger y distancia */}
-          <div className="flex flex-col gap-8">
+          {/* Right — todo el bloque entra junto */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VP}
+            transition={{ duration: 0.75, delay: 0.15, ease: E }}
+            className="flex flex-col gap-8"
+          >
             {author.bio.map((paragraph, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={VP}
-                transition={{ delay: i * 0.18, duration: 0.75, ease: E }}
-              >
+              <div key={i}>
                 {i === 0 ? (
                   <p className="font-bellefair text-lg text-text-secondary leading-[1.85] first-letter:font-cinzel first-letter:text-[3.5rem] first-letter:font-bold first-letter:text-white first-letter:float-left first-letter:leading-[0.75] first-letter:mr-2 first-letter:mt-1">
                     {paragraph}
@@ -80,29 +70,16 @@ export function AuthorBio({ author }: { author: AuthorData }) {
                 )}
 
                 {i === 1 && (
-                  <motion.blockquote
-                    initial={{ opacity: 0, x: 80 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={VP}
-                    transition={{ duration: 0.8, ease: E }}
-                    className="mt-8 pl-5 relative"
-                  >
-                    {/* Línea izquierda que se dibuja hacia abajo */}
-                    <motion.div
-                      initial={{ scaleY: 0, originY: 0 }}
-                      whileInView={{ scaleY: 1 }}
-                      viewport={VP}
-                      transition={{ duration: 0.55, ease: E }}
-                      className="absolute left-0 top-0 bottom-0 w-0.5 bg-white/20"
-                    />
+                  <blockquote className="mt-8 pl-5 relative">
+                    <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-white/20" />
                     <p className="font-bellefair text-xl lg:text-2xl text-text-primary italic leading-relaxed">
                       &ldquo;{PULL_QUOTE}&rdquo;
                     </p>
-                  </motion.blockquote>
+                  </blockquote>
                 )}
-              </motion.div>
+              </div>
             ))}
-          </div>
+          </motion.div>
 
         </div>
       </div>

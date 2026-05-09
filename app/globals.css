@@ -89,6 +89,7 @@ html {
 }
 
 body {
+  overflow-x: clip;
   background-color: var(--color-base);
   color: var(--color-text-primary);
   font-family: var(--font-body);

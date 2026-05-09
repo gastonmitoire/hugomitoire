@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { AuthorData } from "@/data/types";
 
-const VP = { once: true, margin: "-50px" } as const;
+const VP = { once: false, margin: "-50px" } as const;
 const E = [0.16, 1, 0.3, 1] as const;
 
 export function AuthorAwards({ author }: { author: AuthorData }) {

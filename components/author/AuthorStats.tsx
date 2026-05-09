@@ -7,7 +7,7 @@ import { AuthorData } from "@/data/types";
 function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const inView = useInView(ref, { once: false, margin: "-60px" });
 
   useEffect(() => {
     if (!inView) return;
@@ -47,7 +47,7 @@ export function AuthorStats({ author }: { author: AuthorData }) {
               key={key}
               initial={{ opacity: 0, y: -70, scale: 0.9 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: false, margin: "-60px" }}
               transition={{
                 type: "spring",
                 stiffness: 260,

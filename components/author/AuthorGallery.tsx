@@ -272,7 +272,7 @@ function GalleryThumb({ photo }: { photo: Photo }) {
 
 // ─── Grid ────────────────────────────────────────────────────────────────────
 
-const VP = { once: true, margin: "-20px" } as const;
+const VP = { once: false, margin: "-20px" } as const;
 const E = [0.16, 1, 0.3, 1] as const;
 
 export function AuthorGallery() {
@@ -288,7 +288,7 @@ export function AuthorGallery() {
           <motion.p
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: false, margin: "-60px" }}
             transition={{ duration: 0.6, ease: E }}
             className="text-[10px] uppercase tracking-[0.22em] text-text-muted mb-2"
           >
@@ -297,7 +297,7 @@ export function AuthorGallery() {
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: false, margin: "-60px" }}
             transition={{ duration: 0.85, delay: 0.1, ease: E }}
             className="font-cinzel text-3xl lg:text-4xl font-semibold text-text-primary tracking-wide"
           >
@@ -306,7 +306,7 @@ export function AuthorGallery() {
           <motion.div
             initial={{ scaleX: 0, originX: 0 }}
             whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: false, margin: "-60px" }}
             transition={{ duration: 0.5, delay: 0.35, ease: E }}
             className="mt-3 h-px w-14 bg-white/20"
           />
@@ -315,17 +315,20 @@ export function AuthorGallery() {
         {/* Grid — cada foto aparece con stagger */}
         <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-2 lg:gap-3">
           {photos.map((photo, i) => (
-            <motion.figure
+            <figure
               key={photo.src}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={VP}
-              transition={{ delay: i * 0.055, duration: 0.65, ease: E }}
-              className="break-inside-avoid mb-2 lg:mb-3 group cursor-zoom-in"
+              className="break-inside-avoid mb-2 lg:mb-3 group cursor-zoom-in overflow-hidden"
               onClick={() => setSelectedIndex(i)}
             >
-              <GalleryThumb photo={photo} />
-            </motion.figure>
+              <motion.div
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={VP}
+                transition={{ delay: i * 0.055, duration: 0.65, ease: E }}
+              >
+                <GalleryThumb photo={photo} />
+              </motion.div>
+            </figure>
           ))}
         </div>
 
